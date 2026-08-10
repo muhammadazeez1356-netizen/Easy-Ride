@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <title>Driver-page</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/image/logo">
+    <link rel="icon" href="/image/easy-ride logo.png">
+    <link rel="stylesheet" href="driverpage.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <div id="side-bar">
+
+            <h2 class="logo">Easy Ride</h2>
+
+            <div class="profile">
+
+                <img id="profileImage" src="/image/userr.webp">
+
+                <h3 id="driverName"></h3>
+
+                <p>Driver</p>
+
+            </div>
+
+            <div class="online-bar">
+                <button id="bbtn1"> <i class="fa-solid fa-tower-broadcast"> </i> Online</button>
+                <button id="bbtn2"> <i class="fa-solid fa-power-off"> </i> Offline</button>
+            </div>
+
+            <div class="menu">
+
+                <a href="dashboard.html" class="menu-link driver-menu active">
+                    <i class="fa-solid fa-chart-column"></i> Dashboard
+                </a>
+
+                <a href="ride-request.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-taxi"></i> Ride Requests
+                </a>
+
+                <a href="ride-history.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-book"></i> Ride History
+                </a>
+
+                <a href="earnings.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-money-bill-trend-up"></i> Earnings
+                </a>
+
+                <a href="wallet.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-wallet"></i> Wallet
+                </a>
+
+                <a href="ratings.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-star-half-stroke"></i> Ratings
+                </a>
+
+                <!-- <a href="report.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-retweet"></i> Earnings Report
+                </a> -->
+
+                <a href="transactions.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i> Transactions
+                </a>
+
+                <a href="schedule.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-business-time"></i> Schedule
+                </a>
+
+                <a href="support.html" class="menu-link driver-menu">
+                    <i class="fa-solid fa-thumbs-up"></i> Support
+                </a>
+
+                <!-- These stay visible -->
+                <button id="settingsBtn" class="menu-btns">
+                    ⚙ Settings
+                </button>
+
+                <div id="settingsBox">
+                    <label class="uploadBtn">
+                        📷 Change Profile Picture
+                        <input type="file" id="uploadImage" accept="image/*" hidden>
+                    </label>
+                </div>
+
+                <button id="logoutBtn" class="logoutBtn">
+                    Logout
+                </button>
+
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="head">
+
+                <img src="/image/logo.png" class="headimage">
+
+                <div class="head-text">
+
+                    <div>
+                        <h2>Welcome back.</h2>
+                        <h3 id="sidebarName">Musa</h3>
+                    </div>
+
+                    <div class="header-right">
+
+                        <!-- <a href="ride-request.html" class="notification-link"> -->
+
+                        <div class="right">
+                            <div class="notification">
+                                <i class="fa-regular fa-bell"></i>
+                                <span>1</span>
+                            </div>
+
+
+                        </div>
+
+                        <!-- <span id="notificationDot" class="notification-dot"></span> -->
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                    
+                <div class="menu-toggle" id="menuToggle">
+    <i class="fa-solid fa-bars"></i>
+</div>
+
+            </div>
+
+            <div id="mainContent"></div>
+
+        </div>
+
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="dashboard.js"></script>
+
+</body>
+
+</html>

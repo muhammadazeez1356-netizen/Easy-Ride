@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ride</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/image/logo">
+    <link rel="icon" href="/image/easy-ride logo.png">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .app {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 380px;
+            background: #fff;
+            padding: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+            z-index: 1000;
+            overflow-y: auto;
+            overflow: hidden;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+
+        }
+
+        .logo span {
+            color: #ffd900;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
+        }
+
+        .field select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
+        }
+
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #111;
+        }
+
+        /* AUTOCOMPLETE */
+        .autocomplete {
+            position: relative;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 3000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 14px;
+        }
+
+        .suggestion-item:hover {
+            background: #f5f5f5;
+        }
+
+        /* BUTTON */
+        .btton {
+            width: 100%;
+            padding: 15px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            position: relative;
+            top: -15px;
+        }
+
+        .btton:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* INFO */
+        .info {
+            margin-top: 24px;
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        /* MAP */
+        #map {
+            flex: 1;
+            height: 100vh;
+            min-width: 0;
+        }
+
+        .trip-info {
+            margin-top: 20px;
+            background: #fff;
+            border: 2px solid #ffd900;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+        }
+
+        .trip-info h3 {
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .trip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        #tripStatus {
+            color: #16a34a;
+        }
+
+        /* NEARBY PLACE ICONS */
+        .place-marker {
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border: 2px solid #111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+        }
+
+        .place-icon {
+            background: none;
+            border: none;
+        }
+
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: #111;
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(120%);
+            transition: all .4s ease;
+            z-index: 5000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .toast i {
+            color: #22c55e;
+            font-size: 18px;
+        }
+
+
+        /* MODAL */
+        .ride-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: none;
+            /* allows sidebar buttons to work */
+        }
+
+        .ride-modal-content {
+            pointer-events: auto;
+            /* modal itself still works */
+        }
+
+        .ride-modal.show {
+            display: flex;
+        }
+
+        .ride-modal-content {
+            width: 90%;
+            max-width: 380px;
+            background: #fff;
+            padding: 30px 25px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+        }
+
+        .loading-box {
+            margin-top: 18px;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #e5e5e5;
+            border-top: 5px solid #111;
+            border-radius: 50%;
+            margin: auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .cancel-ride-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #dc2626;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .cancel-ride-btn:hover {
+            background: #b91c1c;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 12px;
+            /* margin-top: 10px; */
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .cancel-btn:hover {
+            background: #dc2626;
+        }
+
+        /* .trip-info {
+            margin-top: 20px;
+            background: #ffffff;
+            border: 2px solid #ffd900;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+        }
+
+        .trip-info h3 {
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .trip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        #tripStatus {
+            color: #16a34a;
+        } */
+
+
+       /* =========================================
+   MOBILE HEADER + RESPONSIVE SIDEBAR
+========================================= */
+
+/* Hide on desktop */
+.mobile-header,
+.sidebar-overlay{
+    display:none;
+}
+
+
+/* ---------- Mobile ---------- */
+@media (max-width: 900px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .app{
+        display:block;
+        height:100vh;
+    }
+
+    /* Top mobile header */
+    .mobile-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:14px 16px;
+        background:#fff;
+        border-bottom:1px solid #eee;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:3000;
+        height:60px;
+    }
+
+    .mobile-logo{
+        font-size:24px;
+        font-weight:700;
+    }
+
+    .mobile-logo span{
+        color:#ffd900;
+    }
+
+    .menu-toggle{
+        width:42px;
+        height:42px;
+        border:none;
+        background:#111;
+        color:#fff;
+        border-radius:10px;
+        font-size:18px;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    /* Sidebar overlay */
+    .sidebar-overlay{
+        display:block;
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.45);
+        opacity:0;
+        visibility:hidden;
+        transition:.3s;
+        z-index:1999;
+    }
+
+    .sidebar-overlay.show{
+        opacity:1;
+        visibility:visible;
+    }
+
+    /* Sidebar hidden by default */
+    .sidebar{
+        position:fixed;
+        top:0;
+        left:-100%;
+        width:320px;
+        max-width:85%;
+        height:100vh;
+        background:#fff;
+        padding:18px;
+        overflow-y:auto;
+        z-index:2500;
+        transition:left .3s ease;
+        box-shadow:4px 0 20px rgba(0,0,0,.15);
+    }
+
+    /* Show sidebar */
+    .sidebar.show{
+        left:0;
+    }
+
+    /* Hide desktop logo inside sidebar */
+    .sidebar .logo{
+        display:none;
+    }
+
+    /* Fullscreen map */
+    #map{
+        width:100%;
+        height:100vh;
+        margin-top:60px;
+        min-height:100vh;
+    }
+
+    .trip-info{
+        margin-bottom:20px;
+    }
+
+    .field input,
+    .field select{
+        padding:14px;
+        font-size:14px;
+    }
+
+    .btton,
+    .cancel-btn{
+        padding:14px;
+        font-size:15px;
+    }
+}
+
+
+/* ---------- Small Mobile ---------- */
+@media (max-width: 480px){
+
+    .sidebar{
+        width:280px;
+        padding:16px;
+    }
+
+    .mobile-logo{
+        font-size:22px;
+    }
+
+    .field label{
+        font-size:14px;
+    }
+
+    .info-row,
+    .trip-row{
+        font-size:14px;
+    }
+
+    .toast{
+        top:15px;
+        right:15px;
+        left:15px;
+        width:auto;
+        transform:translateY(-20px);
+    }
+
+    .toast.show{
+        transform:translateY(0);
+    }
+}
+    </style>
+</head>
+
+<body>
+
+
+<!-- Mobile Header -->
+<div class="mobile-header">
+
+    <div class="mobile-logo">
+        Easy <span>Ride</span>
+    </div>
+
+    <button id="menuToggle" class="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</div>
+
+<!-- Sidebar Overlay -->
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+
+            <div class="logo">Easy <span>Ride</span></div>
+
+            <!-- Country -->
+            <div class="field">
+                <label>🌍 Select Country</label>
+
+                <select id="countrySelect">
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="Ghana">Ghana</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="France">France</option>
+                    <option value="Germany">Germany</option>
+                    <option value="India">India</option>
+                </select>
+            </div>
+
+            <!-- User Name -->
+            <div class="field">
+                <label>👤 User Name</label>
+                <input type="text" id="username" placeholder="Enter your name">
+            </div>
+
+            <!-- Pickup -->
+            <div class="field">
+                <label> Where are you?</label>
+
+                <div class="autocomplete">
+                    <input type="text" id="pickup" placeholder="Enter pickup location">
+                    <div class="suggestions" id="pickupSuggestions"></div>
+                </div>
+            </div>
+
+            <!-- Destination -->
+            <div class="field">
+                <label>Where are you going?</label>
+
+                <div class="autocomplete">
+                    <input type="text" id="destination" placeholder="Enter destination location">
+                    <div class="suggestions" id="destinationSuggestions"></div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+
+            <button id="bookBtn" class="btton"> Book Now</button>
+
+            <button id="cancelRideBtn" class="cancel-btn">
+                ❌ Cancel Ride
+            </button>
+
+            <!-- Route Info -->
+            <div class="info">
+
+                <div class="info-row">
+                    <span>Distance</span>
+                    <strong id="distance">-- km</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Estimated Time</span>
+                    <strong id="time">-- min</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Ride Price</span>
+                    <strong id="fare">₦0</strong>
+                </div>
+
+            </div>
+
+            <div id="tripInfo" class="trip-info" style="display:none;">
+
+                <h3> Ride Details</h3>
+
+                <div class="trip-row">
+                    <span>Destination</span>
+                    <strong id="tripDestination">--</strong>
+                </div>
+
+                <div class="trip-row">
+                    <span>Distance</span>
+                    <strong id="tripDistance">-- km</strong>
+                </div>
+
+                <div class="trip-row">
+                    <span>Estimated Time</span>
+                    <strong id="tripTime">-- min</strong>
+                </div>
+
+                <div class="trip-row">
+                    <span>Fare</span>
+                    <strong id="tripFare">₦0</strong>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div id="map"></div>
+
+    </div>
+
+
+    <!-- WAITING / STATUS MODAL -->
+    <div id="rideModal" class="ride-modal">
+
+        <div class="ride-modal-content">
+
+            <h2 id="rideTitle">Waiting for driver...</h2>
+
+            <p id="rideMessage">
+                Please wait while we connect you with a driver.
+            </p>
+
+            <div id="loadingBox" class="loading-box">
+                <div class="loader"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Ride booked successfully!</span>
+    </div>
+
+    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* ---------------- MAP ---------------- */
+const map = L.map('map', {
+    zoomControl: true,
+    maxZoom: 20
+}).setView([9.0820, 8.6753], 6);
+
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 20
+    }
+).addTo(map);
+
+map.locate({
+    setView: true,
+    maxZoom: 18,
+    enableHighAccuracy: true
+});
+
+map.on('locationfound', e => {
+    L.marker(e.latlng)
+        .addTo(map)
+        .bindPopup('📍 Your current location');
+
+    L.circle(e.latlng, {
+        radius: e.accuracy / 2,
+        color: '#2563eb',
+        fillColor: '#2563eb',
+        fillOpacity: 0.2
+    }).addTo(map);
+});
+
+let pickupMarker = null;
+let destinationMarker = null;
+let routeLayer = null;
+
+let selectedPickup = null;
+let selectedDestination = null;
+
+/* ---------------- SEARCH ---------------- */
+async function searchLocation(query) {
+
+    const country = document.getElementById('countrySelect').value;
+
+    const url =
+        `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&q=${encodeURIComponent(query + ', ' + country)}`;
+
+    try {
+
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Accept-Language': 'en'
+            }
+        });
+
+        const data = await response.json();
+
+        if (!data.length) return null;
+
+        return {
+            lat: parseFloat(data[0].lat),
+            lon: parseFloat(data[0].lon),
+            name: data[0].display_name
+        };
+
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
+
+/* ---------------- AUTOCOMPLETE ---------------- */
+async function getSuggestions(query) {
+
+    if (query.trim().length < 2) return [];
+
+    const country =
+        document.getElementById('countrySelect').value;
+
+    const url =
+        `https://nominatim.openstreetmap.org/search?` +
+        `format=jsonv2&addressdetails=1&limit=5&q=` +
+        encodeURIComponent(query + ', ' + country);
+
+    try {
+
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Accept-Language': 'en'
+            }
+        });
+
+        if (!response.ok) return [];
+
+        return await response.json();
+
+    } catch (err) {
+
+        console.error('Suggestion error:', err);
+
+        return [];
+    }
+}
+
+
+function setupAutocomplete(inputId, boxId) {
+
+    const input = document.getElementById(inputId);
+    const box = document.getElementById(boxId);
+
+    input.addEventListener('input', async () => {
+
+        const query = input.value.trim();
+
+        // IMPORTANT: clear previous selected location
+        if (inputId === 'pickup') {
+            selectedPickup = null;
+        } else {
+            selectedDestination = null;
+        }
+
+        if (query.length < 2) {
+            box.style.display = 'none';
+            box.innerHTML = '';
+            return;
+        }
+
+        const suggestions = await getSuggestions(query);
+
+        box.innerHTML = '';
+
+        if (!suggestions.length) {
+            box.style.display = 'none';
+            return;
+        }
+
+        suggestions.forEach(place => {
+
+            const item = document.createElement('div');
+
+            item.className = 'suggestion-item';
+            item.textContent = place.display_name;
+
+            item.addEventListener('click', () => {
+
+                input.value = place.display_name;
+
+                const data = {
+                    lat: parseFloat(place.lat),
+                    lon: parseFloat(place.lon),
+                    name: place.display_name
+                };
+
+                if (inputId === 'pickup') {
+                    selectedPickup = data;
+                } else {
+                    selectedDestination = data;
+                }
+
+                box.style.display = 'none';
+                box.innerHTML = '';
+            });
+
+            box.appendChild(item);
+        });
+
+        box.style.display = 'block';
+    });
+
+    // Hide when clicking outside
+    document.addEventListener('click', (e) => {
+
+        if (!input.contains(e.target) &&
+            !box.contains(e.target)) {
+
+            box.style.display = 'none';
+        }
+    });
+}
+
+
+setupAutocomplete('pickup', 'pickupSuggestions');
+setupAutocomplete('destination', 'destinationSuggestions');
+
+/* ---------------- ROUTE ---------------- */
+async function getDrivingRoute(start, end) {
+
+    const url =
+        `https://router.project-osrm.org/route/v1/driving/${start.lon},${start.lat};${end.lon},${end.lat}?overview=full&geometries=geojson`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return data.routes?.[0] || null;
+}
+
+function drawRoute(pickup, destination, geometry) {
+
+    if (pickupMarker) map.removeLayer(pickupMarker);
+    if (destinationMarker) map.removeLayer(destinationMarker);
+    if (routeLayer) map.removeLayer(routeLayer);
+
+    pickupMarker = L.marker([pickup.lat, pickup.lon])
+        .addTo(map)
+        .bindPopup('📍 Pickup');
+
+    destinationMarker = L.marker([destination.lat, destination.lon])
+        .addTo(map)
+        .bindPopup('🏁 Destination');
+
+    routeLayer = L.geoJSON(geometry, {
+        style: {
+            color: '#111',
+            weight: 6,
+            opacity: 0.9
+        }
+    }).addTo(map);
+
+    map.fitBounds(routeLayer.getBounds(), {
+        padding: [50, 50]
+    });
+}
+
+/* ---------------- FARE ---------------- */
+function calculateFare(distanceKm) {
+
+    const baseFare = 500;
+    const perKm = 250;
+
+    return `₦${Math.round(baseFare + distanceKm * perKm).toLocaleString()}`;
+}
+
+/* ---------------- BOOK NOW ---------------- */
+document.getElementById('bookBtn').addEventListener('click', async () => {
+
+    const btn = document.getElementById('bookBtn');
+
+    const name =
+        document.getElementById('username').value.trim();
+
+    const pickupText =
+        document.getElementById('pickup').value.trim();
+
+    const destinationText =
+        document.getElementById('destination').value.trim();
+
+    if (!name || !pickupText || !destinationText) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Booking...';
+
+    try {
+
+        const pickup =
+            selectedPickup || await searchLocation(pickupText);
+
+        const destination =
+            selectedDestination || await searchLocation(destinationText);
+
+        if (!pickup || !destination) {
+            alert('Location not found');
+            return;
+        }
+
+        const route =
+            await getDrivingRoute(pickup, destination);
+
+        if (!route) {
+            alert('No driving route found');
+            return;
+        }
+
+        drawRoute(pickup, destination, route.geometry);
+
+        const distanceKm = route.distance / 1000;
+        const timeMin = Math.ceil(route.duration / 60);
+        const fare = calculateFare(distanceKm);
+
+        document.getElementById('distance').textContent =
+            `${distanceKm.toFixed(1)} km`;
+
+        document.getElementById('time').textContent =
+            `${timeMin} min`;
+
+        document.getElementById('fare').textContent =
+            fare;
+
+        const request = {
+            passenger: name,
+            pickup: pickup.name,
+            destination: destination.name,
+            pickupLat: pickup.lat,
+            pickupLon: pickup.lon,
+            destinationLat: destination.lat,
+            destinationLon: destination.lon,
+            distance: `${distanceKm.toFixed(1)} km`,
+            eta: `${timeMin} min`,
+            fare: fare,
+            status: 'pending'
+        };
+
+        localStorage.setItem(
+            'easyRideRequest',
+            JSON.stringify(request)
+        );
+
+        localStorage.removeItem('rideAccepted');
+        localStorage.removeItem('rideDeclined');
+
+        document.getElementById('rideModal')
+            .classList.add('show');
+
+        document.getElementById('rideTitle')
+            .textContent = 'Waiting for driver...';
+
+        document.getElementById('rideMessage')
+            .textContent =
+            'Please wait while we connect you with a driver.';
+
+        document.getElementById('loadingBox')
+            .style.display = 'block';
+
+    } catch (err) {
+
+        console.error(err);
+        alert('Error booking ride');
+
+    } finally {
+
+        btn.disabled = false;
+        btn.textContent = '🚖 Book Now';
+    }
+});
+
+/* ---------------- DRIVER RESPONSE ---------------- */
+setInterval(() => {
+
+    const accepted =
+        JSON.parse(localStorage.getItem('rideAccepted'));
+
+    const declined =
+        JSON.parse(localStorage.getItem('rideDeclined'));
+
+    if (accepted) {
+
+        document.getElementById('rideModal')
+            .classList.add('show');
+
+        document.getElementById('rideTitle')
+            .textContent = 'Ride Accepted';
+
+        document.getElementById('rideMessage')
+            .textContent = 'Your journey begins now.';
+
+        document.getElementById('loadingBox')
+            .style.display = 'none';
+
+        document.getElementById('tripInfo')
+            .style.display = 'block';
+
+        document.getElementById('tripDestination').textContent =
+            accepted.destination;
+
+        document.getElementById('tripDistance').textContent =
+            accepted.distance;
+
+        document.getElementById('tripTime').textContent =
+            accepted.eta;
+
+        document.getElementById('tripFare').textContent =
+            accepted.fare;
+
+        localStorage.removeItem('rideAccepted');
+
+        setTimeout(() => {
+            document.getElementById('rideModal')
+                .classList.remove('show');
+        }, 3000);
+    }
+
+    if (declined) {
+
+        document.getElementById('rideTitle')
+            .textContent = 'Ride Declined';
+
+        document.getElementById('rideMessage')
+            .textContent =
+            'No driver accepted your ride request.';
+
+        document.getElementById('loadingBox')
+            .style.display = 'none';
+
+        localStorage.removeItem('rideDeclined');
+
+        setTimeout(() => {
+            document.getElementById('rideModal')
+                .classList.remove('show');
+        }, 3000);
+    }
+
+}, 1000);
+
+/* ---------------- CANCEL RIDE ---------------- */
+/* ---------------- CANCEL RIDE ---------------- */
+document.getElementById("cancelRideBtn")
+    .addEventListener("click", () => {
+
+        // Ask for confirmation
+        const confirmCancel = confirm(
+            "Are you sure you want to cancel this ride?"
+        );
+
+        if (!confirmCancel) return;
+
+        const accepted = JSON.parse(
+            localStorage.getItem("rideAccepted")
+        );
+
+        const request = JSON.parse(
+            localStorage.getItem("easyRideRequest")
+        );
+
+        // Save cancellation for driver page
+        localStorage.setItem(
+            "userCanceledRide",
+            JSON.stringify(accepted || request)
+        );
+
+        // Remove active ride
+        localStorage.removeItem("rideAccepted");
+        localStorage.removeItem("easyRideRequest");
+        localStorage.removeItem("rideDeclined");
+
+        alert("Ride canceled successfully");
+    });
+
+
+/* =========================================
+   MOBILE SIDEBAR TOGGLE
+========================================= */
+
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.querySelector('.sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+if (menuToggle) {
+
+    menuToggle.addEventListener('click', () => {
+
+        sidebar.classList.add('show');
+        sidebarOverlay.classList.add('show');
+    });
+}
+
+function closeSidebar(){
+
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+}
+
+/* Close when clicking outside */
+sidebarOverlay.addEventListener('click', closeSidebar);
+
+/* Close when screen becomes desktop */
+window.addEventListener('resize', () => {
+
+    if (window.innerWidth > 900) {
+        closeSidebar();
+    }
+});
+
+
+
+</script>
+
+</body>
+
+</html>

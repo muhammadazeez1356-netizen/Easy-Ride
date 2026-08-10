@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/image/logo">
+    <link rel="icon" href="/image/easy-ride logo.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="bod">
+
+        <div class="container">
+
+            <h1 class="logoo">
+                <span>Easy</span> Ride
+            </h1>
+
+            <h3>LOG IN</h3>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="emailForm" id="tabb">
+                    Email or Username
+                </button>
+
+                <button class="tab" data-tab="phoneForm" id="tabb">
+                    Phone Number
+                </button>
+            </div>
+
+            <div id="emailForm" class="form active">
+
+                <label>Email or Username</label>
+
+                <input type="text" id="emailInput" placeholder="Email or Username">
+
+            </div>
+            <div id="phoneForm" class="form">
+
+                <label>Phone Number</label>
+
+                <div class="phone-box">
+
+                    <select id="country">
+                        <option>+234</option>
+                        <option>+1</option>
+                        <option>+44</option>
+                        <option>+91</option>
+                    </select>
+
+                    <input type="tel" id="phoneInput" placeholder="Phone Number">
+
+                </div>
+
+            </div>
+
+            <button id="continueBtn" disabled class="tabb">
+                Log in →
+            </button>
+
+            <a href="forget-password.html" class="forgot">
+                Forgot Password
+            </a>
+
+            <hr>
+
+            <p class="signup">
+
+                Not an Easy Ride driver?
+
+                <a href="Adriver.html">
+                    Signup here
+                </a>
+
+            </p>
+
+            <div class="language">
+
+                <i class="fa-solid fa-earth-africa"></i>
+
+                <select>
+
+                    <option>
+                        English, Nigeria
+                    </option>
+
+
+
+                </select>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script src="/script.js"></script>
+
+</body>
+
+</html>

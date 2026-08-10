@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Easy Ride - Sign Up</title>
+
+    <link rel="stylesheet" href="signup.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left">
+
+        <form id="signupForm" class="signup-card">
+
+            <h1>Create Account</h1>
+
+            <p>
+                Join Easy Ride and start booking rides quickly and safely.
+            </p>
+
+            <div class="input-box">
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    id="fullname"
+                    placeholder="Full Name"
+                    required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    required>
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required>
+
+                <i class="fa-solid fa-eye eye"></i>
+
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    required>
+
+                <i class="fa-solid fa-eye eye"></i>
+
+            </div>
+
+            <p id="message"></p>
+
+            <button id="submit" type="submit">
+                Create Account
+            </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button type="button" class="google-btn">
+
+                <i class="fa-brands fa-google"></i>
+
+                Continue with Google
+
+            </button>
+
+            <p class="login-link">
+
+                Already have an account?
+
+                <a href="login.html">Login</a>
+
+            </p>
+
+        </form>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <div class="overlay"></div>
+
+        <div class="content">
+
+            <!-- <img
+                src="image/easy-ride logo.png"
+                class="logo"
+                alt="Easy Ride Logo"> -->
+
+            <h1>Easy <span style="color: black;">Ride</span></h1>
+
+            <p>
+
+                Fast • Safe • Reliable
+
+                <br><br>
+
+                Book your ride in seconds
+                and enjoy a smooth journey
+                anywhere, anytime.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="signup.js"></script>
+
+</body>
+</html>
