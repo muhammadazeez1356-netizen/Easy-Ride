@@ -32,8 +32,46 @@
         <header class="header1">
             <img src="image/file_000000007b407230b9a83d4f923e3676.png" alt="">
 
-            <button> <a href="/website/user-driver.html">Login</a> </button>
+           <button id="openModal">Login</button>
         </header>
+
+
+<!-- ================= MODAL ================= -->
+<div id="loginModal" class="login-modal">
+
+    <div class="container">
+
+        <div class="card">
+
+            <button class="close-btn" id="closeModal">&times;</button>
+
+            <h1>Easy <span>Ride</span></h1>
+
+            <p>
+                Welcome to Easy Ride.
+                <br>
+                Select how you would like to continue.
+            </p>
+
+            <div class="buttons">
+
+                <a href="/website/sign-up.html" class="user-btn">
+                    <i class="fa-solid fa-user"></i>
+                    Continue as User
+                </a>
+
+                <a href="/landingpage/login.html" class="driver-btn">
+                    <i class="fa-solid fa-car-side"></i>
+                    Continue as Driver
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         <div class="overlays"></div>
         <!-- HERO SECTION 1 -->
@@ -54,7 +92,11 @@
             <p>Easy Ride is here. Book a ride anytime and arrive on time, stress-free.</p>
             <p>Tap a book now.</p>
 
-            <button>Dounwload App</button>
+            <button id="downloadBtn">Download App</button>
+            <!-- Toast -->
+            <div id="toast" class="toast">
+                The Easy Ride app is coming soon. <br> Please check back later.
+            </div>
 
             <div class="img-text">
                 <img src="image/100 (1).jfif" alt="">
@@ -261,6 +303,64 @@
     </div>
 
     <script src="script.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    const toast = document.getElementById("toast");
+
+    if(downloadBtn && toast){
+
+        downloadBtn.addEventListener("click", () => {
+
+            // show toast
+            toast.classList.add("show");
+
+            // hide after 10 seconds
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 5000);
+
+        });
+
+    }
+
+});
+
+
+// ================= LOGIN MODAL =================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    const loginModal = document.getElementById("loginModal");
+
+    // Open modal
+    openModal.addEventListener("click", () => {
+        loginModal.classList.add("show");
+    });
+
+    // Close modal
+    closeModal.addEventListener("click", () => {
+        loginModal.classList.remove("show");
+    });
+
+    // Close when clicking outside the card
+    loginModal.addEventListener("click", (e) => {
+        if (e.target === loginModal) {
+            loginModal.classList.remove("show");
+        }
+    });
+
+});
+
+</script>
+
+
+
 </body>
 
 </html>
