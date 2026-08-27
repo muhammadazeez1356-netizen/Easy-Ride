@@ -63,15 +63,20 @@
 
             </button>
 
-
+<div id="toast"></div>
             <!-- USER POPOVER -->
             <div id="userPopover" class="user-popover">
 
                 <!-- USER HEADER -->
                 <div class="user-popover-header">
 
-                    <div class="user-avatar" id="userAvatar">
-                        <i class="fa-solid fa-user"></i>
+                    <div class="user-avatar" id="userAvatar" title="View profile picture">
+
+                        <img id="userAvatarImage" src="" alt="Profile Picture">
+
+                        <i id="userAvatarDefault" class="fa-solid fa-user">
+                        </i>
+
                     </div>
 
                     <div class="user-header-text">
@@ -360,9 +365,6 @@
                             </div>
 
                         </div>
-
-                    </section>
-
 
                     </section>
 
@@ -728,6 +730,25 @@
         </div>
 
     </section>
+
+
+    <!-- PROFILE IMAGE VIEWER -->
+    <div id="profileImageViewer" class="profile-image-viewer">
+
+        <div class="profile-image-viewer-box">
+
+            <button type="button" id="closeProfileViewer" class="close-profile-viewer"
+                aria-label="Close profile picture">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+            <img id="largeProfileImage" src="" alt="Profile Picture">
+
+        </div>
+
+    </div>
 
 
     <footer class="footer">

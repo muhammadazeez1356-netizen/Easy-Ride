@@ -4,6 +4,64 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    /* =====================================================
+       TOAST NOTIFICATION SYSTEM
+    ===================================================== */
+
+    function showToast(message, type = "success") {
+
+        let toast = document.getElementById("easyRideToast");
+
+        if (!toast) {
+
+            toast = document.createElement("div");
+
+            toast.id = "easyRideToast";
+
+            document.body.appendChild(toast);
+
+        }
+
+        toast.className = "";
+
+        toast.classList.add("easy-ride-toast");
+
+        if (type === "error") {
+
+            toast.classList.add("error");
+
+        } else if (type === "warning") {
+
+            toast.classList.add("warning");
+
+        } else {
+
+            toast.classList.add("success");
+
+        }
+
+        toast.textContent = message;
+
+        requestAnimationFrame(function () {
+
+            toast.classList.add("show");
+
+        });
+
+        if (toast.hideTimer) {
+
+            clearTimeout(toast.hideTimer);
+
+        }
+
+        toast.hideTimer = setTimeout(function () {
+
+            toast.classList.remove("show");
+
+        }, 3000);
+
+    }
+
 
     /* =====================================================
        ACCOUNT HELPERS
@@ -14,25 +72,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const usersData =
             localStorage.getItem("easyRideUsers");
 
-
         if (!usersData) {
 
             return [];
 
         }
 
-
         try {
 
             const users =
                 JSON.parse(usersData);
 
-
-            return Array.isArray(users) ?
-                users :
-                [];
+            return Array.isArray(users)
+                ? users
+                : [];
 
         } catch (error) {
+
+            console.error(
+                "Unable to read users:",
+                error
+            );
 
             return [];
 
@@ -56,19 +116,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const userData =
             localStorage.getItem("easyRideUser");
 
-
         if (!userData) {
 
             return null;
 
         }
 
-
         try {
 
             const user =
                 JSON.parse(userData);
-
 
             if (
                 user &&
@@ -80,10 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-
             return null;
 
         } catch (error) {
+
+            console.error(
+                "Unable to read current user:",
+                error
+            );
 
             return null;
 
@@ -102,16 +163,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*
-       Find the newest version of the
-       current account from easyRideUsers.
-    */
-
     function getUserById(userId) {
 
         const users =
             getAllUsers();
-
 
         return users.find(function (user) {
 
@@ -121,13 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-
-    /*
-       Update ONLY one account.
-
-       The user's ID is used to make sure
-       another account is never changed.
-    */
 
     function updateUser(updatedUser) {
 
@@ -140,51 +188,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
         const users =
             getAllUsers();
-
 
         const userIndex =
             users.findIndex(function (user) {
 
-                return user.id ===
-                    updatedUser.id;
+                return user.id === updatedUser.id;
 
             });
 
 
         if (userIndex === -1) {
 
-            return false;
+            users.push(updatedUser);
+
+        } else {
+
+            users[userIndex] =
+                updatedUser;
 
         }
 
 
-        users[userIndex] =
-            updatedUser;
-
-
         saveAllUsers(users);
 
-
-        /*
-           Update only the current session.
-        */
-
-        saveCurrentUser(
-            updatedUser
-        );
-
+        saveCurrentUser(updatedUser);
 
         return true;
 
     }
 
-
-    /*
-       Check whether a real user is logged in.
-    */
 
     function isLoggedIn() {
 
@@ -192,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.getItem(
                 "easyRideLoggedIn"
             );
-
 
         const user =
             getCurrentUser();
@@ -206,10 +239,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-
-    /*
-       Get the latest account information.
-    */
 
     function getFreshCurrentUser() {
 
@@ -230,14 +259,11 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        /*
-           If the account exists inside
-           easyRideUsers, use the latest data.
-        */
-
         if (savedUser) {
 
-            saveCurrentUser(savedUser);
+            saveCurrentUser(
+                savedUser
+            );
 
             return savedUser;
 
@@ -250,18 +276,93 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
+       SETTINGS ELEMENTS
+       IMPORTANT: DECLARED EARLY
+    ===================================================== */
+
+    const settingsBtn =
+        document.getElementById(
+            "settingsBtn"
+        );
+
+    const settingsModal =
+        document.getElementById(
+            "settingsModal"
+        );
+
+    const closeSettings =
+        document.getElementById(
+            "closeSettings"
+        );
+
+    const saveSettings =
+        document.getElementById(
+            "saveSettings"
+        );
+
+    const settingsName =
+        document.getElementById(
+            "settingsName"
+        );
+
+    const settingsEmail =
+        document.getElementById(
+            "settingsEmail"
+        );
+
+    const settingsPhone =
+        document.getElementById(
+            "settingsPhone"
+        );
+
+    const settingsPassword =
+        document.getElementById(
+            "settingsPassword"
+        );
+
+    const togglePassword =
+        document.getElementById(
+            "togglePassword"
+        );
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+    const profileImageInput =
+        document.getElementById(
+            "profileImageInput"
+        );
+
+    const settingsProfileImage =
+        document.getElementById(
+            "settingsProfileImage"
+        );
+
+    const settingsDefaultAvatar =
+        document.getElementById(
+            "settingsDefaultAvatar"
+        );
+
+
+    /* =====================================================
        SPLASH SCREEN
     ===================================================== */
 
     const splash =
         document.getElementById("splash");
 
-
     const mainContent =
-        document.getElementById("main-content");
+        document.getElementById(
+            "main-content"
+        );
 
 
-    if (splash && mainContent) {
+    if (
+        splash &&
+        mainContent
+    ) {
 
         setTimeout(function () {
 
@@ -291,9 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const text =
             "Easy Ride.";
 
-        let index =
-            0;
-
+        let index = 0;
 
         typingTexts.textContent =
             "";
@@ -328,7 +427,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const typing =
-        document.getElementById("typing");
+        document.getElementById(
+            "typing"
+        );
 
 
     if (typing) {
@@ -336,9 +437,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const text =
             "Ride with Confidence. Every Mile Matters.";
 
-        let index =
-            0;
-
+        let index = 0;
 
         typing.textContent =
             "";
@@ -380,9 +479,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (slides.length > 0) {
 
-        let currentSlide =
-            0;
-
+        let currentSlide = 0;
 
         slides[0].classList.add(
             "active"
@@ -421,7 +518,6 @@ document.addEventListener("DOMContentLoaded", function () {
             ".show-div"
         );
 
-
     const navItems =
         document.getElementById(
             "nav-items"
@@ -436,6 +532,8 @@ document.addEventListener("DOMContentLoaded", function () {
         mobileMenuButton.addEventListener(
             "click",
             function (event) {
+
+                event.preventDefault();
 
                 event.stopPropagation();
 
@@ -457,7 +555,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(
             "contactForm"
         );
-
 
     const contactToast =
         document.getElementById(
@@ -507,24 +604,20 @@ document.addEventListener("DOMContentLoaded", function () {
             ".tab"
         );
 
-
     const forms =
         document.querySelectorAll(
             ".form"
         );
-
 
     const emailInput =
         document.getElementById(
             "emailInput"
         );
 
-
     const phoneInput =
         document.getElementById(
             "phoneInput"
         );
-
 
     const continueBtn =
         document.getElementById(
@@ -612,14 +705,12 @@ document.addEventListener("DOMContentLoaded", function () {
             ) {
 
                 continueBtn.disabled =
-                    emailInput.value.trim() ===
-                    "";
+                    emailInput.value.trim() === "";
 
             } else {
 
                 continueBtn.disabled =
-                    phoneInput.value.trim() ===
-                    "";
+                    phoneInput.value.trim() === "";
 
             }
 
@@ -644,7 +735,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       USER MENU
+       USER MENU ELEMENTS
     ===================================================== */
 
     const userMenuBtn =
@@ -652,54 +743,137 @@ document.addEventListener("DOMContentLoaded", function () {
             "userMenuBtn"
         );
 
-
     const userPopover =
         document.getElementById(
             "userPopover"
         );
 
+    const userAvatar =
+        document.getElementById(
+            "userAvatar"
+        );
+
+    const userAvatarImage =
+        document.getElementById(
+            "userAvatarImage"
+        );
+
+    const userAvatarDefault =
+        document.getElementById(
+            "userAvatarDefault"
+        );
 
     const popoverName =
         document.getElementById(
             "popoverName"
         );
 
-
     const popoverEmail =
         document.getElementById(
             "popoverEmail"
         );
-
 
     const userFullname =
         document.getElementById(
             "userFullname"
         );
 
-
     const userPhone =
         document.getElementById(
             "userPhone"
         );
-
 
     const userEmail =
         document.getElementById(
             "userEmail"
         );
 
-
     const accountStatus =
         document.getElementById(
             "accountStatus"
         );
-
 
     const logoutBtn =
         document.getElementById(
             "logoutBtn"
         );
 
+
+    /* =====================================================
+       PROFILE IMAGE ELEMENTS
+    ===================================================== */
+
+    const profileImageViewer =
+        document.getElementById(
+            "profileImageViewer"
+        );
+
+    const largeProfileImage =
+        document.getElementById(
+            "largeProfileImage"
+        );
+
+    const closeProfileViewer =
+        document.getElementById(
+            "closeProfileViewer"
+        );
+
+
+    /* =====================================================
+       UPDATE USER AVATAR
+    ===================================================== */
+
+    function updateUserAvatar(user) {
+
+        if (
+            !userAvatarImage ||
+            !userAvatarDefault
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !user ||
+            !user.profileImage
+        ) {
+
+            userAvatarImage.removeAttribute(
+                "src"
+            );
+
+            userAvatarImage.classList.remove(
+                "show"
+            );
+
+            userAvatarDefault.classList.remove(
+                "hide"
+            );
+
+            return;
+
+        }
+
+
+        userAvatarImage.src =
+            user.profileImage;
+
+        userAvatarImage.classList.add(
+            "show"
+        );
+
+        userAvatarDefault.classList.add(
+            "hide"
+        );
+
+    }
+
+
+    /* =====================================================
+       SHOW GUEST USER
+    ===================================================== */
 
     function showGuestUser() {
 
@@ -761,8 +935,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
+        updateUserAvatar(null);
+
     }
 
+
+    /* =====================================================
+       LOAD USER INFORMATION
+    ===================================================== */
 
     function loadUserInformation() {
 
@@ -786,11 +967,9 @@ document.addEventListener("DOMContentLoaded", function () {
             user.fullname ||
             "Easy Ride User";
 
-
         const phone =
             user.phone ||
             "Not available";
-
 
         const email =
             user.email ||
@@ -855,6 +1034,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
+        updateUserAvatar(user);
+
     }
 
 
@@ -862,8 +1044,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       OPEN / CLOSE USER MENU
+       USER MENU OPEN / CLOSE
     ===================================================== */
+
+    function openUserMenu() {
+
+        if (!userPopover) {
+
+            return;
+
+        }
+
+
+        loadUserInformation();
+
+        userPopover.classList.add(
+            "show"
+        );
+
+    }
+
+
+    function closeUserMenu() {
+
+        if (!userPopover) {
+
+            return;
+
+        }
+
+
+        userPopover.classList.remove(
+            "show"
+        );
+
+    }
+
 
     if (
         userMenuBtn &&
@@ -879,24 +1095,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
 
-                userPopover.classList.toggle(
-                    "show"
-                );
-
-
                 if (
                     userPopover.classList.contains(
                         "show"
                     )
                 ) {
 
-                    userPopover.style.display =
-                        "block";
+                    closeUserMenu();
 
                 } else {
 
-                    userPopover.style.display =
-                        "";
+                    openUserMenu();
 
                 }
 
@@ -927,13 +1136,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 ) {
 
-                    userPopover.classList.remove(
-                        "show"
-                    );
-
-
-                    userPopover.style.display =
-                        "";
+                    closeUserMenu();
 
                 }
 
@@ -944,57 +1147,84 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       LOGOUT
+       CLOSE PROFILE IMAGE VIEWER
     ===================================================== */
 
-    if (logoutBtn) {
+    function closeProfileImageViewer() {
 
-        logoutBtn.addEventListener(
+        if (!profileImageViewer) {
+
+            return;
+
+        }
+
+
+        profileImageViewer.classList.remove(
+            "show"
+        );
+
+
+        if (largeProfileImage) {
+
+            largeProfileImage.removeAttribute(
+                "src"
+            );
+
+        }
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* =====================================================
+       CLICK PROFILE IMAGE
+    ===================================================== */
+
+    if (userAvatar) {
+
+        userAvatar.addEventListener(
             "click",
-            function () {
+            function (event) {
 
-                /*
-                   Only remove the current session.
-                   ALL registered accounts remain.
-                */
+                event.preventDefault();
 
-                localStorage.removeItem(
-                    "easyRideLoggedIn"
-                );
+                event.stopPropagation();
 
 
-                localStorage.removeItem(
-                    "easyRideUser"
-                );
+                const currentUser =
+                    getFreshCurrentUser();
 
 
-                /*
-                   Remove current account's theme
-                   from the visible page.
+                if (
+                    !currentUser ||
+                    !currentUser.profileImage
+                ) {
 
-                   The next user will load THEIR
-                   own saved theme.
-                */
-
-                document.body.classList.remove(
-                    "dark-mode"
-                );
-
-
-                if (userPopover) {
-
-                    userPopover.classList.remove(
-                        "show"
-                    );
-
-                    userPopover.style.display =
-                        "";
+                    return;
 
                 }
 
 
-                window.location.href =
-                    "/website/login.html";
+                if (
+                    profileImageViewer &&
+                    largeProfileImage
+                ) {
+
+                    largeProfileImage.src =
+                        currentUser.profileImage;
+
+                    profileImageViewer.classList.add(
+                        "show"
+                    );
+
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
 
             }
         );
@@ -1003,80 +1233,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SETTINGS ELEMENTS
+       CLOSE PROFILE IMAGE BUTTON
     ===================================================== */
 
-    const settingsBtn =
-        document.getElementById(
-            "settingsBtn"
+    if (closeProfileViewer) {
+
+        closeProfileViewer.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                closeProfileImageViewer();
+
+            }
         );
 
-
-    const settingsModal =
-        document.getElementById(
-            "settingsModal"
-        );
-
-
-    const closeSettings =
-        document.getElementById(
-            "closeSettings"
-        );
-
-
-    const saveSettings =
-        document.getElementById(
-            "saveSettings"
-        );
-
-
-    const settingsName =
-        document.getElementById(
-            "settingsName"
-        );
-
-
-    const settingsEmail =
-        document.getElementById(
-            "settingsEmail"
-        );
-
-
-    const settingsPhone =
-        document.getElementById(
-            "settingsPhone"
-        );
-
-
-   
-
-
-    const themeToggle =
-        document.getElementById(
-            "themeToggle"
-        );
-
-
-    const profileImageInput =
-        document.getElementById(
-            "profileImageInput"
-        );
-
-
-    const settingsProfileImage =
-        document.getElementById(
-            "settingsProfileImage"
-        );
-
-
-    const settingsDefaultAvatar =
-        document.getElementById(
-            "settingsDefaultAvatar"
-        );
+    }
 
 
     /* =====================================================
-       OPEN SETTINGS
+       CLICK OUTSIDE PROFILE IMAGE
+    ===================================================== */
+
+    if (profileImageViewer) {
+
+        profileImageViewer.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    profileImageViewer
+                ) {
+
+                    closeProfileImageViewer();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SETTINGS OPEN / CLOSE
     ===================================================== */
 
     if (
@@ -1102,8 +1306,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     !user
                 ) {
 
-                    alert(
-                        "Please login first."
+                    showToast(
+                        "Please login first.",
+                        "error"
                     );
 
                     return;
@@ -1135,6 +1340,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                if (settingsPassword) {
+
+                    settingsPassword.value =
+                        "";
+
+                    settingsPassword.type =
+                        "password";
+
+                }
+
+
                 if (
                     user.profileImage &&
                     settingsProfileImage &&
@@ -1144,11 +1360,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     settingsProfileImage.src =
                         user.profileImage;
 
-
                     settingsProfileImage.classList.add(
                         "show"
                     );
-
 
                     settingsDefaultAvatar.classList.add(
                         "hide"
@@ -1163,11 +1377,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         "src"
                     );
 
-
                     settingsProfileImage.classList.remove(
                         "show"
                     );
-
 
                     settingsDefaultAvatar.classList.remove(
                         "hide"
@@ -1175,6 +1387,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
+
+                closeUserMenu();
 
                 settingsModal.classList.add(
                     "show"
@@ -1187,7 +1401,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE SETTINGS
+       CLOSE SETTINGS BUTTON
     ===================================================== */
 
     if (
@@ -1197,7 +1411,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         closeSettings.addEventListener(
             "click",
-            function () {
+            function (event) {
+
+                event.preventDefault();
 
                 settingsModal.classList.remove(
                     "show"
@@ -1208,6 +1424,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
+    /* =====================================================
+       CLOSE SETTINGS BY CLICKING OUTSIDE
+    ===================================================== */
 
     if (settingsModal) {
 
@@ -1233,7 +1453,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       PROFILE IMAGE
+       SHOW / HIDE PASSWORD
+    ===================================================== */
+
+    if (
+        togglePassword &&
+        settingsPassword
+    ) {
+
+        togglePassword.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                const icon =
+                    togglePassword.querySelector(
+                        "i"
+                    );
+
+
+                if (
+                    settingsPassword.type ===
+                    "password"
+                ) {
+
+                    settingsPassword.type =
+                        "text";
+
+
+                    if (icon) {
+
+                        icon.classList.remove(
+                            "fa-eye"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye-slash"
+                        );
+
+                    }
+
+                } else {
+
+                    settingsPassword.type =
+                        "password";
+
+
+                    if (icon) {
+
+                        icon.classList.remove(
+                            "fa-eye-slash"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye"
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       PROFILE IMAGE PREVIEW
     ===================================================== */
 
     if (
@@ -1263,9 +1554,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 ) {
 
-                    alert(
-                        "Please select an image."
+                    showToast(
+                        "Please select a valid image.",
+                        "error"
                     );
+
+                    profileImageInput.value =
+                        "";
 
                     return;
 
@@ -1277,10 +1572,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 reader.onload =
-                    function (event) {
+                    function (loadEvent) {
+
+                        const imageData =
+                            loadEvent.target.result;
+
 
                         settingsProfileImage.src =
-                            event.target.result;
+                            imageData;
 
 
                         settingsProfileImage.classList.add(
@@ -1292,20 +1591,37 @@ document.addEventListener("DOMContentLoaded", function () {
                             "hide"
                         );
 
+
+                        const currentUser =
+                            getFreshCurrentUser();
+
+
+                        if (currentUser) {
+
+                            currentUser.profileImage =
+                                imageData;
+
+                            updateUserAvatar(
+                                currentUser
+                            );
+
+                        }
+
+
+                        showToast(
+                            "Profile picture updated.",
+                            "success"
+                        );
+
                     };
 
 
-                reader.readAsDataURL(
-                    file
-                );
+                reader.readAsDataURL(file);
 
             }
         );
 
     }
-
-
-    
 
 
     /* =====================================================
@@ -1331,13 +1647,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadUserTheme() {
 
-        /*
-           Always reset first.
-
-           This stops the previous account's
-           theme from affecting another account.
-        */
-
         document.body.classList.remove(
             "dark-mode"
         );
@@ -1359,10 +1668,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /*
-           Theme belongs to this user only.
-        */
-
         const isDark =
             user.theme === "dark";
 
@@ -1383,11 +1688,18 @@ document.addEventListener("DOMContentLoaded", function () {
     loadUserTheme();
 
 
+    /* =====================================================
+       THEME TOGGLE
+    ===================================================== */
+
     if (themeToggle) {
 
         themeToggle.addEventListener(
             "click",
-            function () {
+            function (event) {
+
+                event.preventDefault();
+
 
                 const currentUser =
                     getFreshCurrentUser();
@@ -1398,8 +1710,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     !currentUser
                 ) {
 
-                    alert(
-                        "Please login first."
+                    showToast(
+                        "Please login first.",
+                        "error"
                     );
 
                     return;
@@ -1419,19 +1732,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /*
-                   Save ONLY inside this account.
-                */
-
                 currentUser.theme =
-                    isDark ?
-                    "dark" :
-                    "light";
+                    isDark
+                        ? "dark"
+                        : "light";
 
-
-                /*
-                   Update ONLY this user's data.
-                */
 
                 updateUser(
                     currentUser
@@ -1440,6 +1745,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 updateThemeToggle(
                     isDark
+                );
+
+
+                showToast(
+                    isDark
+                        ? "Dark mode enabled."
+                        : "Light mode enabled.",
+                    "success"
                 );
 
             }
@@ -1459,19 +1772,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         saveSettings.addEventListener(
             "click",
-            function () {
+            function (event) {
+
+                event.preventDefault();
+
 
                 const currentUser =
                     getFreshCurrentUser();
 
+
+                /* -----------------------------------------
+                   LOGIN CHECK
+                ----------------------------------------- */
 
                 if (
                     !isLoggedIn() ||
                     !currentUser
                 ) {
 
-                    alert(
-                        "Please login first."
+                    showToast(
+                        "Please login first.",
+                        "error"
                     );
 
                     return;
@@ -1479,81 +1800,139 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* -----------------------------------------
+                   GET VALUES
+                ----------------------------------------- */
+
                 const name =
-                    settingsName ?
-                    settingsName.value.trim() :
-                    "";
+                    settingsName
+                        ? settingsName.value.trim()
+                        : "";
 
 
                 const email =
-                    settingsEmail ?
-                    settingsEmail.value
-                    .trim()
-                    .toLowerCase() :
-                    "";
+                    settingsEmail
+                        ? settingsEmail.value
+                            .trim()
+                            .toLowerCase()
+                        : "";
 
 
                 const phone =
-                    settingsPhone ?
-                    settingsPhone.value.trim() :
-                    "";
+                    settingsPhone
+                        ? settingsPhone.value.trim()
+                        : "";
+
+
+                const password =
+                    settingsPassword
+                        ? settingsPassword.value.trim()
+                        : "";
+
+
+                /* -----------------------------------------
+                   NAME VALIDATION
+                ----------------------------------------- */
 
                 if (!name) {
 
-                    alert(
-                        "Please enter your name."
+                    showToast(
+                        "Please enter your name.",
+                        "error"
                     );
+
+                    if (settingsName) {
+
+                        settingsName.focus();
+
+                    }
 
                     return;
 
                 }
 
+
+                /* -----------------------------------------
+                   EMAIL VALIDATION
+                ----------------------------------------- */
 
                 if (!email) {
 
-                    alert(
-                        "Please enter your Gmail/email."
+                    showToast(
+                        "Please enter your Gmail/email.",
+                        "error"
                     );
+
+                    if (settingsEmail) {
+
+                        settingsEmail.focus();
+
+                    }
 
                     return;
 
                 }
 
 
-                /*
-                   Get all accounts and check
-                   whether ANOTHER account
-                   already uses this email.
-                */
+                /* -----------------------------------------
+                   BASIC EMAIL VALIDATION
+                ----------------------------------------- */
+
+                const emailPattern =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                if (
+                    !emailPattern.test(email)
+                ) {
+
+                    showToast(
+                        "Please enter a valid email address.",
+                        "error"
+                    );
+
+                    if (settingsEmail) {
+
+                        settingsEmail.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                /* -----------------------------------------
+                   CHECK DUPLICATE EMAIL
+                ----------------------------------------- */
 
                 const users =
                     getAllUsers();
 
 
                 const emailUsedByAnotherUser =
-                    users.some(
-                        function (user) {
+                    users.some(function (user) {
 
-                            return (
-                                user.email &&
-                                user.email
+                        return (
+                            user.email &&
+                            user.email
                                 .trim()
                                 .toLowerCase() ===
-                                email &&
-                                user.id !==
-                                currentUser.id
-                            );
+                            email &&
+                            user.id !==
+                            currentUser.id
+                        );
 
-                        }
-                    );
+                    });
 
 
                 if (
                     emailUsedByAnotherUser
                 ) {
 
-                    alert(
-                        "Another account already uses this email."
+                    showToast(
+                        "Another account already uses this email.",
+                        "error"
                     );
 
                     return;
@@ -1561,18 +1940,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* UPDATE ONLY CURRENT ACCOUNT */
+                /* -----------------------------------------
+                   UPDATE CURRENT USER
+                ----------------------------------------- */
 
                 currentUser.fullname =
                     name;
 
-
                 currentUser.email =
                     email;
 
-
                 currentUser.phone =
                     phone;
+
+
+                /* -----------------------------------------
+                   CHANGE PASSWORD
+                ----------------------------------------- */
+
+                if (password !== "") {
+
+                    if (
+                        password.length < 6
+                    ) {
+
+                        showToast(
+                            "Password must be at least 6 characters.",
+                            "error"
+                        );
+
+                        if (settingsPassword) {
+
+                            settingsPassword.focus();
+
+                        }
+
+                        return;
+
+                    }
+
+
+                    currentUser.password =
+                        password;
+
+                }
+
+
+                /* -----------------------------------------
+                   SAVE PROFILE IMAGE
+                ----------------------------------------- */
 
                 if (
                     settingsProfileImage &&
@@ -1588,10 +2004,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /*
-                   Keep the current user's
-                   own theme unchanged.
-                */
+                /* -----------------------------------------
+                   DEFAULT THEME
+                ----------------------------------------- */
 
                 if (!currentUser.theme) {
 
@@ -1601,11 +2016,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /*
-                   Update ONLY this account
-                   in easyRideUsers and
-                   easyRideUser.
-                */
+                /* -----------------------------------------
+                   SAVE USER
+                ----------------------------------------- */
 
                 const updated =
                     updateUser(
@@ -1615,8 +2028,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (!updated) {
 
-                    alert(
-                        "Unable to update your account."
+                    showToast(
+                        "Unable to update your account.",
+                        "error"
                     );
 
                     return;
@@ -1630,17 +2044,169 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
+                /* -----------------------------------------
+                   REFRESH USER INFORMATION
+                ----------------------------------------- */
+
+                loadUserInformation();
+
+                updateUserAvatar(
+                    currentUser
+                );
+
+
+                /* -----------------------------------------
+                   CLOSE SETTINGS
+                ----------------------------------------- */
+
                 settingsModal.classList.remove(
                     "show"
                 );
 
 
-                /*
-                   Refresh so all information
-                   belongs to the updated account.
-                */
+                /* -----------------------------------------
+                   RESET PASSWORD FIELD
+                ----------------------------------------- */
 
-                window.location.reload();
+                if (settingsPassword) {
+
+                    settingsPassword.value =
+                        "";
+
+                    settingsPassword.type =
+                        "password";
+
+                }
+
+
+                /* -----------------------------------------
+                   RESET EYE ICON
+                ----------------------------------------- */
+
+                if (togglePassword) {
+
+                    const icon =
+                        togglePassword.querySelector(
+                            "i"
+                        );
+
+
+                    if (icon) {
+
+                        icon.classList.remove(
+                            "fa-eye-slash"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye"
+                        );
+
+                    }
+
+                }
+
+
+                /* -----------------------------------------
+                   SUCCESS TOAST
+                ----------------------------------------- */
+
+                showToast(
+                    "Your settings have been saved successfully.",
+                    "success"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ESCAPE KEY
+       IMPORTANT: settingsModal IS ALREADY DECLARED ABOVE
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+
+                return;
+
+            }
+
+
+            closeUserMenu();
+
+            closeProfileImageViewer();
+
+
+            if (
+                settingsModal &&
+                settingsModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                settingsModal.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                localStorage.removeItem(
+                    "easyRideLoggedIn"
+                );
+
+                localStorage.removeItem(
+                    "easyRideUser"
+                );
+
+
+                document.body.classList.remove(
+                    "dark-mode"
+                );
+
+
+                closeUserMenu();
+
+                closeProfileImageViewer();
+
+
+                if (settingsModal) {
+
+                    settingsModal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+
+                window.location.href =
+                    "/website/login.html";
 
             }
         );
