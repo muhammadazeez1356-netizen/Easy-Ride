@@ -1,238 +1,934 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family:
+        "Montserrat Alternates",
+        sans-serif;
+
+    text-decoration: none;
+
 }
 
-body{
-    background:whitesmoke;
-    overflow-x:hidden;
+
+body {
+
+    background: whitesmoke;
+
+    overflow-x: hidden;
+
 }
 
-.container{
-    display:flex;
-    min-height:100vh;
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container {
+
+    display: flex;
+
+    min-height: 100vh;
+
 }
 
-/* LEFT */
 
-.left{
-    width:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
+/* =========================================================
+   LEFT
+========================================================= */
+
+.left {
+
+    width: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px;
+
 }
 
-.login-card{
-    width:430px;
-    padding:45px;
-    background:whitesmoke;
-    /* backdrop-filter:blur(20px); */
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:25px;
-    box-shadow:0 20px 40px rgba(0,0,0,.4);
-    color:white;
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card {
+
+    width: 430px;
+
+    padding: 45px;
+
+    background: whitesmoke;
+
+    border: 1px solid rgba(255, 255, 255, .1);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, .4);
+
+    color: white;
+
 }
 
-.login-card h1{
-    text-align:center;
-    color:#F4B400;
-    font-size:35px;
-    margin-bottom:10px;
+
+.login-card h1 {
+
+    text-align: center;
+
+    color: #F4B400;
+
+    font-size: 35px;
+
+    margin-bottom: 10px;
+
 }
 
-.login-card p{
-    text-align:center;
-    color:#443f3f;
-    margin-bottom:25px;
-    line-height:24px;
+
+.login-card > p {
+
+    text-align: center;
+
+    color: #443f3f;
+
+    margin-bottom: 25px;
+
+    line-height: 24px;
+
 }
 
-.input-box{
-    position:relative;
-    margin-bottom:20px;
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-box {
+
+    position: relative;
+
+    margin-bottom: 20px;
+
 }
 
-.input-box input{
-    width:100%;
-    padding:16px 50px;
-    background:whitesmoke;
-    border:2px solid transparent;
-    border-radius:12px;
-    outline:none;
-    color:black;
-    font-size:16px;
-    transition:.3s;
+
+.input-box input {
+
+    width: 100%;
+
+    padding: 16px 50px;
+
+    background: whitesmoke;
+
+    border: 2px solid transparent;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    color: black;
+
+    font-size: 16px;
+
+    transition: .3s;
+
 }
 
-.input-box input::placeholder{
-    color:black;
+
+.input-box input::placeholder {
+
+    color: black;
+
 }
 
-.input-box input:focus{
-    border-color:#F4B400;
-    box-shadow:0 0 10px rgba(244,180,0,.4);
+
+.input-box input:focus {
+
+    border-color: #F4B400;
+
+    box-shadow:
+        0 0 10px rgba(244, 180, 0, .4);
+
 }
 
-.input-box i:first-child{
-    position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#F4B400;
+
+.input-box i:first-child {
+
+    position: absolute;
+
+    left: 18px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #F4B400;
+
 }
 
-.eye{
-    position:absolute;
-    right:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:black;
-    cursor:pointer;
+
+.eye {
+
+    position: absolute;
+
+    right: 18px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: black;
+
+    cursor: pointer;
+
 }
 
-#loginMessage{
-    text-align:center;
-    min-height:20px;
-    margin-bottom:10px;
+
+/* =========================================================
+   FORGOT PASSWORD LINK
+========================================================= */
+
+.forgot-password-row {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: -8px;
+
+    margin-bottom: 15px;
+
 }
 
-#submit{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:12px;
-    background:#15803d;
-    color:#0F172A;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
+
+.forgot-password-btn {
+
+    border: none;
+
+    background: transparent;
+
+    color: #d99d00;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
 }
 
-#submit:hover{
-    background:#1baa4f;
-    transform:translateY(-2px);
+
+.forgot-password-btn:hover {
+
+    color: #0F172A;
+
+    text-decoration: underline;
+
 }
 
-.divider{
-    margin:25px 0;
-    text-align:center;
-    position:relative;
+
+/* =========================================================
+   LOGIN MESSAGE
+========================================================= */
+
+#loginMessage {
+
+    text-align: center;
+
+    min-height: 20px;
+
+    margin-bottom: 10px;
+
 }
 
-.divider::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:1px;
-    background:#555;
-    left:0;
-    top:50%;
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+#submit {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #F4B400;
+
+    color: #0F172A;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+
 }
 
-.divider span{
-    background:#162032;
-    color:#aaa;
-    padding:0 15px;
-    position:relative;
+
+#submit:hover {
+
+    background: #0F172A;
+
+    color: #fff;
+
+    transform: translateY(-2px);
+
 }
 
-.google-btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    background:white;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    transition:.3s;
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.divider {
+
+    margin: 25px 0;
+
+    text-align: center;
+
+    position: relative;
+
 }
 
-.google-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(0,0,0,.2);
+
+.divider::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 1px;
+
+    background: #555;
+
+    left: 0;
+
+    top: 50%;
+
 }
 
-.google-btn i{
-    color:rgb(255, 225, 0);
-    margin-right:10px;
+
+.divider span {
+
+    background: #162032;
+
+    color: #aaa;
+
+    padding: 0 15px;
+
+    position: relative;
+
 }
 
-.login-link{
-    margin-top:25px;
-    text-align:center;
+
+/* =========================================================
+   GOOGLE BUTTON
+========================================================= */
+
+.google-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    transition: .3s;
+
 }
 
-.login-link a{
-    color:#F4B400;
-    text-decoration:none;
-    font-weight:bold;
+
+.google-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, .2);
+
 }
 
-.login-link a:hover{
-    text-decoration:underline;
+
+.google-btn i {
+
+    color: rgb(255, 225, 0);
+
+    margin-right: 10px;
+
 }
 
-/* RIGHT */
 
-.right{
-    width:50%;
+/* =========================================================
+   SIGNUP LINK
+========================================================= */
+
+.login-link {
+
+    margin-top: 25px;
+
+    text-align: center;
+
+}
+
+
+.login-link a {
+
+    color: #F4B400;
+
+    font-weight: bold;
+
+}
+
+
+.login-link a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.right {
+
+    width: 50%;
+
     background:
-    /* linear-gradient(rgba(15,23,42,.75),rgba(15,23,42,.75)), */
-    url("image/signup-bg.jpg");
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+        url("image/signup-bg.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
 }
 
-.content{
-    text-align:center;
-    color:rgb(28, 22, 22);
-    padding:40px;
+
+.content {
+
+    text-align: center;
+
+    color: rgb(28, 22, 22);
+
+    padding: 40px;
+
 }
 
-.logo{
-    width:120px;
-    margin-bottom:20px;
+
+.content h1 {
+
+    font-size: 60px;
+
+    color: #F4B400;
+
+    margin-bottom: 15px;
+
 }
 
-.content h1{
-    font-size:60px;
-    color:#F4B400;
-    margin-bottom:15px;
+
+.content h1 span {
+
+    color: #0F172A;
+
 }
 
-.content p{
-    font-size:20px;
-    line-height:35px;
+
+.content p {
+
+    font-size: 20px;
+
+    line-height: 35px;
+
 }
 
-/* RESPONSIVE */
 
-@media(max-width:900px){
+/* =========================================================
+   GOOGLE TOAST
+========================================================= */
 
-.container{
-    flex-direction:column;
+.toast {
+
+    position: fixed;
+
+    top: 20px;
+
+    right: 20px;
+
+    width: 320px;
+
+    padding: 15px 20px;
+
+    background: #222;
+
+    color: white;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, .2);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateX(100%);
+
+    transition: all .4s ease;
+
+    z-index: 9999;
+
 }
 
-.left{
-    width:100%;
-    padding:20px;
+
+.toast.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateX(0);
+
 }
 
-.right{
-    display:none;
+
+.toast i {
+
+    color: #ffd900;
+
+    font-size: 20px;
+
 }
 
-.login-card{
-    width:100%;
-    max-width:430px;
+
+.toast span {
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
 }
+
+
+/* =========================================================
+   FORGOT PASSWORD OVERLAY
+========================================================= */
+
+.forgot-password-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .45);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-end;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition: .35s ease;
+
+    z-index: 10000;
+
+}
+
+
+/* =========================================================
+   SHOW OVERLAY
+========================================================= */
+
+.forgot-password-overlay.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+/* =========================================================
+   POPOVER
+========================================================= */
+
+.forgot-password-popover {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 480px;
+
+    background: whitesmoke;
+
+    padding: 35px;
+
+    border-radius: 25px 25px 0 0;
+
+    box-shadow:
+        0 -10px 40px rgba(0, 0, 0, .25);
+
+    transform: translateY(100%);
+
+    transition: transform .4s ease;
+
+}
+
+
+.forgot-password-overlay.show
+.forgot-password-popover {
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.close-forgot {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 18px;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #eee;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+}
+
+
+.close-forgot:hover {
+
+    background: #F4B400;
+
+}
+
+
+/* =========================================================
+   FORGOT ICON
+========================================================= */
+
+.forgot-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #F4B400;
+
+    color: #0F172A;
+
+    font-size: 25px;
+
+}
+
+
+.forgot-password-popover h2 {
+
+    text-align: center;
+
+    color: #0F172A;
+
+    margin-bottom: 8px;
+
+}
+
+
+.forgot-description {
+
+    text-align: center;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 22px;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   FORGOT INPUT
+========================================================= */
+
+.forgot-input-box {
+
+    position: relative;
+
+    margin-bottom: 15px;
+
+}
+
+
+.forgot-input-box input {
+
+    width: 100%;
+
+    padding: 15px 48px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: white;
+
+    color: #111;
+
+    font-size: 15px;
+
+}
+
+
+.forgot-input-box input:focus {
+
+    border-color: #F4B400;
+
+    box-shadow:
+        0 0 8px rgba(244, 180, 0, .25);
+
+}
+
+
+.forgot-input-box > i:first-child {
+
+    position: absolute;
+
+    left: 17px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #F4B400;
+
+}
+
+
+.forgot-eye {
+
+    position: absolute;
+
+    right: 17px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    color: #333;
+
+}
+
+
+/* =========================================================
+   FORGOT MESSAGE
+========================================================= */
+
+.forgot-password-message {
+
+    min-height: 22px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 20px;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =========================================================
+   CHANGE PASSWORD BUTTON
+========================================================= */
+
+.change-password-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #F4B400;
+
+    color: #0F172A;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.change-password-btn:hover {
+
+    background: #0F172A;
+
+    color: white;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .container {
+
+        flex-direction: column;
+
+    }
+
+
+    .left {
+
+        width: 100%;
+
+        min-height: 100vh;
+
+        padding: 20px;
+
+    }
+
+
+    .right {
+
+        display: none;
+
+    }
+
+
+    .login-card {
+
+        width: 100%;
+
+        max-width: 430px;
+
+        padding: 35px 25px;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .login-card {
+
+        padding: 30px 20px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .forgot-password-popover {
+
+        padding: 30px 20px 25px;
+
+        border-radius: 20px 20px 0 0;
+
+    }
 
 }

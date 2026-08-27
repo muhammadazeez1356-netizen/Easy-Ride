@@ -2,112 +2,337 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Ride - Login</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Easy Ride - Login</title>
+
+    <link rel="icon"
+        href="/image/easy-ride logo.png">
+
+    <link rel="stylesheet"
+        href="style.css">
+
 </head>
+
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- LEFT -->
 
-    <div class="left">
+        <!-- =========================================
+             LEFT SIDE
+        ========================================== -->
 
-        <form id="loginForm" class="login-card">
+        <div class="left">
 
-            <h1>Welcome Back</h1>
+            <form id="loginForm"
+                class="login-card">
 
-            <p>
-                Login to continue using Easy Ride.
-            </p>
+                <h1>
+                    Welcome Back
+                </h1>
 
-            <div class="input-box">
 
-                <i class="fa-solid fa-envelope"></i>
+                <p>
+                    Login to continue using Easy Ride.
+                </p>
 
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="Email Address"
-                    required>
+
+                <!-- EMAIL -->
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Email Address"
+                        autocomplete="email"
+                        required>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required>
+
+                    <i class="fa-solid fa-eye-slash eye"
+                        id="loginPasswordEye"></i>
+
+                </div>
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <div class="forgot-password-row">
+
+                    <button
+                        type="button"
+                        id="forgotPasswordBtn"
+                        class="forgot-password-btn">
+
+                        Forgot password?
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN MESSAGE -->
+
+                <p id="loginMessage"></p>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    id="submit"
+                    type="submit">
+
+                    Login
+
+                </button>
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                    <span>
+                        OR
+                    </span>
+
+                </div>
+
+
+                <!-- GOOGLE -->
+
+                <button
+                    type="button"
+                    class="google-btn"
+                    id="googleBtn">
+
+                    <i class="fa-brands fa-google"></i>
+
+                    Continue with Google
+
+                </button>
+
+
+                <!-- GOOGLE TOAST -->
+
+                <div id="toast"
+                    class="toast">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+
+                        Google sign-in is not connected yet.
+                        We will get back to you when the
+                        service is available.
+
+                    </span>
+
+                </div>
+
+
+                <!-- SIGN UP -->
+
+                <p class="login-link">
+
+                    Don't have an account?
+
+                    <a href="sign-up.html">
+                        Create Account
+                    </a>
+
+                </p>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================================
+             RIGHT SIDE
+        ========================================== -->
+
+        <div class="right">
+
+            <div class="content">
+
+                <h1>
+                    Easy <span>Ride</span>
+                </h1>
+
+
+                <p>
+
+                    Fast • Safe • Reliable
+
+                    <br><br>
+
+                    Welcome back!
+
+                    <br>
+
+                    Login and continue your journey
+                    with Easy Ride.
+
+                </p>
 
             </div>
-
-            <div class="input-box">
-
-                <i class="fa-solid fa-lock"></i>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Password"
-                    required>
-
-                <i class="fa-solid fa-eye eye"></i>
-
-            </div>
-
-            <p id="loginMessage"></p>
-
-            <button id="submit" type="submit">
-                Login
-            </button>
-
-            <div class="divider">
-                <span>OR</span>
-            </div>
-
-            <button type="button" class="google-btn">
-                <i class="fa-brands fa-google"></i>
-                Continue with Google
-            </button>
-
-            <p class="login-link">
-                Don't have an account?
-                <a href="sign-up.html">Create Account</a>
-            </p>
-
-        </form>
-
-    </div>
-
-    <!-- RIGHT -->
-
-    <div class="right">
-
-        <div class="content">
-
-            <!-- <img src="image/easy-ride logo.png"
-                 class="logo"
-                 alt="logo"> -->
-
-            <h1>Easy <span style="color: black;">Ride</span></h1>
-
-            <p>
-
-                Fast • Safe • Reliable
-
-                <br><br>
-
-                Welcome back!
-                Login and continue your journey with Easy Ride.
-
-            </p>
 
         </div>
 
     </div>
 
-</div>
 
-<script src="login.js"></script>
+    <!-- =============================================
+         FORGOT PASSWORD POPOVER
+    ============================================== -->
+
+    <div
+        id="forgotPasswordOverlay"
+        class="forgot-password-overlay">
+
+        <div
+            id="forgotPasswordPopover"
+            class="forgot-password-popover">
+
+
+            <!-- CLOSE -->
+
+            <button
+                type="button"
+                id="closeForgotPassword"
+                class="close-forgot">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+
+            <div class="forgot-icon">
+
+                <i class="fa-solid fa-key"></i>
+
+            </div>
+
+
+            <h2>
+                Change Password
+            </h2>
+
+
+            <p class="forgot-description">
+
+                Enter your account email and create
+                a new password.
+
+            </p>
+
+
+            <!-- EMAIL -->
+
+            <div class="forgot-input-box">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    id="forgotEmail"
+                    placeholder="Account Email"
+                    autocomplete="email">
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="forgot-input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="New Password"
+                    autocomplete="new-password">
+
+                <i
+                    class="fa-solid fa-eye-slash forgot-eye"
+                    id="newPasswordEye"></i>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="forgot-input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="confirmNewPassword"
+                    placeholder="Confirm New Password"
+                    autocomplete="new-password">
+
+                <i
+                    class="fa-solid fa-eye-slash forgot-eye"
+                    id="confirmNewPasswordEye"></i>
+
+            </div>
+
+
+            <!-- RESET MESSAGE -->
+
+            <p
+                id="forgotPasswordMessage"
+                class="forgot-password-message">
+            </p>
+
+
+            <!-- CHANGE PASSWORD -->
+
+            <button
+                type="button"
+                id="changePasswordBtn"
+                class="change-password-btn">
+
+                Change Password
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <script src="login.js"></script>
 
 </body>
+
 </html>

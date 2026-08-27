@@ -92,11 +92,20 @@
             <p>Easy Ride is here. Book a ride anytime and arrive on time, stress-free.</p>
             <p>Tap a book now.</p>
 
-            <button id="downloadBtn">Download App</button>
-            <!-- Toast -->
-            <div id="toast" class="toast">
-                The Easy Ride app is coming soon. <br> Please check back later.
-            </div>
+            
+ <button id="downloadBtn">Download App</button>
+
+    <!-- Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <p>The app will be ready soon. Please try again later.</p>
+            <button id="gotItBtn">Got it</button>
+        </div>
+    </div>
+
+    
+
+          
 
             <div class="img-text">
                 <img src="image/100 (1).jfif" alt="">
@@ -306,28 +315,24 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
 
-    const downloadBtn = document.getElementById("downloadBtn");
-    const toast = document.getElementById("toast");
 
-    if(downloadBtn && toast){
+const downloadBtn = document.getElementById("downloadBtn");
+const modal = document.getElementById("downloadModal");
+const gotItBtn = document.getElementById("gotItBtn");
 
-        downloadBtn.addEventListener("click", () => {
-
-            // show toast
-            toast.classList.add("show");
-
-            // hide after 10 seconds
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 5000);
-
-        });
-
-    }
-
+// Open modal
+downloadBtn.addEventListener("click", function () {
+    modal.style.display = "flex";
 });
+
+// Close modal
+gotItBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+});
+
+
+
 
 
 // ================= LOGIN MODAL =================

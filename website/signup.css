@@ -1,239 +1,273 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat Alternates", sans-serif;
+    text-decoration: none;
 }
 
-body{
-    background:rgb(234, 230, 230);
-    overflow-x:hidden;
+body {
+    background: rgb(234, 230, 230);
+    overflow-x: hidden;
 }
 
-.container{
-    display:flex;
-    min-height:100vh;
+.container {
+    display: flex;
+    min-height: 100vh;
 }
 
 /* LEFT SIDE */
 
-.left{
-    width:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
+.left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
 }
 
-.signup-card{
-    width:430px;
-    padding:45px;
-    background:rgba(255, 255, 255, 0.787);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:25px;
-    box-shadow:0 20px 40px rgba(0,0,0,.4);
-    color:#fff;
+.signup-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 45px;
+    background: rgba(255, 255, 255, 0.787);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
 }
 
-.signup-card h1{
-    text-align:center;
-    font-size:35px;
-    color:#F4B400;
-    margin-bottom:10px;
+.signup-card h1 {
+    text-align: center;
+    font-size: 35px;
+    color: #F4B400;
+    margin-bottom: 10px;
 }
 
-.signup-card p{
-    text-align:center;
-    color:black;
-    margin-bottom:25px;
-    line-height:24px;
+.signup-card p {
+    text-align: center;
+    color: black;
+    margin-bottom: 25px;
+    line-height: 24px;
 }
 
-.input-box{
-    position:relative;
-    margin-bottom:20px;
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
 }
 
-.input-box input{
-    width:100%;
-    padding:16px 50px;
-    background:whitesmoke;
-    border:2px solid transparent;
-    border-radius:12px;
-    outline:none;
-    color:#3d3838;
-    font-size:16px;
-    transition:.3s;
+.input-box input {
+    width: 100%;
+    padding: 16px 50px;
+    background: whitesmoke;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    outline: none;
+    color: #3d3838;
+    font-size: 16px;
+    transition: .3s;
 }
 
-.input-box input::placeholder{
-    color:#aaa;
+.input-box input::placeholder {
+    color: #aaa;
 }
 
-.input-box input:focus{
-    border-color:#F4B400;
-    box-shadow:0 0 12px rgba(244,180,0,.35);
+.input-box input:focus {
+    border-color: #F4B400;
+    box-shadow: 0 0 12px rgba(244, 180, 0, .35);
 }
 
-.input-box i:first-child{
-    position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#F4B400;
+.input-box i:first-child {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #F4B400;
 }
 
-.eye{
-    position:absolute;
-    right:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#aaa;
-    cursor:pointer;
+.eye {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    cursor: pointer;
 }
 
-#message{
-    text-align:center;
-    margin-bottom:15px;
-    font-size:14px;
+#message {
+    min-height: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
 }
 
-#submit{
-    width:100%;
-    padding:16px;
-    background:#15803d;
-    color:#0F172A;
-    border:none;
-    border-radius:12px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
+/* CREATE ACCOUNT BUTTON */
+
+#submit {
+    width: 100%;
+    padding: 16px;
+    background: #F4B400;
+    color: #0F172A;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
 }
 
-#submit:hover{
-    background:#d89b00;
-    transform:translateY(-2px);
+#submit:hover {
+    background: #0F172A;
+    color: #fff;
+    transform: translateY(-2px);
 }
 
-.divider{
-    margin:25px 0;
-    text-align:center;
-    position:relative;
+/* DIVIDER */
+
+.divider {
+    margin: 25px 0;
+    text-align: center;
+    position: relative;
 }
 
-.divider::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:1px;
-    background:#555;
-    left:0;
-    top:50%;
+.divider::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: #555;
+    left: 0;
+    top: 50%;
 }
 
-.divider span{
-    background:#fafbfc;
-    color:#aaa;
-    padding:0 15px;
-    position:relative;
+.divider span {
+    background: #fafbfc;
+    color: #aaa;
+    padding: 0 15px;
+    position: relative;
 }
 
-.google-btn{
-    width:100%;
-    padding:15px;
-    background:#fff;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    transition:.3s;
+/* GOOGLE BUTTON */
+
+.google-btn {
+    width: 100%;
+    padding: 15px;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: .3s;
 }
 
-.google-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(0,0,0,.2);
+.google-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
 }
 
-.google-btn i{
-    color:rgb(255, 208, 0);
-    margin-right:10px;
+.google-btn i {
+    color: rgb(255, 208, 0);
+    margin-right: 10px;
 }
 
-.login-link{
-    margin-top:25px;
-    text-align:center;
+/* LOGIN LINK */
+
+.login-link {
+    margin-top: 25px;
+    text-align: center;
 }
 
-.login-link a{
-    color:#F4B400;
-    text-decoration:none;
-    font-weight:bold;
+.login-link a {
+    color: #F4B400;
+    font-weight: bold;
 }
 
-.login-link a:hover{
-    text-decoration:underline;
+.login-link a:hover {
+    text-decoration: underline;
 }
 
 /* RIGHT SIDE */
 
-.right{
-    width:50%;
-    background:
-    /* linear-gradient(rgba(12, 17, 30, 0.75),rgba(15,23,42,.75)), */
-    url("");
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
+.right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-.content{
-    text-align:center;
-    color:#090707;
-    padding:40px;
-    z-index:2;
+.content {
+    text-align: center;
+    color: #090707;
+    padding: 40px;
 }
 
-.logo{
-    width:120px;
-    margin-bottom:20px;
+.content h1 {
+    font-size: 60px;
+    color: #F4B400;
+    margin-bottom: 15px;
 }
 
-.content h1{
-    font-size:60px;
-    color:#F4B400;
-    margin-bottom:15px;
+.content h1 span {
+    color: black;
 }
 
-.content p{
-    font-size:20px;
-    line-height:35px;
+.content p {
+    font-size: 20px;
+    line-height: 35px;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    padding: 15px 20px;
+    background: #222;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all .4s ease;
+
+    z-index: 999999;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
 }
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-.container{
-    flex-direction:column;
-}
+    .container {
+        flex-direction: column;
+    }
 
-.left{
-    width:100%;
-    padding:20px;
-}
+    .left {
+        width: 100%;
+        padding: 20px;
+    }
 
-.right{
-    display:none;
-}
+    .right {
+        display: none;
+    }
 
-.signup-card{
-    width:100%;
-    max-width:430px;
-}
+    .signup-card {
+        padding: 30px 20px;
+    }
 }
