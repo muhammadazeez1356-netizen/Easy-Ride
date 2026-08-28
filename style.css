@@ -4584,415 +4584,292 @@ input {
 
 
 
-/* hompage responsive */
+
+/* =========================================================
+   HOME PAGE
+   EASY RIDE - FULL RESPONSIVE DESIGN
+   ========================================================= */
 
 
 /* =========================================================
-   EASY RIDE - GENERAL RESPONSIVENESS
-   ADD THIS AT THE VERY BOTTOM OF style.css
-========================================================= */
-
-
-/* =========================
-   GLOBAL RESPONSIVE FIX
-========================= */
+   GENERAL RESPONSIVE FIXES
+   ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
-html,
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     width: 100%;
-    max-width: 100%;
+    margin: 0;
     overflow-x: hidden;
 }
 
 img,
 video {
     max-width: 100%;
+    height: auto;
 }
 
-a {
-    text-decoration: none;
+a,
+button,
+input {
+    font-family: inherit;
 }
 
 
-/* =========================
-   LARGE LAPTOP / SMALL DESKTOP
-   1200px and below
-========================= */
+/* =========================================================
+   LARGE DESKTOP
+   1200px AND ABOVE
+   ========================================================= */
 
-@media screen and (max-width: 1200px) {
+@media (min-width: 1200px) {
 
     .header2 {
-        padding: 25px 30px;
+        padding: 15px 5%;
     }
 
-    .header2 img {
-        width: 180px;
-        max-width: 22%;
+    .header2 > img {
+        width: 155px;
+        height: auto;
     }
 
-    nav {
-        gap: 40px;
+    .divnave {
+        gap: 30px;
+    }
+
+    .hero {
+        min-height: 700px;
+    }
+
+    .hero-text {
+        max-width: 800px;
+        margin-left: 7%;
+    }
+
+    .hero-text h1 {
+        font-size: 64px;
+        line-height: 1.08;
+    }
+
+    .hero-text > p {
+        font-size: 19px;
+        max-width: 650px;
+    }
+
+    .hero2 {
+        padding: 100px 7%;
+        gap: 80px;
+    }
+
+    .text-dive {
+        max-width: 600px;
+    }
+
+    .bend-image {
+        max-width: 520px;
+    }
+
+    .service-box {
+        max-width: 1200px;
+        margin: 50px auto 0;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+   ========================================================= */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    .header2 {
+        padding: 14px 4%;
+    }
+
+    .header2 > img {
+        width: 140px;
     }
 
     .divnave {
         gap: 18px;
     }
 
-    nav a {
+    .divnave a {
         font-size: 14px;
     }
 
-    .hero-text {
-        padding-left: 7%;
-        padding-right: 7%;
-    }
-
-    .hero-text h1 {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
-    }
-
-    .hero2 {
-        padding-left: 7%;
-        padding-right: 7%;
-        gap: 40px;
-    }
-
-    .service-box {
-        padding-left: 5%;
-        padding-right: 5%;
-        gap: 20px;
-    }
-
-    .card {
-        min-width: 0;
-    }
-
-    .contanal-icon {
-        padding-left: 5%;
-        padding-right: 5%;
-        gap: 20px;
-    }
-
-    .footer-container {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-}
-
-
-/* =========================
-   TABLET
-   992px and below
-========================= */
-
-@media screen and (max-width: 992px) {
-
-    .header2 {
-        height: 75px;
-        padding: 15px 25px;
-        gap: 15px;
-    }
-
-    .header2 img {
-        width: 160px;
-        max-width: 35%;
-    }
-
-    nav {
-        gap: 25px;
-    }
-
-    .divnave {
-        gap: 15px;
-    }
-
-    nav a {
+    .button1 {
+        padding: 11px 15px;
         font-size: 13px;
     }
 
-    #nav-items .button1 {
-        padding: 10px 14px;
-        white-space: nowrap;
-    }
-
-
-    /* HERO */
-
     .hero {
-        min-height: 600px;
+        min-height: 650px;
     }
 
     .hero-text {
-        width: 100%;
-        max-width: 850px;
-        padding: 80px 7%;
+        width: 60%;
+        margin-left: 6%;
     }
 
     .hero-text h1 {
-        font-size: clamp(2.4rem, 6vw, 4rem);
-        line-height: 1.15;
+        font-size: 52px;
     }
 
-    .hero-text p {
-        font-size: 16px;
-        max-width: 650px;
+    .hero-text > p {
+        font-size: 17px;
     }
-
-
-    /* SAFETY SECTION */
 
     .hero2 {
-        flex-direction: column;
-        padding: 70px 8%;
-        text-align: center;
+        padding: 80px 5%;
+        gap: 45px;
     }
 
     .text-dive {
-        width: 100%;
-        max-width: 700px;
-    }
-
-    .text-dive h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-    }
-
-    .backgroundtext {
-        text-align: left;
+        width: 52%;
     }
 
     .bend-image {
-        width: 80%;
-        max-width: 600px;
+        width: 45%;
+        max-width: 450px;
     }
 
-
-    /* SERVICES */
-
     .service-box {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 25px;
-        padding: 50px 7%;
+        padding: 0 4%;
+        gap: 20px;
     }
 
     .card {
-        width: 100%;
+        width: calc(50% - 10px);
     }
-
-
-    /* TESTIMONIALS */
 
     .contanal-icon {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 25px;
-    }
-
-    .texticon {
-        width: 100%;
-    }
-
-
-    /* CTA */
-
-    .hero5 .content {
-        width: 90%;
-        max-width: 750px;
-    }
-
-
-    /* FOOTER */
-
-    .footer-container {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 35px;
+        padding: 0 5%;
     }
 }
 
 
-/* =========================
-   MOBILE / TABLET NAVIGATION
-   900px and below
-========================= */
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
 
-@media screen and (max-width: 900px) {
+@media (min-width: 768px) and (max-width: 991px) {
+
+    /* ================= HEADER ================= */
 
     .header2 {
-        position: sticky;
-        top: 0;
+        min-height: 75px;
+        padding: 12px 4%;
+        position: relative;
         z-index: 10000;
     }
 
-
-    /* Hide normal desktop navigation */
+    .header2 > img {
+        width: 135px;
+        height: auto;
+    }
 
     #nav-items {
-        position: fixed;
-
-        top: 75px;
-        left: 0;
-
-        width: 100%;
-        min-height: auto;
-
-        padding: 25px;
-
-        background: #000000f2;
-
-        display: flex;
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 25px;
-
-        opacity: 0;
-        visibility: hidden;
-
-        transform: translateY(-20px);
-
-        transition:
-            opacity 0.3s ease,
-            transform 0.3s ease,
-            visibility 0.3s ease;
-
-        z-index: 9999;
-        background: #09080832;
-          border: 1px solid #ffffffc1;
-          border-radius: 0 0 30px 30px;
+        display: none;
     }
-
-
-    /* Your JS can use either .show or .open */
-
-    #nav-items.show,
-    #nav-items.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-
-    .divnave {
-        width: 100%;
-
-        display: flex;
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 5px;
-    }
-
-
-    #nav-items .divnave a {
-        width: 100%;
-
-        padding: 14px;
-
-        text-align: center;
-
-        border-radius: 10px;
-    }
-
-
-    #nav-items .button1 {
-        display: inline-flex;
-
-        justify-content: center;
-        align-items: center;
-
-        width: 100%;
-
-        padding: 14px 20px;
-    }
-
-
-    /* Show mobile hamburger */
 
     .show-div {
         display: flex;
-
         align-items: center;
         justify-content: center;
-
-        width: 45px;
-        height: 45px;
-
-        font-size: 28px;
     }
-
-
-    .show-div svg {
-        width: 28px;
-        height: 28px;
-    }
-
-
-    /* User menu */
 
     .user-menu {
         margin-left: auto;
+        margin-right: 15px;
     }
 
-    .user-popover {
-        top: 58px;
+
+    /* ================= MOBILE NAV ================= */
+
+    #nav-items.open {
+        display: flex;
+
+        position: absolute;
+
+        top: 75px;
+        left: 0;
         right: 0;
-    }
-}
 
+        width: 100%;
 
-/* =========================
-   LARGE MOBILE
-   768px and below
-========================= */
+        flex-direction: column;
+        align-items: stretch;
 
-@media screen and (max-width: 768px) {
+        padding: 20px;
 
-    .header2 {
-        padding: 12px 20px;
-        height: 70px;
-    }
+        background: rgba(0, 0, 0, 0.97);
 
-    .header2 img {
-        width: 145px;
-        max-width: 45%;
+        z-index: 999;
+
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
-    .user-menu-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 18px;
+    #nav-items.open .divnave {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    #nav-items.open .divnave a {
+        width: 100%;
+        padding: 15px;
+
+        text-align: center;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #nav-items.open > div:last-child {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    #nav-items.open .button1 {
+        width: 100%;
+        justify-content: center;
     }
 
 
-    /* HERO */
+    /* ================= HERO ================= */
 
     .hero {
-        min-height: 580px;
+        min-height: 620px;
     }
 
     .hero-text {
-        padding: 80px 25px 60px;
-        text-align: center;
-    }
+        width: 85%;
+        margin: 0 auto;
 
-    .badge {
-        font-size: 13px;
+        text-align: center;
+        align-items: center;
     }
 
     .hero-text h1 {
-        font-size: clamp(2.2rem, 9vw, 3.8rem);
+        font-size: 48px;
+        line-height: 1.1;
     }
 
-    .hero-text p {
-        font-size: 15px;
-        line-height: 1.7;
+    .hero-text > p {
+        max-width: 650px;
+        font-size: 17px;
+
         margin-left: auto;
         margin-right: auto;
     }
@@ -5000,789 +4877,2088 @@ a {
     .buttons {
         justify-content: center;
         flex-wrap: wrap;
-        gap: 15px;
     }
 
 
-    /* SAFETY */
+    /* ================= HERO 2 ================= */
 
     .hero2 {
-        padding: 60px 25px;
+        padding: 70px 6%;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 45px;
+
+        text-align: center;
     }
 
-    .text-dive h1 {
-        font-size: 2.2rem;
+    .text-dive {
+        width: 100%;
+        max-width: 700px;
+
+        margin: auto;
     }
 
-    .textp {
-        font-size: 15px;
+    .text-dive .textp {
+        max-width: 650px;
+
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .backgroundtext {
-        padding: 15px;
+        text-align: left;
+
+        max-width: 600px;
+
+        margin: 20px auto;
     }
 
     .bend-image {
+        width: 70%;
+        max-width: 450px;
+
+        margin: auto;
+    }
+
+
+    /* ================= SERVICES ================= */
+
+    .services {
+        padding: 70px 5%;
+    }
+
+    .service-box {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+    }
+
+    .card {
         width: 100%;
     }
 
 
-    /* SERVICES */
+    /* ================= TESTIMONIALS ================= */
+
+    .hero4 {
+        padding: 70px 5%;
+    }
+
+    .contanal-icon {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+    }
+
+    .texticon {
+        width: 100%;
+    }
+
+    .texticon:last-child {
+        grid-column: 1 / -1;
+
+        max-width: 48%;
+
+        margin: auto;
+    }
+
+
+    /* ================= HERO 5 ================= */
+
+    .hero5 {
+        min-height: 500px;
+    }
+
+    .hero5 .content {
+        width: 85%;
+
+        text-align: center;
+
+        margin: auto;
+    }
+
+    .hero5 h1 {
+        font-size: 45px;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    .footer-container {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 40px;
+
+        padding: 60px 6% 40px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   576px - 767px
+   ========================================================= */
+
+@media (min-width: 576px) and (max-width: 767px) {
+
+    /* ================= HEADER ================= */
+
+    .header2 {
+        min-height: 68px;
+
+        padding: 10px 18px;
+
+        position: relative;
+
+        z-index: 10000;
+    }
+
+    .header2 > img {
+        width: 120px;
+    }
+
+    #nav-items {
+        display: none;
+    }
+
+    .user-menu {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    .show-div {
+        display: flex;
+    }
+
+
+    /* ================= MOBILE NAV ================= */
+
+    #nav-items.open {
+        display: flex;
+
+        position: absolute;
+
+        top: 68px;
+
+        left: 0;
+
+        width: 100%;
+
+        flex-direction: column;
+
+        padding: 15px;
+
+        background: rgba(0, 0, 0, 0.98);
+
+        z-index: 9999;
+    }
+
+    #nav-items.open .divnave {
+        display: flex;
+
+        flex-direction: column;
+
+        width: 100%;
+
+        gap: 0;
+    }
+
+    #nav-items.open .divnave a {
+        display: block;
+
+        width: 100%;
+
+        padding: 14px 10px;
+
+        text-align: center;
+    }
+
+    #nav-items.open .button1 {
+        width: 100%;
+
+        justify-content: center;
+
+        margin-top: 10px;
+    }
+
+
+    /* ================= HERO ================= */
+
+    .hero {
+        min-height: 600px;
+    }
+
+    .hero-text {
+        width: 90%;
+
+        margin: auto;
+
+        text-align: center;
+    }
+
+    .badge {
+        font-size: 13px;
+
+        padding: 8px 13px;
+    }
+
+    .hero-text h1 {
+        font-size: 40px;
+
+        line-height: 1.1;
+    }
+
+    .hero-text > p {
+        font-size: 16px;
+
+        line-height: 1.6;
+    }
+
+    .buttons {
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 12px;
+    }
+
+    .buttons a {
+        width: 220px;
+
+        text-align: center;
+    }
+
+
+    /* ================= HERO 2 ================= */
+
+    .hero2 {
+        padding: 60px 20px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 35px;
+
+        text-align: center;
+    }
+
+    .text-dive {
+        width: 100%;
+    }
+
+    .text-dive h1 {
+        font-size: 34px;
+
+        line-height: 1.2;
+    }
+
+    .text-dive .textp {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+    .backgroundtext {
+        display: flex;
+
+        align-items: flex-start;
+
+        text-align: left;
+
+        gap: 15px;
+
+        margin: 18px 0;
+    }
+
+    .backgroundtext > i {
+        flex-shrink: 0;
+    }
+
+    .div-txt h4 {
+        font-size: 16px;
+    }
+
+    .div-txt p {
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+    .bend-image {
+        width: 85%;
+
+        max-width: 450px;
+
+        margin: auto;
+    }
+
+
+    /* ================= SERVICES ================= */
 
     .services {
         padding: 60px 20px;
     }
 
+    .heading h4 {
+        font-size: 14px;
+    }
+
     .heading h1 {
-        font-size: 2.2rem;
+        font-size: 34px;
+
+        line-height: 1.2;
+    }
+
+    .heading p {
+        font-size: 15px;
+
+        line-height: 1.6;
     }
 
     .service-box {
+        display: grid;
+
         grid-template-columns: 1fr;
-        padding: 40px 0 0;
+
+        gap: 25px;
+
+        margin-top: 35px;
     }
 
     .card {
-        max-width: 500px;
-        margin: auto;
+        width: 100%;
+    }
+
+    .card img {
+        width: 100%;
+
+        height: 220px;
+
+        object-fit: cover;
     }
 
 
-    /* TESTIMONIALS */
+    /* ================= TESTIMONIALS ================= */
 
     .hero4 {
         padding: 60px 20px;
     }
 
     .hero4 > h1 {
-        font-size: 2.2rem;
+        font-size: 35px;
+
         text-align: center;
     }
 
     .contanal-icon {
+        display: grid;
+
         grid-template-columns: 1fr;
-        padding: 30px 0 0;
+
+        gap: 20px;
     }
 
-    .texticon {
-        max-width: 600px;
-        margin: auto;
+    .texticon,
+    .texticon:last-child {
+        width: 100%;
+
+        max-width: 100%;
+
+        margin: 0;
     }
 
 
-    /* CTA */
+    /* ================= HERO 5 ================= */
 
     .hero5 {
         min-height: 500px;
+
         padding: 70px 20px;
     }
 
     .hero5 .content {
         width: 100%;
+
         text-align: center;
     }
 
-    .hero5 .content h1 {
-        font-size: clamp(2rem, 8vw, 3rem);
+    .hero5 h1 {
+        font-size: 38px;
+
+        line-height: 1.15;
     }
 
-    .hero5 .content p {
+    .hero5 p {
         font-size: 15px;
+
+        line-height: 1.7;
     }
 
-    .hero5 .buttons {
-        justify-content: center;
-    }
 
-
-    /* FOOTER */
-
-    .footer {
-        padding: 55px 20px 20px;
-    }
+    /* ================= FOOTER ================= */
 
     .footer-container {
+        display: grid;
+
         grid-template-columns: 1fr;
-        padding: 0;
-        text-align: center;
+
+        gap: 35px;
+
+        padding: 50px 25px 30px;
     }
 
     .footer-box {
         width: 100%;
     }
 
-    .footer-box ul {
-        padding-left: 0;
-        list-style: none;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-
     .footer-bottom {
-        text-align: center;
-    }
-}
-
-
-/* =========================
-   MOBILE
-   600px and below
-========================= */
-
-@media screen and (max-width: 600px) {
-
-    .header2 {
-        padding: 10px 15px;
-        gap: 10px;
-    }
-
-    .header2 img {
-        width: 125px;
-    }
-
-    .user-menu-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 17px;
-    }
-
-    .show-div {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
-    }
-
-
-    #nav-items {
-        top: 60px;
-        padding: 20px 15px;
-    }
-
-
-    /* USER POPOVER */
-
-    .user-popover {
-        position: fixed;
-
-        top: 75px;
-        right: 10px;
-
-        width: calc(100% - 20px);
-
-        max-width: 380px;
-    }
-
-    .user-popover-header {
-        padding: 16px;
-    }
-
-    .user-info {
-        padding: 12px 15px;
-    }
-
-
-    /* HERO */
-
-    .hero {
-        min-height: 520px;
-    }
-
-    .hero-text {
-        padding: 70px 18px 50px;
-    }
-
-    .badge {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-
-    .hero-text h1 {
-        font-size: clamp(2rem, 10vw, 3rem);
-        line-height: 1.2;
-    }
-
-    .hero-text p {
-        font-size: 14px;
-    }
-
-    .buttons {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .buttons a,
-    .buttons .btn,
-    .buttons .btn1,
-    .buttons .btn2 {
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        text-align: center;
-        justify-content: center;
-    }
-
-
-    /* SAFETY */
-
-    .hero2 {
-        padding: 50px 18px;
-    }
-
-    .text-dive h1 {
-        font-size: 1.9rem;
-    }
-
-    .backgroundtext {
-        gap: 12px;
-    }
-
-    .backgroundtext i {
-        flex-shrink: 0;
-    }
-
-    .div-txt h4 {
-        font-size: 15px;
-    }
-
-    .div-txt p {
-        font-size: 13px;
-    }
-
-
-    /* SERVICES */
-
-    .services {
-        padding: 50px 15px;
-    }
-
-    .heading h4 {
-        font-size: 13px;
-    }
-
-    .heading h1 {
-        font-size: 1.9rem;
-    }
-
-    .heading p {
-        font-size: 14px;
-    }
-
-    .card .content {
-        padding: 20px 16px;
-    }
-
-    .card img {
-        width: 100%;
-        height: auto;
-    }
-
-
-    /* TESTIMONIALS */
-
-    .hero4 {
-        padding: 50px 15px;
-    }
-
-    .hero4 > h1 {
-        font-size: 1.9rem;
-    }
-
-    .texticon {
         padding: 20px;
-    }
 
-    .texticon > p {
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-    .imagetext {
-        flex-wrap: wrap;
-    }
-
-
-    /* CTA */
-
-    .hero5 {
-        padding: 60px 15px;
-    }
-
-    .top-btn {
-        font-size: 11px;
-    }
-
-    .hero5 .content h1 {
-        font-size: 2rem;
-    }
-
-    .hero5 .content p {
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-
-    /* FOOTER */
-
-    .footer {
-        padding: 50px 15px 20px;
-    }
-
-    .footer-box h2 {
-        font-size: 1.8rem;
-    }
-
-    .footer-box h3 {
-        font-size: 1.2rem;
-    }
-
-    .footer-box p,
-    .footer-box li,
-    .footer-box a {
-        font-size: 14px;
+        text-align: center;
     }
 
     .footer-bottom p {
-        font-size: 12px;
+        font-size: 13px;
+
         line-height: 1.6;
     }
-}
 
 
-/* =========================
-   SMALL MOBILE
-   480px and below
-========================= */
+    /* ================= SETTINGS ================= */
 
-@media screen and (max-width: 480px) {
-
-    .header2 {
-        height: 60px;
-        padding: 8px 12px;
-    }
-
-    .header2 img {
-        width: 110px;
-    }
-
-    .user-menu-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 16px;
-    }
-
-    .show-div {
-        width: 38px;
-        height: 38px;
-    }
-
-
-    #nav-items {
-        top: 60px;
-    }
-
-
-    /* Hero */
-
-    .hero {
-        min-height: 500px;
-    }
-
-    .hero-text h1 {
-        font-size: 1.9rem;
-    }
-
-    .hero-text p {
-        font-size: 13px;
-    }
-
-
-    /* General headings */
-
-    .text-dive h1,
-    .heading h1,
-    .hero4 > h1 {
-        font-size: 1.7rem;
-    }
-
-
-    /* Safety cards */
-
-    .backgroundtext {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-    }
-
-    .backgroundtext .div-txt {
-        text-align: center;
-    }
-
-
-    /* Service card */
-
-    .card .content h2 {
-        font-size: 1.4rem;
-    }
-
-
-    /* Testimonials */
-
-    .texticon {
-        padding: 16px;
-    }
-
-    .imagetext img {
-        width: 45px;
-        height: 45px;
-    }
-
-
-    /* CTA */
-
-    .hero5 .content h1 {
-        font-size: 1.8rem;
-    }
-
-
-    /* Popover */
-
-    .user-popover {
-        top: 65px;
-    }
-
-    .user-avatar {
-        width: 48px;
-        height: 48px;
-        min-width: 48px;
-    }
-
-    .user-header-text h3 {
-        font-size: 15px;
-    }
-
-    .user-header-text p {
-        font-size: 11px;
-    }
-}
-
-
-/* =========================
-   VERY SMALL SCREENS
-   360px and below
-========================= */
-
-@media screen and (max-width: 360px) {
-
-    .header2 img {
-        width: 95px;
-    }
-
-    .hero-text {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .hero-text h1 {
-        font-size: 1.7rem;
-    }
-
-    .text-dive h1,
-    .heading h1,
-    .hero4 > h1,
-    .hero5 .content h1 {
-        font-size: 1.6rem;
-    }
-
-    .user-popover {
-        right: 5px;
-        width: calc(100% - 10px);
-    }
-
-}
-
-/* =====================================================
-   HERO2 RESPONSIVENESS ONLY
-===================================================== */
-
-
-/* ===============================
-   DESKTOP - 1200px AND BELOW
-================================ */
-
-@media (max-width: 1200px) {
-
-    .hero2 {
-        padding: 80px 6%;
-        gap: 50px;
-    }
-
-    .text-dive {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .bend-image {
-        width: 45%;
-        max-width: 550px;
-        height: auto;
-        object-fit: contain;
-    }
-
-}
-
-
-/* ===============================
-   TABLET - 992px AND BELOW
-================================ */
-
-@media (max-width: 992px) {
-
-    .hero2 {
-        padding: 70px 5%;
-        gap: 35px;
-    }
-
-    .text-dive h1 {
-        font-size: clamp(2rem, 4vw, 3rem);
-        line-height: 1.2;
-    }
-
-    .text-dive .textp {
-        font-size: 15px;
-        line-height: 1.7;
-    }
-
-    .bend-image {
-        width: 43%;
-    }
-
-    .backgroundtext {
+    .settings-modal {
         padding: 15px;
     }
 
+    .settings-container {
+        width: 100%;
+
+        max-width: 600px;
+
+        max-height: 92vh;
+
+        overflow-y: auto;
+    }
+
+    .settings-top {
+        padding: 20px;
+    }
+
+    .settings-content {
+        padding: 20px;
+    }
 }
 
 
-/* ===============================
-   MOBILE / SMALL TABLET
-   768px AND BELOW
-================================ */
+/* =========================================================
+   SMALL MOBILE
+   0 - 575px
+   ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 575px) {
 
-    .hero2 {
+    /* ================= HEADER ================= */
+
+    .header2 {
+        min-height: 62px;
+
+        height: auto;
+
+        padding: 9px 13px;
+
         display: flex;
-        flex-direction: column;
-
-        padding: 70px 30px;
-
-        gap: 45px;
 
         align-items: center;
+
+        position: relative;
+
+        z-index: 10000;
     }
 
-    .text-dive {
+    .header2 > img {
+        width: 105px;
+
+        height: auto;
+
+        object-fit: contain;
+    }
+
+    #nav-items {
+        display: none;
+    }
+
+    .show-div {
+        display: flex;
+
+        width: 38px;
+
+        height: 38px;
+
+        align-items: center;
+
+        justify-content: center;
+
+        cursor: pointer;
+    }
+
+    .show-div svg {
+        width: 25px;
+
+        height: 25px;
+    }
+
+
+    /* ================= MOBILE NAV ================= */
+
+    #nav-items.open {
+        display: flex;
+
+        position: absolute;
+
+        top: 62px;
+
+        left: 0;
+
+        right: 0;
+
         width: 100%;
-        max-width: 700px;
+
+        padding: 12px 15px 20px;
+
+        flex-direction: column;
+
+        background: rgba(0, 0, 0, 0.98);
+
+        z-index: 9999;
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
     }
 
-    /* Keep heading and main text left aligned */
-    .text-dive > p:first-child,
-    .text-dive > h1,
-    .text-dive > .textp {
-        text-align: left;
-    }
-
-    .text-dive h1 {
-        font-size: clamp(2rem, 7vw, 2.8rem);
-        line-height: 1.2;
-    }
-
-    .text-dive .textp {
-        font-size: 15px;
-        line-height: 1.7;
-    }
-
-    /* Safety features stay horizontal */
-    .backgroundtext {
+    #nav-items.open .divnave {
         width: 100%;
 
         display: flex;
-        flex-direction: row;
+
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    #nav-items.open .divnave a {
+        width: 100%;
+
+        padding: 13px 8px;
+
+        text-align: center;
+
+        font-size: 15px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #nav-items.open > div:last-child {
+        width: 100%;
+    }
+
+    #nav-items.open .button1 {
+        display: flex;
+
+        width: 100%;
+
+        justify-content: center;
+
+        margin-top: 15px;
+    }
+
+
+    /* =====================================================
+       USER MENU
+       MOBILE DOT BUTTON
+       LEFT MIDDLE OF BODY
+       ===================================================== */
+
+    .user-menu {
+        position: static !important;
+
+        margin: 0 !important;
+
+        width: auto;
+
+        height: auto;
+    }
+
+    .user-menu-btn {
+
+        position: fixed !important;
+
+        left: 12px !important;
+
+        top: 50% !important;
+
+        right: auto !important;
+
+        bottom: auto !important;
+
+        transform: translateY(-50%) !important;
+
+        width: 48px !important;
+
+        height: 48px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        border-radius: 50% !important;
+
+        background: #ffd900 !important;
+
+        border: none !important;
+
+        z-index: 100001 !important;
+
+        cursor: pointer;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .user-menu-btn i {
+        font-size: 20px;
+    }
+
+
+    /* =====================================================
+       USER POPOVER
+       LARGE
+       COMES FROM BELOW
+       ===================================================== */
+
+    .user-popover {
+
+        position: fixed !important;
+
+        left: 0 !important;
+
+        right: 0 !important;
+
+        bottom: 0 !important;
+
+        top: auto !important;
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        height: 94vh !important;
+
+        max-height: 94vh !important;
+
+        min-height: 0 !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        overflow-y: auto !important;
+
+        overflow-x: hidden !important;
+
+        -webkit-overflow-scrolling: touch;
+
+        overscroll-behavior: contain;
+
+        border-radius: 25px 25px 0 0 !important;
+
+        z-index: 100000 !important;
+
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.30);
+
+        animation: userPopoverFromBottom 0.35s ease-out;
+
+    }
+
+
+    /* ================= POPOVER ANIMATION ================= */
+
+    @keyframes userPopoverFromBottom {
+
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+
+    /* ================= POPOVER HEADER ================= */
+
+    .user-popover-header {
+
+        width: 100%;
+
+        padding: 25px 20px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+    }
+
+    .user-avatar {
+
+        width: 60px !important;
+
+        height: 60px !important;
+
+        min-width: 60px;
+
+        border-radius: 50%;
+
+        overflow: hidden;
+
+        flex-shrink: 0;
+    }
+
+    .user-avatar img {
+
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+    .user-header-text {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+    .user-header-text h3 {
+
+        margin: 0 0 5px;
+
+        font-size: 18px;
+
+        line-height: 1.3;
+
+        word-break: break-word;
+    }
+
+    .user-header-text p {
+
+        margin: 0;
+
+        font-size: 13px;
+
+        line-height: 1.5;
+
+        word-break: break-word;
+    }
+
+
+    /* ================= USER INFORMATION ================= */
+
+    .user-info {
+
+        width: 100%;
+
+        padding: 10px 20px 15px;
+    }
+
+    .user-info-item {
+
+        width: 100%;
+
+        display: flex;
 
         align-items: center;
 
         gap: 15px;
 
-        padding: 18px;
+        padding: 15px 0;
+
+        min-height: 65px;
     }
 
-    .backgroundtext i {
+    .user-info-item > i {
+
+        width: 38px;
+
+        min-width: 38px;
+
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #ffd900;
+
+        color: #000;
+
+        flex-shrink: 0;
+    }
+
+    .user-info-item > div {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+    .user-info-item span {
+
+        display: block;
+
+        font-size: 12px;
+
+        margin-bottom: 4px;
+    }
+
+    .user-info-item strong {
+
+        display: block;
+
+        font-size: 15px;
+
+        line-height: 1.4;
+
+        word-break: break-word;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    /* =====================================================
+       BOOKING RIDE / SETTINGS / LOGOUT
+       ===================================================== */
+
+    .user-popover-links {
+
+        width: 100%;
+
+        padding: 15px 20px 40px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .user-popover-links a,
+    .user-popover-links button {
+
+        width: 100% !important;
+
+        min-height: 55px;
+
+        padding: 14px 16px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        gap: 12px;
+
+        border-radius: 12px;
+
+        font-size: 15px;
+
+        text-decoration: none;
+
+        cursor: pointer;
+
+        flex-shrink: 0;
+    }
+
+    .user-popover-links a i,
+    .user-popover-links button i {
+
+        width: 25px;
+
+        text-align: center;
+
+        flex-shrink: 0;
+    }
+
+
+    /* ================= KEEP ALL POPOVER CONTENT ================= */
+
+    .user-popover > * {
+
+        max-width: 100%;
+
+        flex-shrink: 0;
+    }
+
+
+    /* ================= HERO ================= */
+
+    .hero {
+
+        min-height: 570px;
+
+        display: flex;
+
+        align-items: center;
+    }
+
+    .hero-text {
+
+        width: 92%;
+
+        margin: 0 auto;
+
+        text-align: center;
+
+        padding: 40px 0;
+    }
+
+    .badge {
+
+        display: inline-block;
+
+        font-size: 11px;
+
+        padding: 7px 10px;
+
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+
+        font-size: 32px;
+
+        line-height: 1.12;
+
+        margin-top: 18px;
+
+        word-break: normal;
+    }
+
+    .hero-text > p {
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+        margin-top: 18px;
+    }
+
+    .hero-text .buttons {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 10px;
+
+        width: 100%;
+
+        margin-top: 25px;
+    }
+
+    .hero-text .buttons a {
+
+        width: 100%;
+
+        max-width: 230px;
+
+        padding: 12px 15px;
+
+        text-align: center;
+    }
+
+
+    /* ================= HERO 2 ================= */
+
+    .hero2 {
+
+        width: 100%;
+
+        padding: 55px 18px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 30px;
+
+        text-align: center;
+    }
+
+    .text-dive {
+
+        width: 100%;
+
+        max-width: 100%;
+    }
+
+    .text-dive > p:first-child {
+
+        font-size: 13px;
+    }
+
+    .text-dive h1 {
+
+        font-size: 29px;
+
+        line-height: 1.2;
+
+        margin: 12px 0;
+    }
+
+    .text-dive .textp {
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+        margin-bottom: 25px;
+    }
+
+    .backgroundtext {
+
+        width: 100%;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 12px;
+
+        text-align: left;
+
+        margin: 16px 0;
+    }
+
+    .backgroundtext > i {
+
+        min-width: 38px;
+
+        width: 38px;
+
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
         flex-shrink: 0;
     }
 
     .div-txt {
-        flex: 1;
+
         min-width: 0;
     }
 
     .div-txt h4 {
-        margin-top: 0;
-    }
 
-    .bend-image {
-        display: block;
-
-        width: 100%;
-        max-width: 600px;
-
-        height: auto;
-
-        margin: 0 auto;
-    }
-
-}
-
-
-/* ===============================
-   MOBILE
-   600px AND BELOW
-================================ */
-
-@media (max-width: 600px) {
-
-    .hero2 {
-        padding: 55px 20px;
-        gap: 35px;
-    }
-
-    .text-dive > p:first-child {
-        font-size: 14px;
-    }
-
-    .text-dive h1 {
-        font-size: 2rem;
-        line-height: 1.25;
-        margin: 10px 0 15px;
-    }
-
-    .text-dive .textp {
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-    .backgroundtext {
-        padding: 15px;
-        gap: 13px;
-    }
-
-    .backgroundtext i {
-        width: 42px;
-        height: 42px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        flex-shrink: 0;
-
-        font-size: 18px;
-    }
-
-    .div-txt h4 {
         font-size: 15px;
-        margin-bottom: 5px;
+
+        margin: 0 0 5px;
     }
 
     .div-txt p {
+
         font-size: 13px;
+
         line-height: 1.5;
+
         margin: 0;
     }
 
     .bend-image {
+
         width: 100%;
-        max-width: 500px;
+
+        max-width: 360px;
+
+        height: auto;
+
+        margin: 10px auto 0;
     }
 
-}
 
+    /* ================= SERVICES ================= */
 
-/* ===============================
-   SMALL PHONES
-   480px AND BELOW
-================================ */
+    .services {
 
-@media (max-width: 480px) {
+        width: 100%;
 
-    .hero2 {
-        padding: 50px 15px;
-        gap: 30px;
+        padding: 55px 16px;
     }
 
-    .text-dive h1 {
-        font-size: 1.8rem;
+    .heading {
+
+        width: 100%;
+
+        text-align: center;
     }
 
-    .text-dive .textp {
+    .heading h4 {
+
+        font-size: 12px;
+
+        letter-spacing: 1px;
+    }
+
+    .heading h1 {
+
+        font-size: 29px;
+
+        line-height: 1.2;
+
+        margin: 10px 0;
+    }
+
+    .heading p {
+
+        font-size: 14px;
+
+        line-height: 1.6;
+    }
+
+    .service-box {
+
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+
+        margin-top: 30px;
+    }
+
+    .card {
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+    .card img {
+
+        width: 100%;
+
+        height: 200px;
+
+        object-fit: cover;
+    }
+
+    .card .content {
+
+        padding: 18px;
+    }
+
+    .card .content h2 {
+
+        font-size: 21px;
+    }
+
+    .card .content .pp {
+
+        font-size: 14px;
+
+        line-height: 1.6;
+    }
+
+    .card ul {
+
+        padding-left: 0;
+
+        list-style: none;
+    }
+
+    .card li {
+
         font-size: 13px;
+
+        margin: 7px 0;
     }
 
-    .backgroundtext {
-        padding: 14px 12px;
-        gap: 10px;
+
+    /* ================= TESTIMONIALS ================= */
+
+    .hero4 {
+
+        width: 100%;
+
+        padding: 55px 16px;
     }
 
-    .backgroundtext i {
-        width: 38px;
-        height: 38px;
-        font-size: 16px;
+    .hero4 > h1 {
+
+        font-size: 30px;
+
+        line-height: 1.2;
+
+        text-align: center;
+
+        margin-bottom: 30px;
     }
 
-    .div-txt h4 {
+    .contanal-icon {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+    .texticon {
+
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 20px;
+    }
+
+    .texticon p {
+
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .icons {
+
         font-size: 14px;
     }
 
-    .div-txt p {
+    .imagetext {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+    }
+
+    .imagetext img {
+
+        width: 45px;
+
+        height: 45px;
+
+        object-fit: cover;
+
+        border-radius: 50%;
+    }
+
+    .texth-p h2 {
+
+        font-size: 15px;
+    }
+
+    .texth-p p {
+
         font-size: 12px;
     }
 
-}
 
+    /* ================= HERO 5 ================= */
 
-/* ===============================
-   VERY SMALL PHONES
-   360px AND BELOW
-================================ */
+    .hero5 {
 
-@media (max-width: 360px) {
+        width: 100%;
 
-    .hero2 {
-        padding: 45px 12px;
+        min-height: 520px;
+
+        padding: 65px 18px;
+
+        display: flex;
+
+        align-items: center;
     }
 
-    .text-dive h1 {
-        font-size: 1.6rem;
+    .hero5 .content {
+
+        width: 100%;
+
+        text-align: center;
     }
 
-    .backgroundtext {
-        padding: 12px 10px;
+    .top-btn {
+
+        font-size: 11px;
+
+        padding: 7px 10px;
     }
 
-    .backgroundtext i {
-        width: 35px;
-        height: 35px;
+    .hero5 h1 {
+
+        font-size: 31px;
+
+        line-height: 1.15;
+
+        margin: 18px 0;
+    }
+
+    .hero5 p {
+
         font-size: 14px;
+
+        line-height: 1.7;
     }
 
-    .div-txt h4 {
+    .hero5 .buttons {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-top: 25px;
+    }
+
+    .hero5 .btn {
+
+        width: 100%;
+
+        max-width: 240px;
+
+        text-align: center;
+    }
+
+
+    /* ================= SETTINGS MODAL ================= */
+
+    .settings-modal {
+
+        position: fixed;
+
+        inset: 0;
+
+        padding: 10px;
+
+        overflow-y: auto;
+    }
+
+    .settings-container {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        max-height: 96vh;
+
+        overflow-y: auto;
+
+        border-radius: 15px;
+    }
+
+    .settings-top {
+
+        padding: 17px;
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+    .settings-top h2 {
+
+        font-size: 21px;
+
+        margin: 0;
+    }
+
+    .settings-top p {
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+    .close-settings {
+
+        width: 35px;
+
+        height: 35px;
+
+        flex-shrink: 0;
+    }
+
+    .settings-content {
+
+        padding: 17px;
+    }
+
+    .settings-section {
+
+        margin-bottom: 25px;
+    }
+
+    .section-title {
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .section-title h3 {
+
+        font-size: 17px;
+    }
+
+    .section-title p {
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+    .profile-setting {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        margin-top: 18px;
+    }
+
+    .profile-picture {
+
+        width: 70px;
+
+        height: 70px;
+
+        flex-shrink: 0;
+    }
+
+    .profile-setting h4 {
+
+        font-size: 15px;
+    }
+
+    .profile-setting p {
+
+        font-size: 12px;
+    }
+
+    .change-photo-btn {
+
+        font-size: 12px;
+
+        padding: 9px 12px;
+    }
+
+    .settings-input {
+
+        width: 100%;
+
+        margin-top: 15px;
+    }
+
+    .settings-input label {
+
         font-size: 13px;
     }
 
-    .div-txt p {
-        font-size: 11px;
+    .settings-input-box {
+
+        width: 100%;
     }
 
+    .settings-input-box input {
+
+        width: 100%;
+
+        min-width: 0;
+
+        font-size: 14px;
+    }
+
+    .theme-setting {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-top: 18px;
+    }
+
+    .theme-info {
+
+        min-width: 0;
+    }
+
+    .theme-info h4 {
+
+        font-size: 14px;
+    }
+
+    .theme-info p {
+
+        font-size: 12px;
+    }
+
+    .theme-toggle {
+
+        flex-shrink: 0;
+    }
+
+    .save-settings {
+
+        width: 100%;
+
+        padding: 13px;
+
+        font-size: 14px;
+    }
+
+
+    /* ================= PROFILE IMAGE VIEWER ================= */
+
+    .profile-image-viewer {
+
+        padding: 15px;
+    }
+
+    .profile-image-viewer-box {
+
+        width: 100%;
+
+        max-width: 400px;
+    }
+
+    .largeProfileImage {
+
+        max-width: 100%;
+
+        height: auto;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+
+        width: 100%;
+    }
+
+    .footer-container {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 30px;
+
+        padding: 45px 20px 25px;
+    }
+
+    .footer-box {
+
+        width: 100%;
+    }
+
+    .footer-box h2 {
+
+        font-size: 25px;
+    }
+
+    .footer-box h3 {
+
+        font-size: 18px;
+    }
+
+    .footer-box p {
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+    .footer-box ul {
+
+        padding-left: 0;
+    }
+
+    .footer-box li {
+
+        font-size: 13px;
+
+        margin-bottom: 8px;
+    }
+
+    .social-icons {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .footer hr {
+
+        margin: 0;
+    }
+
+    .footer-bottom {
+
+        padding: 18px 15px;
+
+        text-align: center;
+    }
+
+    .footer-bottom p {
+
+        font-size: 11px;
+
+        line-height: 1.6;
+
+        margin: 0;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+   360px AND BELOW
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .header2 {
+        padding: 8px 10px;
+    }
+
+    .header2 > img {
+        width: 92px;
+    }
+
+    .hero {
+        min-height: 550px;
+    }
+
+    .hero-text {
+        width: 94%;
+    }
+
+    .hero-text h1 {
+        font-size: 28px;
+    }
+
+    .hero-text > p {
+        font-size: 13px;
+    }
+
+    .hero2 {
+        padding: 45px 14px;
+    }
+
+    .text-dive h1 {
+        font-size: 26px;
+    }
+
+    .services {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .heading h1 {
+        font-size: 26px;
+    }
+
+    .hero4 > h1 {
+        font-size: 27px;
+    }
+
+    .hero5 {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .hero5 h1 {
+        font-size: 28px;
+    }
+
+    .settings-modal {
+        padding: 5px;
+    }
+
+    .settings-container {
+        border-radius: 10px;
+    }
+
+    .settings-top,
+    .settings-content {
+        padding: 14px;
+    }
+
+    .profile-setting {
+        align-items: flex-start;
+    }
+
+    .theme-setting {
+        align-items: flex-start;
+    }
+
+    .theme-toggle {
+        transform: scale(0.9);
+
+        transform-origin: right center;
+    }
+
+
+    /* ================= LEFT-MIDDLE DOT ================= */
+
+    .user-menu-btn {
+
+        position: fixed !important;
+
+        left: 10px !important;
+
+        top: 50% !important;
+
+        right: auto !important;
+
+        bottom: auto !important;
+
+        transform: translateY(-50%) !important;
+
+        width: 43px !important;
+
+        height: 43px !important;
+
+        z-index: 100001 !important;
+    }
+
+    .user-menu-btn i {
+        font-size: 17px;
+    }
+
+
+    /* ================= BIG POPOVER ================= */
+
+    .user-popover {
+
+        position: fixed !important;
+
+        left: 0 !important;
+
+        right: 0 !important;
+
+        bottom: 0 !important;
+
+        top: auto !important;
+
+        width: 100% !important;
+
+        height: 95vh !important;
+
+        max-height: 95vh !important;
+
+        overflow-y: auto !important;
+
+        overflow-x: hidden !important;
+
+        border-radius: 22px 22px 0 0 !important;
+
+        z-index: 100000 !important;
+    }
+
+    .user-popover-header {
+
+        padding: 18px 15px;
+    }
+
+    .user-avatar {
+
+        width: 52px !important;
+
+        height: 52px !important;
+
+        min-width: 52px;
+    }
+
+    .user-info {
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+    .user-info-item {
+
+        padding: 12px 0;
+    }
+
+    .user-popover-links {
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+
+        padding-bottom: 30px;
+    }
+}
+
+
+/* =========================================================
+   IMPORTANT MOBILE DOT MENU OVERRIDE
+   0 - 767px ONLY
+   =========================================================
+
+   This section is intentionally placed LAST so it overrides
+   any older .user-menu / .user-menu-btn / .user-popover
+   rules from the original stylesheet.
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    /* ---------------------------------------------
+       KEEP THE DOT OUT OF THE HEADER
+       --------------------------------------------- */
+
+    .user-menu {
+        position: static !important;
+
+        margin: 0 !important;
+
+        width: auto !important;
+
+        height: auto !important;
+    }
+
+
+    /* ---------------------------------------------
+       THREE DOT BUTTON
+       LEFT MIDDLE OF BODY
+       --------------------------------------------- */
+
+    .user-menu-btn {
+
+        position: fixed !important;
+
+        left: 10px !important;
+
+        top: 50% !important;
+
+        right: auto !important;
+
+        bottom: auto !important;
+
+        transform: translateY(-50%) !important;
+
+        width: 48px !important;
+
+        height: 48px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        padding: 0 !important;
+
+        margin: 0 !important;
+
+        border-radius: 50% !important;
+
+        background: #ffd900 !important;
+
+        border: none !important;
+
+        z-index: 100001 !important;
+
+        cursor: pointer !important;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+
+    }
+
+    .user-menu-btn i {
+
+        font-size: 20px !important;
+    }
+
+
+    /* ---------------------------------------------
+       LARGE USER POPOVER
+       STARTS FROM THE BOTTOM
+       --------------------------------------------- */
+
+    .user-popover {
+
+        position: fixed !important;
+
+        left: 0 !important;
+
+        right: 0 !important;
+
+        bottom: 0 !important;
+
+        top: auto !important;
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        height: 94vh !important;
+
+        max-height: 94vh !important;
+
+        min-height: 0 !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        overflow-y: auto !important;
+
+        overflow-x: hidden !important;
+
+        -webkit-overflow-scrolling: touch;
+
+        overscroll-behavior: contain;
+
+        border-radius: 25px 25px 0 0 !important;
+
+        z-index: 100000 !important;
+
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.30);
+
+    }
+
+
+    /* ---------------------------------------------
+       POPOVER CONTENT MUST BE ABLE TO GROW
+       --------------------------------------------- */
+
+    .user-popover > * {
+
+        max-width: 100% !important;
+
+        flex-shrink: 0 !important;
+    }
+
+
+    .user-popover-header {
+
+        width: 100% !important;
+
+        padding: 25px 20px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        gap: 15px !important;
+    }
+
+
+    .user-info {
+
+        width: 100% !important;
+
+        padding: 10px 20px 15px !important;
+    }
+
+
+    .user-popover-links {
+
+        width: 100% !important;
+
+        padding: 15px 20px 40px !important;
+
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        gap: 10px !important;
+    }
+
+
+    .user-popover-links a,
+    .user-popover-links button {
+
+        width: 100% !important;
+
+        min-height: 55px !important;
+
+        flex-shrink: 0 !important;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP ONLY
+   768px AND ABOVE
+   Restore normal header position
+   ========================================================= */
+
+@media (min-width: 768px) {
+
+    .user-menu {
+        position: relative;
+
+        margin-left: auto;
+    }
+
+    .user-menu-btn {
+        position: relative;
+    }
+
+    .user-popover {
+        position: absolute;
+    }
 }

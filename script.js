@@ -2077,3 +2077,285 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+
+/* =========================================================
+   EASY RIDE - MOVABLE MOBILE THREE-DOT MENU
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const userMenu = document.querySelector(".user-menu");
+    const userMenuBtn = document.querySelector(".user-menu-btn");
+
+    if (!userMenu || !userMenuBtn) {
+        return;
+    }
+
+
+    /* =====================================================
+       ONLY ENABLE DRAGGING ON MOBILE
+       ===================================================== */
+
+    let isDragging = false;
+
+    let startX = 0;
+    let startY = 0;
+
+    let startLeft = 0;
+    let startTop = 0;
+
+    let moved = false;
+
+
+    function isMobile() {
+        return window.innerWidth <= 767;
+    }
+
+
+    /* =====================================================
+       START DRAG
+       ===================================================== */
+
+    userMenuBtn.addEventListener("pointerdown", function (event) {
+
+        if (!isMobile()) {
+            return;
+        }
+
+        isDragging = true;
+        moved = false;
+
+        userMenuBtn.setPointerCapture(event.pointerId);
+
+        const rect = userMenu.getBoundingClientRect();
+
+        startX = event.clientX;
+        startY = event.clientY;
+
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        userMenu.style.transform = "none";
+
+        userMenuBtn.style.cursor = "grabbing";
+
+        event.preventDefault();
+    });
+
+
+    /* =====================================================
+       MOVE DOT
+       ===================================================== */
+
+    userMenuBtn.addEventListener("pointermove", function (event) {
+
+        if (!isDragging || !isMobile()) {
+            return;
+        }
+
+        const moveX = event.clientX - startX;
+        const moveY = event.clientY - startY;
+
+        if (Math.abs(moveX) > 5 || Math.abs(moveY) > 5) {
+            moved = true;
+        }
+
+
+        let newLeft = startLeft + moveX;
+        let newTop = startTop + moveY;
+
+
+        /* ================================================
+           KEEP BUTTON INSIDE SCREEN
+           ================================================ */
+
+        const buttonWidth = userMenu.offsetWidth;
+        const buttonHeight = userMenu.offsetHeight;
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+
+        const minimumLeft = 5;
+        const maximumLeft = screenWidth - buttonWidth - 5;
+
+        const minimumTop = 5;
+        const maximumTop = screenHeight - buttonHeight - 5;
+
+
+        newLeft = Math.max(
+            minimumLeft,
+            Math.min(newLeft, maximumLeft)
+        );
+
+        newTop = Math.max(
+            minimumTop,
+            Math.min(newTop, maximumTop)
+        );
+
+
+        userMenu.style.left = newLeft + "px";
+        userMenu.style.top = newTop + "px";
+
+
+        event.preventDefault();
+    });
+
+
+    /* =====================================================
+       END DRAG
+       ===================================================== */
+
+    userMenuBtn.addEventListener("pointerup", function (event) {
+
+        if (!isDragging) {
+            return;
+        }
+
+        isDragging = false;
+
+        userMenuBtn.style.cursor = "grab";
+
+
+        /* =================================================
+           SAVE THE POSITION
+           ================================================= */
+
+        if (isMobile()) {
+
+            const rect = userMenu.getBoundingClientRect();
+
+            localStorage.setItem(
+                "easyRideMenuPosition",
+                JSON.stringify({
+                    left: rect.left,
+                    top: rect.top
+                })
+            );
+        }
+
+
+        /*
+         * Prevent the normal click from opening the menu
+         * when the user was dragging it.
+         */
+        if (moved) {
+
+            userMenuBtn.dataset.wasDragged = "true";
+
+            setTimeout(function () {
+                userMenuBtn.dataset.wasDragged = "false";
+            }, 100);
+        }
+
+        event.preventDefault();
+    });
+
+
+    /* =====================================================
+       LOAD SAVED POSITION
+       ===================================================== */
+
+    function loadMenuPosition() {
+
+        if (!isMobile()) {
+            return;
+        }
+
+        const savedPosition =
+            localStorage.getItem("easyRideMenuPosition");
+
+        if (!savedPosition) {
+            return;
+        }
+
+        try {
+
+            const position = JSON.parse(savedPosition);
+
+            const buttonWidth = userMenu.offsetWidth;
+            const buttonHeight = userMenu.offsetHeight;
+
+            let left = position.left;
+            let top = position.top;
+
+
+            /* Keep saved position inside screen */
+
+            left = Math.max(
+                5,
+                Math.min(
+                    left,
+                    window.innerWidth - buttonWidth - 5
+                )
+            );
+
+            top = Math.max(
+                5,
+                Math.min(
+                    top,
+                    window.innerHeight - buttonHeight - 5
+                )
+            );
+
+
+            userMenu.style.left = left + "px";
+            userMenu.style.top = top + "px";
+
+            userMenu.style.transform = "none";
+
+        } catch (error) {
+
+            console.log(
+                "Could not load menu position:",
+                error
+            );
+        }
+    }
+
+
+    /* =====================================================
+       HANDLE NORMAL CLICK
+       ===================================================== */
+
+    userMenuBtn.addEventListener("click", function (event) {
+
+        if (userMenuBtn.dataset.wasDragged === "true") {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            return;
+        }
+
+    });
+
+
+    /* =====================================================
+       RESET POSITION WHEN CHANGING TO DESKTOP
+       ===================================================== */
+
+    window.addEventListener("resize", function () {
+
+        if (window.innerWidth > 767) {
+
+            userMenu.style.left = "";
+            userMenu.style.top = "";
+            userMenu.style.transform = "";
+
+        } else {
+
+            loadMenuPosition();
+        }
+
+    });
+
+
+    /* =====================================================
+       INITIAL LOAD
+       ===================================================== */
+
+    loadMenuPosition();
+
+});
