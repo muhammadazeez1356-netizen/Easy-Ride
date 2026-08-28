@@ -4393,6 +4393,24 @@ input {
 
 
 
+/* =========================================================
+   REMOVE HOVER EFFECT FROM THREE-DOT USER MENU
+   ========================================================= */
+
+.user-menu:hover,
+.user-menu-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+.user-menu-btn:hover {
+    background: inherit !important;
+    color: inherit !important;
+}
+
+
+
 /* BOOKING--RIDE */
 
 
@@ -7062,3 +7080,4 @@ input {
         position: absolute;
     }
 }
+

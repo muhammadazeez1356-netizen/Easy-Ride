@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        ACCOUNT STORAGE HELPERS
-       EVERY ACCOUNT IS SEPARATE
     ===================================================== */
 
     function getAllUsers() {
@@ -73,10 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
-    /* =====================================================
-       SAVE ALL USERS
-    ===================================================== */
 
     function saveAllUsers(users) {
 
@@ -123,10 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       SAVE CURRENT USER SESSION
-    ===================================================== */
-
     function saveCurrentUser(user) {
 
         if (!user || !user.id) {
@@ -156,9 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return (
             users.find(function (user) {
-
                 return String(user.id) === String(userId);
-
             }) || null
         );
     }
@@ -182,12 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        ACCOUNT-SPECIFIC STORAGE KEY
-       
-       Example:
-       easyRide_theme_12345
-       easyRide_profileImage_12345
-       
-       Account 12345 cannot use Account 67890's data.
     ===================================================== */
 
     function userStorageKey(key) {
@@ -331,14 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       UPDATE ONLY THE CURRENT ACCOUNT
-       
-       IMPORTANT:
-       This function ONLY updates the account whose ID
-       matches updatedUser.id.
-       
-       It will NEVER push a new user and accidentally
-       overwrite another account.
+       UPDATE ONLY CURRENT ACCOUNT
     ===================================================== */
 
     function updateUser(updatedUser) {
@@ -371,17 +347,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
 
-        /* Preserve the existing account and only
-           update its own information. */
-
         users[userIndex] = {
             ...users[userIndex],
             ...updatedUser
         };
 
         saveAllUsers(users);
-
-        /* Update only the currently logged-in session. */
 
         saveCurrentUser(users[userIndex]);
 
@@ -962,10 +933,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let shouldReturnToUserPopover = false;
 
 
-    /* =====================================================
-       RETURN TO USER POPOVER
-    ===================================================== */
-
     function returnToUserPopover() {
 
         if (!shouldReturnToUserPopover) {
@@ -1000,6 +967,16 @@ document.addEventListener("DOMContentLoaded", function () {
         userMenuBtn.addEventListener(
             "click",
             function (event) {
+
+                if (
+                    userMenuBtn.dataset.wasDragged === "true"
+                ) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    return;
+                }
 
                 event.preventDefault();
                 event.stopPropagation();
@@ -1065,7 +1042,6 @@ document.addEventListener("DOMContentLoaded", function () {
         profileImageViewer.classList.remove("show");
 
         if (largeProfileImage) {
-
             largeProfileImage.removeAttribute("src");
         }
 
@@ -1115,7 +1091,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE PROFILE IMAGE BUTTON
+       CLOSE PROFILE VIEWER
     ===================================================== */
 
     if (closeProfileViewer) {
@@ -1188,39 +1164,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* Remember where Settings was opened from. */
-
                 shouldReturnToUserPopover = true;
 
 
-                /* Load name. */
-
                 if (settingsName) {
-
                     settingsName.value =
                         user.fullname || "";
                 }
 
 
-                /* Load email. */
-
                 if (settingsEmail) {
-
                     settingsEmail.value =
                         user.email || "";
                 }
 
 
-                /* Load phone. */
-
                 if (settingsPhone) {
-
                     settingsPhone.value =
                         user.phone || "";
                 }
 
-
-                /* Reset password. */
 
                 if (settingsPassword) {
 
@@ -1230,8 +1193,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         "password";
                 }
 
-
-                /* Reset password eye icon. */
 
                 if (togglePassword) {
 
@@ -1250,8 +1211,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
-
-                /* Load THIS ACCOUNT'S profile image. */
 
                 if (
                     user.profileImage &&
@@ -1298,7 +1257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE SETTINGS BUTTON
+       CLOSE SETTINGS
     ===================================================== */
 
     if (
@@ -1392,7 +1351,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     "password"
                 ) {
 
-                    settingsPassword.type = "text";
+                    settingsPassword.type =
+                        "text";
 
                     if (icon) {
 
@@ -1428,11 +1388,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        PROFILE IMAGE PREVIEW
-       
-       IMPORTANT:
-       The image is first displayed as a preview.
-       It is saved to the CURRENT ACCOUNT when
-       Save Settings is clicked.
     ===================================================== */
 
     if (
@@ -1491,9 +1446,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
 
 
-                        /* Update current account
-                           preview only. */
-
                         const currentUser =
                             getFreshCurrentUser();
 
@@ -1540,7 +1492,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadUserTheme() {
 
-        document.body.classList.remove("dark-mode");
+        document.body.classList.remove(
+            "dark-mode"
+        );
 
         const user =
             getFreshCurrentUser();
@@ -1555,12 +1509,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /* Theme belongs to THIS account. */
-
         const isDark =
             user.theme === "dark";
-
 
         document.body.classList.toggle(
             "dark-mode",
@@ -1616,8 +1566,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /* Save theme ONLY to this account. */
-
                 currentUser.theme =
                     isDark ? "dark" : "light";
 
@@ -1668,10 +1616,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
 
-                /* =========================================
-                   GET THE CURRENT ACCOUNT
-                ========================================= */
-
                 const currentUser =
                     getFreshCurrentUser();
 
@@ -1689,10 +1633,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   GET VALUES
-                ========================================= */
 
                 const name =
                     settingsName
@@ -1720,10 +1660,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         : "";
 
 
-                /* =========================================
-                   NAME VALIDATION
-                ========================================= */
-
                 if (!name) {
 
                     showToast(
@@ -1739,10 +1675,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* =========================================
-                   EMAIL VALIDATION
-                ========================================= */
-
                 if (!email) {
 
                     showToast(
@@ -1757,10 +1689,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   CORRECT EMAIL REGEX
-                ========================================= */
 
                 const emailPattern =
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1782,13 +1710,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   CHECK DUPLICATE EMAIL
-                   
-                   Ignore the CURRENT account.
-                   Only another account causes an error.
-                ========================================= */
 
                 const users =
                     getAllUsers();
@@ -1820,10 +1741,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* =========================================
-                   UPDATE ONLY CURRENT ACCOUNT
-                ========================================= */
-
                 currentUser.fullname =
                     name;
 
@@ -1833,10 +1750,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentUser.phone =
                     phone;
 
-
-                /* =========================================
-                   CHANGE PASSWORD
-                ========================================= */
 
                 if (password !== "") {
 
@@ -1856,15 +1769,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
-
                     currentUser.password =
                         password;
                 }
 
-
-                /* =========================================
-                   SAVE PROFILE IMAGE TO CURRENT ACCOUNT
-                ========================================= */
 
                 if (
                     settingsProfileImage &&
@@ -1879,20 +1787,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* =========================================
-                   KEEP CURRENT ACCOUNT'S THEME
-                ========================================= */
-
                 if (!currentUser.theme) {
 
                     currentUser.theme =
                         "light";
                 }
 
-
-                /* =========================================
-                   SAVE CURRENT ACCOUNT
-                ========================================= */
 
                 const updated =
                     updateUser(currentUser);
@@ -1915,25 +1815,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /* =========================================
-                   REFRESH USER INFORMATION
-                ========================================= */
-
                 loadUserInformation();
 
                 updateUserAvatar(currentUser);
 
 
-                /* =========================================
-                   CLOSE SETTINGS
-                ========================================= */
+                settingsModal.classList.remove(
+                    "show"
+                );
 
-                settingsModal.classList.remove("show");
-
-
-                /* =========================================
-                   RESET PASSWORD
-                ========================================= */
 
                 if (settingsPassword) {
 
@@ -1943,10 +1833,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         "password";
                 }
 
-
-                /* =========================================
-                   RESET EYE ICON
-                ========================================= */
 
                 if (togglePassword) {
 
@@ -1966,19 +1852,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* =========================================
-                   SUCCESS MESSAGE
-                ========================================= */
-
                 showToast(
                     "Your settings have been saved successfully.",
                     "success"
                 );
 
-
-                /* =========================================
-                   RETURN TO USER POPOVER
-                ========================================= */
 
                 returnToUserPopover();
             }
@@ -1998,7 +1876,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             closeProfileImageViewer();
 
 
@@ -2007,7 +1884,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 settingsModal.classList.contains("show")
             ) {
 
-                settingsModal.classList.remove("show");
+                settingsModal.classList.remove(
+                    "show"
+                );
 
                 returnToUserPopover();
 
@@ -2033,8 +1912,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
 
-                /* End only the current login session. */
-
                 localStorage.removeItem(
                     "easyRideLoggedIn"
                 );
@@ -2043,8 +1920,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     "easyRideUser"
                 );
 
-
-                /* Reset visual theme. */
 
                 document.body.classList.remove(
                     "dark-mode"
@@ -2068,8 +1943,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* Correct JavaScript syntax. */
-
                 window.location.href =
                     "/website/login.html";
             }
@@ -2080,282 +1953,629 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   EASY RIDE - MOVABLE MOBILE THREE-DOT MENU
-   ========================================================= */
+   EASY RIDE
+   REAL DRAGGABLE MOBILE THREE-DOT MENU
 
-document.addEventListener("DOMContentLoaded", function () {
+   IMPORTANT:
+   - The menu can be dragged anywhere on the screen.
+   - Position is saved.
+   - Dragging does NOT open the menu.
+   - Normal tap still opens the menu.
+   - Desktop is not affected.
+========================================================= */
 
-    const userMenu = document.querySelector(".user-menu");
-    const userMenuBtn = document.querySelector(".user-menu-btn");
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    if (!userMenu || !userMenuBtn) {
-        return;
-    }
+        const userMenu =
+            document.querySelector(".user-menu");
 
+        const userMenuBtn =
+            document.querySelector(".user-menu-btn");
 
-    /* =====================================================
-       ONLY ENABLE DRAGGING ON MOBILE
-       ===================================================== */
-
-    let isDragging = false;
-
-    let startX = 0;
-    let startY = 0;
-
-    let startLeft = 0;
-    let startTop = 0;
-
-    let moved = false;
-
-
-    function isMobile() {
-        return window.innerWidth <= 767;
-    }
-
-
-    /* =====================================================
-       START DRAG
-       ===================================================== */
-
-    userMenuBtn.addEventListener("pointerdown", function (event) {
-
-        if (!isMobile()) {
+        if (
+            !userMenu ||
+            !userMenuBtn
+        ) {
             return;
         }
-
-        isDragging = true;
-        moved = false;
-
-        userMenuBtn.setPointerCapture(event.pointerId);
-
-        const rect = userMenu.getBoundingClientRect();
-
-        startX = event.clientX;
-        startY = event.clientY;
-
-        startLeft = rect.left;
-        startTop = rect.top;
-
-        userMenu.style.transform = "none";
-
-        userMenuBtn.style.cursor = "grabbing";
-
-        event.preventDefault();
-    });
-
-
-    /* =====================================================
-       MOVE DOT
-       ===================================================== */
-
-    userMenuBtn.addEventListener("pointermove", function (event) {
-
-        if (!isDragging || !isMobile()) {
-            return;
-        }
-
-        const moveX = event.clientX - startX;
-        const moveY = event.clientY - startY;
-
-        if (Math.abs(moveX) > 5 || Math.abs(moveY) > 5) {
-            moved = true;
-        }
-
-
-        let newLeft = startLeft + moveX;
-        let newTop = startTop + moveY;
-
-
-        /* ================================================
-           KEEP BUTTON INSIDE SCREEN
-           ================================================ */
-
-        const buttonWidth = userMenu.offsetWidth;
-        const buttonHeight = userMenu.offsetHeight;
-
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-
-
-        const minimumLeft = 5;
-        const maximumLeft = screenWidth - buttonWidth - 5;
-
-        const minimumTop = 5;
-        const maximumTop = screenHeight - buttonHeight - 5;
-
-
-        newLeft = Math.max(
-            minimumLeft,
-            Math.min(newLeft, maximumLeft)
-        );
-
-        newTop = Math.max(
-            minimumTop,
-            Math.min(newTop, maximumTop)
-        );
-
-
-        userMenu.style.left = newLeft + "px";
-        userMenu.style.top = newTop + "px";
-
-
-        event.preventDefault();
-    });
-
-
-    /* =====================================================
-       END DRAG
-       ===================================================== */
-
-    userMenuBtn.addEventListener("pointerup", function (event) {
-
-        if (!isDragging) {
-            return;
-        }
-
-        isDragging = false;
-
-        userMenuBtn.style.cursor = "grab";
 
 
         /* =================================================
-           SAVE THE POSITION
-           ================================================= */
+           MOBILE CHECK
+        ================================================= */
 
-        if (isMobile()) {
+        function isMobile() {
 
-            const rect = userMenu.getBoundingClientRect();
-
-            localStorage.setItem(
-                "easyRideMenuPosition",
-                JSON.stringify({
-                    left: rect.left,
-                    top: rect.top
-                })
-            );
+            return window.innerWidth <= 767;
         }
 
 
-        /*
-         * Prevent the normal click from opening the menu
-         * when the user was dragging it.
-         */
-        if (moved) {
+        /* =================================================
+           DRAG VARIABLES
+        ================================================= */
 
-            userMenuBtn.dataset.wasDragged = "true";
+        let dragging = false;
 
-            setTimeout(function () {
-                userMenuBtn.dataset.wasDragged = "false";
-            }, 100);
-        }
+        let hasMoved = false;
 
-        event.preventDefault();
-    });
+        let pointerId = null;
 
+        let startX = 0;
 
-    /* =====================================================
-       LOAD SAVED POSITION
-       ===================================================== */
+        let startY = 0;
 
-    function loadMenuPosition() {
+        let startLeft = 0;
 
-        if (!isMobile()) {
-            return;
-        }
-
-        const savedPosition =
-            localStorage.getItem("easyRideMenuPosition");
-
-        if (!savedPosition) {
-            return;
-        }
-
-        try {
-
-            const position = JSON.parse(savedPosition);
-
-            const buttonWidth = userMenu.offsetWidth;
-            const buttonHeight = userMenu.offsetHeight;
-
-            let left = position.left;
-            let top = position.top;
+        let startTop = 0;
 
 
-            /* Keep saved position inside screen */
+        /* =================================================
+           MAKE THE MENU ABSOLUTELY POSITIONED
 
-            left = Math.max(
-                5,
-                Math.min(
-                    left,
-                    window.innerWidth - buttonWidth - 5
-                )
-            );
+           This is the important part.
 
-            top = Math.max(
-                5,
-                Math.min(
-                    top,
-                    window.innerHeight - buttonHeight - 5
-                )
-            );
+           The menu is removed from normal layout flow
+           when dragging on mobile.
+        ================================================= */
 
+        function prepareMobileMenu() {
 
-            userMenu.style.left = left + "px";
-            userMenu.style.top = top + "px";
+            if (!isMobile()) {
+                return;
+            }
+
+            const rect =
+                userMenu.getBoundingClientRect();
+
+            userMenu.style.position = "fixed";
+
+            userMenu.style.left =
+                rect.left + "px";
+
+            userMenu.style.top =
+                rect.top + "px";
+
+            userMenu.style.right = "auto";
+
+            userMenu.style.bottom = "auto";
+
+            userMenu.style.margin = "0";
 
             userMenu.style.transform = "none";
 
-        } catch (error) {
+            userMenu.style.zIndex = "99999";
+        }
 
-            console.log(
-                "Could not load menu position:",
-                error
+
+        /* =================================================
+           LOAD SAVED POSITION
+        ================================================= */
+
+        function loadSavedMenuPosition() {
+
+            if (!isMobile()) {
+                return;
+            }
+
+            const saved =
+                localStorage.getItem(
+                    "easyRideMenuPosition"
+                );
+
+            if (!saved) {
+
+                prepareMobileMenu();
+
+                return;
+            }
+
+            try {
+
+                const position =
+                    JSON.parse(saved);
+
+                const rect =
+                    userMenu.getBoundingClientRect();
+
+                const menuWidth =
+                    rect.width;
+
+                const menuHeight =
+                    rect.height;
+
+                const maxLeft =
+                    window.innerWidth -
+                    menuWidth -
+                    5;
+
+                const maxTop =
+                    window.innerHeight -
+                    menuHeight -
+                    5;
+
+                let left =
+                    Number(position.left);
+
+                let top =
+                    Number(position.top);
+
+
+                if (!Number.isFinite(left)) {
+                    left = 5;
+                }
+
+                if (!Number.isFinite(top)) {
+                    top = 5;
+                }
+
+
+                left =
+                    Math.max(
+                        5,
+                        Math.min(
+                            left,
+                            Math.max(5, maxLeft)
+                        )
+                    );
+
+
+                top =
+                    Math.max(
+                        5,
+                        Math.min(
+                            top,
+                            Math.max(5, maxTop)
+                        )
+                    );
+
+
+                userMenu.style.position =
+                    "fixed";
+
+                userMenu.style.left =
+                    left + "px";
+
+                userMenu.style.top =
+                    top + "px";
+
+                userMenu.style.right =
+                    "auto";
+
+                userMenu.style.bottom =
+                    "auto";
+
+                userMenu.style.margin =
+                    "0";
+
+                userMenu.style.transform =
+                    "none";
+
+                userMenu.style.zIndex =
+                    "99999";
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load menu position:",
+                    error
+                );
+
+                prepareMobileMenu();
+            }
+        }
+
+
+        /* =================================================
+           POINTER DOWN
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "pointerdown",
+            function (event) {
+
+                if (!isMobile()) {
+                    return;
+                }
+
+
+                /* Do not start drag with right click. */
+
+                if (
+                    event.pointerType === "mouse" &&
+                    event.button !== 0
+                ) {
+                    return;
+                }
+
+
+                prepareMobileMenu();
+
+
+                const rect =
+                    userMenu.getBoundingClientRect();
+
+
+                dragging = true;
+
+                hasMoved = false;
+
+                pointerId =
+                    event.pointerId;
+
+
+                startX =
+                    event.clientX;
+
+                startY =
+                    event.clientY;
+
+                startLeft =
+                    rect.left;
+
+                startTop =
+                    rect.top;
+
+
+                userMenuBtn.style.cursor =
+                    "grabbing";
+
+
+                try {
+
+                    userMenuBtn.setPointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {
+                    console.log(error);
+                }
+
+
+                event.preventDefault();
+            }
+        );
+
+
+        /* =================================================
+           POINTER MOVE
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "pointermove",
+            function (event) {
+
+                if (!dragging) {
+                    return;
+                }
+
+                if (
+                    pointerId !== null &&
+                    event.pointerId !== pointerId
+                ) {
+                    return;
+                }
+
+
+                const deltaX =
+                    event.clientX -
+                    startX;
+
+                const deltaY =
+                    event.clientY -
+                    startY;
+
+
+                /* Only count it as dragging after
+                   moving a few pixels. */
+
+                if (
+                    Math.abs(deltaX) > 5 ||
+                    Math.abs(deltaY) > 5
+                ) {
+
+                    hasMoved = true;
+                }
+
+
+                if (!hasMoved) {
+                    return;
+                }
+
+
+                const menuWidth =
+                    userMenu.offsetWidth;
+
+                const menuHeight =
+                    userMenu.offsetHeight;
+
+
+                const screenWidth =
+                    window.innerWidth;
+
+                const screenHeight =
+                    window.innerHeight;
+
+
+                const minimumLeft = 5;
+
+                const minimumTop = 5;
+
+
+                const maximumLeft =
+                    Math.max(
+                        minimumLeft,
+                        screenWidth -
+                        menuWidth -
+                        5
+                    );
+
+
+                const maximumTop =
+                    Math.max(
+                        minimumTop,
+                        screenHeight -
+                        menuHeight -
+                        5
+                    );
+
+
+                let newLeft =
+                    startLeft +
+                    deltaX;
+
+                let newTop =
+                    startTop +
+                    deltaY;
+
+
+                /* Keep menu inside screen. */
+
+                newLeft =
+                    Math.max(
+                        minimumLeft,
+                        Math.min(
+                            newLeft,
+                            maximumLeft
+                        )
+                    );
+
+
+                newTop =
+                    Math.max(
+                        minimumTop,
+                        Math.min(
+                            newTop,
+                            maximumTop
+                        )
+                    );
+
+
+                userMenu.style.position =
+                    "fixed";
+
+                userMenu.style.left =
+                    newLeft + "px";
+
+                userMenu.style.top =
+                    newTop + "px";
+
+                userMenu.style.right =
+                    "auto";
+
+                userMenu.style.bottom =
+                    "auto";
+
+                userMenu.style.transform =
+                    "none";
+
+
+                event.preventDefault();
+            }
+        );
+
+
+        /* =================================================
+           POINTER UP
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "pointerup",
+            function (event) {
+
+                if (!dragging) {
+                    return;
+                }
+
+
+                if (
+                    pointerId !== null &&
+                    event.pointerId !== pointerId
+                ) {
+                    return;
+                }
+
+
+                dragging = false;
+
+
+                userMenuBtn.style.cursor =
+                    "grab";
+
+
+                if (hasMoved) {
+
+                    const rect =
+                        userMenu.getBoundingClientRect();
+
+
+                    /* Save the position. */
+
+                    localStorage.setItem(
+                        "easyRideMenuPosition",
+                        JSON.stringify({
+
+                            left: rect.left,
+
+                            top: rect.top
+
+                        })
+                    );
+
+
+                    /* Tell the normal click
+                       handler not to open menu. */
+
+                    userMenuBtn.dataset.wasDragged =
+                        "true";
+
+
+                    setTimeout(
+                        function () {
+
+                            userMenuBtn.dataset.wasDragged =
+                                "false";
+
+                        },
+                        200
+                    );
+                }
+
+
+                try {
+
+                    userMenuBtn.releasePointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {
+                    console.log(error);
+                }
+
+
+                pointerId = null;
+
+                event.preventDefault();
+            }
+        );
+
+
+        /* =================================================
+           POINTER CANCEL
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "pointercancel",
+            function () {
+
+                dragging = false;
+
+                pointerId = null;
+
+                userMenuBtn.style.cursor =
+                    "grab";
+            }
+        );
+
+
+        /* =================================================
+           BLOCK CLICK AFTER DRAG
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    userMenuBtn.dataset.wasDragged ===
+                    "true"
+                ) {
+
+                    event.preventDefault();
+
+                    event.stopImmediatePropagation();
+
+                    return false;
+                }
+            },
+            true
+        );
+
+
+        /* =================================================
+           PREVENT TOUCH SCROLL WHILE DRAGGING
+        ================================================= */
+
+        userMenuBtn.style.touchAction =
+            "none";
+
+        userMenuBtn.style.cursor =
+            "grab";
+
+
+        /* =================================================
+           RESIZE
+
+           If mobile:
+           keep saved position.
+
+           If desktop:
+           remove mobile positioning.
+        ================================================= */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (window.innerWidth <= 767) {
+
+                    loadSavedMenuPosition();
+
+                } else {
+
+                    userMenu.style.position =
+                        "";
+
+                    userMenu.style.left =
+                        "";
+
+                    userMenu.style.top =
+                        "";
+
+                    userMenu.style.right =
+                        "";
+
+                    userMenu.style.bottom =
+                        "";
+
+                    userMenu.style.margin =
+                        "";
+
+                    userMenu.style.transform =
+                        "";
+
+                    userMenu.style.zIndex =
+                        "";
+                }
+            }
+        );
+
+
+        /* =================================================
+           INITIALIZE
+        ================================================= */
+
+        if (isMobile()) {
+
+            requestAnimationFrame(
+                function () {
+
+                    loadSavedMenuPosition();
+
+                }
             );
         }
+
     }
-
-
-    /* =====================================================
-       HANDLE NORMAL CLICK
-       ===================================================== */
-
-    userMenuBtn.addEventListener("click", function (event) {
-
-        if (userMenuBtn.dataset.wasDragged === "true") {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            return;
-        }
-
-    });
-
-
-    /* =====================================================
-       RESET POSITION WHEN CHANGING TO DESKTOP
-       ===================================================== */
-
-    window.addEventListener("resize", function () {
-
-        if (window.innerWidth > 767) {
-
-            userMenu.style.left = "";
-            userMenu.style.top = "";
-            userMenu.style.transform = "";
-
-        } else {
-
-            loadMenuPosition();
-        }
-
-    });
-
-
-    /* =====================================================
-       INITIAL LOAD
-       ===================================================== */
-
-    loadMenuPosition();
-
-});
+);
