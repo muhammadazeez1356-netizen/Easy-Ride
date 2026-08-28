@@ -4624,6 +4624,42 @@ input {
 
 
 /* =========================================================
+   REMOVE MENU HOVER EFFECT
+   ========================================================= */
+
+.user-menu-btn,
+.user-menu-btn:hover,
+.user-menu-btn:focus,
+.user-menu-btn:active {
+    transition: none !important;
+    transform: none !important;
+}
+
+/*
+   IMPORTANT:
+   On mobile the button needs translateY(-50%) to stay
+   vertically centered. Therefore we restore only the
+   positioning transform below.
+*/
+
+@media (max-width: 767px) {
+
+    .user-menu-btn,
+    .user-menu-btn:hover,
+    .user-menu-btn:focus,
+    .user-menu-btn:active {
+        transform: translateY(-50%) !important;
+    }
+
+    .user-menu-btn:hover {
+        background: #ffd900 !important;
+        color: inherit !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+    }
+}
+
+
+/* =========================================================
    LARGE DESKTOP
    1200px AND ABOVE
    ========================================================= */
@@ -4788,8 +4824,8 @@ input {
     }
 
     .user-menu {
+        position: relative;
         margin-left: auto;
-        margin-right: 15px;
     }
 
 
@@ -5030,8 +5066,9 @@ input {
     }
 
     .user-menu {
-        margin-left: auto;
-        margin-right: 10px;
+        position: static !important;
+
+        margin: 0 !important;
     }
 
     .show-div {
@@ -5484,8 +5521,7 @@ input {
 
     /* =====================================================
        USER MENU
-       MOBILE DOT BUTTON
-       LEFT MIDDLE OF BODY
+       LEFT MIDDLE OF SCREEN
        ===================================================== */
 
     .user-menu {
@@ -5493,9 +5529,9 @@ input {
 
         margin: 0 !important;
 
-        width: auto;
+        width: auto !important;
 
-        height: auto;
+        height: auto !important;
     }
 
     .user-menu-btn {
@@ -5522,28 +5558,53 @@ input {
 
         justify-content: center !important;
 
+        padding: 0 !important;
+
+        margin: 0 !important;
+
         border-radius: 50% !important;
 
         background: #ffd900 !important;
 
         border: none !important;
 
+        outline: none !important;
+
         z-index: 100001 !important;
 
-        cursor: pointer;
+        cursor: pointer !important;
 
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+
+        transition: none !important;
+    }
+
+    /* REMOVE HOVER COMPLETELY */
+
+    .user-menu-btn:hover {
+        background: #ffd900 !important;
+
+        transform: translateY(-50%) !important;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .user-menu-btn:focus,
+    .user-menu-btn:active {
+        background: #ffd900 !important;
+
+        transform: translateY(-50%) !important;
+
+        outline: none !important;
     }
 
     .user-menu-btn i {
-        font-size: 20px;
+        font-size: 20px !important;
     }
 
 
     /* =====================================================
        USER POPOVER
-       LARGE
-       COMES FROM BELOW
        ===================================================== */
 
     .user-popover {
@@ -5587,7 +5648,6 @@ input {
         box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.30);
 
         animation: userPopoverFromBottom 0.35s ease-out;
-
     }
 
 
@@ -5753,9 +5813,7 @@ input {
     }
 
 
-    /* =====================================================
-       BOOKING RIDE / SETTINGS / LOGOUT
-       ===================================================== */
+    /* ================= USER POPOVER LINKS ================= */
 
     .user-popover-links {
 
@@ -5807,7 +5865,7 @@ input {
     }
 
 
-    /* ================= KEEP ALL POPOVER CONTENT ================= */
+    /* ================= KEEP POPOVER CONTENT ================= */
 
     .user-popover > * {
 
@@ -6658,7 +6716,7 @@ input {
     }
 
 
-    /* ================= LEFT-MIDDLE DOT ================= */
+    /* ================= LEFT-MIDDLE MENU ================= */
 
     .user-menu-btn {
 
@@ -6679,6 +6737,19 @@ input {
         height: 43px !important;
 
         z-index: 100001 !important;
+    }
+
+    .user-menu-btn:hover,
+    .user-menu-btn:focus,
+    .user-menu-btn:active {
+
+        background: #ffd900 !important;
+
+        transform: translateY(-50%) !important;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+
+        outline: none !important;
     }
 
     .user-menu-btn i {
@@ -6753,20 +6824,15 @@ input {
 
 
 /* =========================================================
-   IMPORTANT MOBILE DOT MENU OVERRIDE
-   0 - 767px ONLY
-   =========================================================
-
-   This section is intentionally placed LAST so it overrides
-   any older .user-menu / .user-menu-btn / .user-popover
-   rules from the original stylesheet.
+   FINAL MOBILE MENU OVERRIDE
+   0 - 767px
    ========================================================= */
 
 @media (max-width: 767px) {
 
-    /* ---------------------------------------------
-       KEEP THE DOT OUT OF THE HEADER
-       --------------------------------------------- */
+    /*
+       Keep menu outside the header.
+    */
 
     .user-menu {
         position: static !important;
@@ -6779,10 +6845,10 @@ input {
     }
 
 
-    /* ---------------------------------------------
-       THREE DOT BUTTON
-       LEFT MIDDLE OF BODY
-       --------------------------------------------- */
+    /*
+       MENU BUTTON
+       LEFT SIDE + CENTER OF SCREEN
+    */
 
     .user-menu-btn {
 
@@ -6818,13 +6884,54 @@ input {
 
         border: none !important;
 
+        outline: none !important;
+
         z-index: 100001 !important;
 
         cursor: pointer !important;
 
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
 
+        transition: none !important;
     }
+
+
+    /*
+       NO HOVER CHANGE
+    */
+
+    .user-menu-btn:hover {
+
+        background: #ffd900 !important;
+
+        color: inherit !important;
+
+        transform: translateY(-50%) !important;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+
+        border: none !important;
+    }
+
+
+    /*
+       NO FOCUS / ACTIVE CHANGE
+    */
+
+    .user-menu-btn:focus,
+    .user-menu-btn:active {
+
+        background: #ffd900 !important;
+
+        transform: translateY(-50%) !important;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+
+        outline: none !important;
+
+        border: none !important;
+    }
+
 
     .user-menu-btn i {
 
@@ -6832,10 +6939,9 @@ input {
     }
 
 
-    /* ---------------------------------------------
-       LARGE USER POPOVER
-       STARTS FROM THE BOTTOM
-       --------------------------------------------- */
+    /*
+       USER POPOVER
+    */
 
     .user-popover {
 
@@ -6876,13 +6982,8 @@ input {
         z-index: 100000 !important;
 
         box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.30);
-
     }
 
-
-    /* ---------------------------------------------
-       POPOVER CONTENT MUST BE ABLE TO GROW
-       --------------------------------------------- */
 
     .user-popover > * {
 
@@ -6941,9 +7042,8 @@ input {
 
 
 /* =========================================================
-   DESKTOP ONLY
+   DESKTOP
    768px AND ABOVE
-   Restore normal header position
    ========================================================= */
 
 @media (min-width: 768px) {
