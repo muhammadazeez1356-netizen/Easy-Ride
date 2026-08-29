@@ -4392,25 +4392,6 @@ input {
 
 
 
-
-/* =========================================================
-   REMOVE HOVER EFFECT FROM THREE-DOT USER MENU
-   ========================================================= */
-
-.user-menu:hover,
-.user-menu-btn:hover {
-    transform: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-}
-
-.user-menu-btn:hover {
-    background: inherit !important;
-    color: inherit !important;
-}
-
-
-
 /* BOOKING--RIDE */
 
 
@@ -4609,56 +4590,7 @@ input {
    ========================================================= */
 
 
-/* =========================================================
-   GENERAL RESPONSIVE FIXES
-   ========================================================= */
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    width: 100%;
-    overflow-x: hidden;
-}
-
-body {
-    width: 100%;
-    margin: 0;
-    overflow-x: hidden;
-}
-
-img,
-video {
-    max-width: 100%;
-    height: auto;
-}
-
-a,
-button,
-input {
-    font-family: inherit;
-}
-
-
-/* =========================================================
-   REMOVE MENU HOVER EFFECT
-   ========================================================= */
-
-.user-menu-btn,
-.user-menu-btn:hover,
-.user-menu-btn:focus,
-.user-menu-btn:active {
-    transition: none !important;
-    transform: none !important;
-}
-
-/*
-   IMPORTANT:
-   On mobile the button needs translateY(-50%) to stay
-   vertically centered. Therefore we restore only the
-   positioning transform below.
-*/
 
 @media (max-width: 767px) {
 
@@ -7081,3 +7013,93 @@ input {
     }
 }
 
+/* =========================================================
+   REMOVE ALL HOVER EFFECT FROM USER MENU
+   ========================================================= */
+
+.user-menu:hover,
+.user-menu:active,
+.user-menu:focus {
+    transform: none !important;
+    right: auto !important;
+}
+
+.user-menu-btn:hover,
+.user-menu-btn:active,
+.user-menu-btn:focus {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* MOBILE / RESPONSIVE */
+@media screen and (max-width: 767px) {
+
+    .user-menu:hover,
+    .user-menu:active,
+    .user-menu:focus {
+        left: 15px !important;
+        right: auto !important;
+    }
+
+    .user-menu-btn:hover,
+    .user-menu-btn:active,
+    .user-menu-btn:focus {
+        transform: none !important;
+    }
+}
+
+/* =========================================================
+   FINAL USER MENU POSITION
+   MOBILE: RIGHT SIDE + MIDDLE OF SCREEN
+   ========================================================= */
+
+@media screen and (max-width: 767px) {
+
+    .user-menu {
+        position: fixed !important;
+        right: 10px !important;
+        left: auto !important;
+        top: 50% !important;
+        bottom: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateY(-50%) !important;
+        z-index: 100001 !important;
+    }
+
+    .user-menu-btn {
+        position: fixed !important;
+        right: 10px !important;
+        left: auto !important;
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+
+        width: 48px !important;
+        height: 48px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        border-radius: 50% !important;
+        background: #ffd900 !important;
+
+        z-index: 100002 !important;
+    }
+
+    .user-menu-btn:hover,
+    .user-menu-btn:focus,
+    .user-menu-btn:active {
+        right: 10px !important;
+        left: auto !important;
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        background: #ffd900 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+    }
+}
