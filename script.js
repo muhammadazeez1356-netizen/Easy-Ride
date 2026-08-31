@@ -1,6 +1,5 @@
 /* =========================================================
    EASY RIDE - MAIN JAVASCRIPT
-   ACCOUNT-SPECIFIC VERSION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -47,12 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       ACCOUNT STORAGE HELPERS
+       ACCOUNT HELPERS
+       EACH ACCOUNT IS COMPLETELY SEPARATE
     ===================================================== */
 
     function getAllUsers() {
 
-        const usersData = localStorage.getItem("easyRideUsers");
+        const usersData =
+            localStorage.getItem("easyRideUsers");
 
         if (!usersData) {
             return [];
@@ -62,16 +63,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const users = JSON.parse(usersData);
 
-            return Array.isArray(users) ? users : [];
+            return Array.isArray(users)
+                ? users
+                : [];
 
         } catch (error) {
 
-            console.error("Unable to read users:", error);
+            console.error(
+                "Unable to read users:",
+                error
+            );
 
             return [];
         }
     }
 
+
+    /* =====================================================
+       SAVE ALL ACCOUNTS
+    ===================================================== */
 
     function saveAllUsers(users) {
 
@@ -83,12 +93,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       GET CURRENT LOGGED-IN USER
+       GET CURRENT LOGGED-IN ACCOUNT
     ===================================================== */
 
     function getCurrentUser() {
 
-        const userData = localStorage.getItem("easyRideUser");
+        const userData =
+            localStorage.getItem("easyRideUser");
 
         if (!userData) {
             return null;
@@ -118,23 +129,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       SAVE CURRENT ACCOUNT SESSION
+    ===================================================== */
+
     function saveCurrentUser(user) {
 
-        if (!user || !user.id) {
-            return false;
+        if (
+            !user ||
+            !user.id
+        ) {
+            return;
         }
 
         localStorage.setItem(
             "easyRideUser",
             JSON.stringify(user)
         );
-
-        return true;
     }
 
 
     /* =====================================================
-       GET USER BY ID
+       GET ACCOUNT BY ID
     ===================================================== */
 
     function getUserById(userId) {
@@ -143,25 +159,31 @@ document.addEventListener("DOMContentLoaded", function () {
             return null;
         }
 
-        const users = getAllUsers();
+        const users =
+            getAllUsers();
 
-        return (
-            users.find(function (user) {
-                return String(user.id) === String(userId);
-            }) || null
-        );
+        return users.find(function (user) {
+
+            return String(user.id) ===
+                String(userId);
+
+        }) || null;
     }
 
 
     /* =====================================================
-       GET CURRENT USER ID
+       GET LOGGED-IN ACCOUNT ID
     ===================================================== */
 
     function getCurrentUserId() {
 
-        const user = getCurrentUser();
+        const user =
+            getCurrentUser();
 
-        if (!user || !user.id) {
+        if (
+            !user ||
+            !user.id
+        ) {
             return null;
         }
 
@@ -175,7 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function userStorageKey(key) {
 
-        const userId = getCurrentUserId();
+        const userId =
+            getCurrentUserId();
 
         if (!userId) {
             return null;
@@ -186,12 +209,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SAVE CURRENT USER DATA ONLY
+       SAVE DATA FOR CURRENT ACCOUNT ONLY
     ===================================================== */
 
     function saveUserData(key, value) {
 
-        const storageKey = userStorageKey(key);
+        const storageKey =
+            userStorageKey(key);
 
         if (!storageKey) {
             return false;
@@ -219,18 +243,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       GET CURRENT USER DATA ONLY
+       GET DATA FOR CURRENT ACCOUNT ONLY
     ===================================================== */
 
     function getUserData(key) {
 
-        const storageKey = userStorageKey(key);
+        const storageKey =
+            userStorageKey(key);
 
         if (!storageKey) {
             return null;
         }
 
-        const data = localStorage.getItem(storageKey);
+        const data =
+            localStorage.getItem(storageKey);
 
         if (!data) {
             return null;
@@ -253,12 +279,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       REMOVE CURRENT USER DATA ONLY
+       REMOVE DATA FOR CURRENT ACCOUNT ONLY
     ===================================================== */
 
     function removeUserData(key) {
 
-        const storageKey = userStorageKey(key);
+        const storageKey =
+            userStorageKey(key);
 
         if (!storageKey) {
             return;
@@ -275,9 +302,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function isLoggedIn() {
 
         const loggedIn =
-            localStorage.getItem("easyRideLoggedIn");
+            localStorage.getItem(
+                "easyRideLoggedIn"
+            );
 
-        const user = getCurrentUser();
+        const user =
+            getCurrentUser();
 
         return (
             loggedIn === "true" &&
@@ -293,18 +323,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function getFreshCurrentUser() {
 
-        const currentUser = getCurrentUser();
+        const currentUser =
+            getCurrentUser();
 
-        if (!currentUser || !currentUser.id) {
+        if (!currentUser) {
             return null;
         }
 
         const savedUser =
-            getUserById(currentUser.id);
+            getUserById(
+                currentUser.id
+            );
 
         if (savedUser) {
 
-            saveCurrentUser(savedUser);
+            saveCurrentUser(
+                savedUser
+            );
 
             return savedUser;
         }
@@ -314,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       UPDATE ONLY CURRENT ACCOUNT
+       UPDATE ONLY THE CURRENT ACCOUNT
     ===================================================== */
 
     function updateUser(updatedUser) {
@@ -326,24 +361,18 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
 
-        const users = getAllUsers();
+        const users =
+            getAllUsers();
 
         const userIndex =
             users.findIndex(function (user) {
 
-                return (
-                    String(user.id) ===
-                    String(updatedUser.id)
-                );
+                return String(user.id) ===
+                    String(updatedUser.id);
 
             });
 
         if (userIndex === -1) {
-
-            console.error(
-                "Account not found. Update cancelled."
-            );
-
             return false;
         }
 
@@ -354,7 +383,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         saveAllUsers(users);
 
-        saveCurrentUser(users[userIndex]);
+        saveCurrentUser(
+            users[userIndex]
+        );
 
         return true;
     }
@@ -365,43 +396,69 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const settingsBtn =
-        document.getElementById("settingsBtn");
+        document.getElementById(
+            "settingsBtn"
+        );
 
     const settingsModal =
-        document.getElementById("settingsModal");
+        document.getElementById(
+            "settingsModal"
+        );
 
     const closeSettings =
-        document.getElementById("closeSettings");
+        document.getElementById(
+            "closeSettings"
+        );
 
     const saveSettings =
-        document.getElementById("saveSettings");
+        document.getElementById(
+            "saveSettings"
+        );
 
     const settingsName =
-        document.getElementById("settingsName");
+        document.getElementById(
+            "settingsName"
+        );
 
     const settingsEmail =
-        document.getElementById("settingsEmail");
+        document.getElementById(
+            "settingsEmail"
+        );
 
     const settingsPhone =
-        document.getElementById("settingsPhone");
+        document.getElementById(
+            "settingsPhone"
+        );
 
     const settingsPassword =
-        document.getElementById("settingsPassword");
+        document.getElementById(
+            "settingsPassword"
+        );
 
     const togglePassword =
-        document.getElementById("togglePassword");
+        document.getElementById(
+            "togglePassword"
+        );
 
     const themeToggle =
-        document.getElementById("themeToggle");
+        document.getElementById(
+            "themeToggle"
+        );
 
     const profileImageInput =
-        document.getElementById("profileImageInput");
+        document.getElementById(
+            "profileImageInput"
+        );
 
     const settingsProfileImage =
-        document.getElementById("settingsProfileImage");
+        document.getElementById(
+            "settingsProfileImage"
+        );
 
     const settingsDefaultAvatar =
-        document.getElementById("settingsDefaultAvatar");
+        document.getElementById(
+            "settingsDefaultAvatar"
+        );
 
 
     /* =====================================================
@@ -412,15 +469,22 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("splash");
 
     const mainContent =
-        document.getElementById("main-content");
+        document.getElementById(
+            "main-content"
+        );
 
-    if (splash && mainContent) {
+    if (
+        splash &&
+        mainContent
+    ) {
 
         setTimeout(function () {
 
-            splash.style.display = "none";
+            splash.style.display =
+                "none";
 
-            mainContent.style.display = "block";
+            mainContent.style.display =
+                "block";
 
         }, 2000);
     }
@@ -431,15 +495,19 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const typingTexts =
-        document.getElementById("typing-texts");
+        document.getElementById(
+            "typing-texts"
+        );
 
     if (typingTexts) {
 
-        const text = "Easy Ride.";
+        const text =
+            "Easy Ride.";
 
         let index = 0;
 
-        typingTexts.textContent = "";
+        typingTexts.textContent =
+            "";
 
         function typeWriter() {
 
@@ -466,7 +534,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const typing =
-        document.getElementById("typing");
+        document.getElementById(
+            "typing"
+        );
 
     if (typing) {
 
@@ -475,7 +545,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let index = 0;
 
-        typing.textContent = "";
+        typing.textContent =
+            "";
 
         function typeHeroText() {
 
@@ -502,25 +573,33 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const slides =
-        document.querySelectorAll(".slide");
+        document.querySelectorAll(
+            ".slide"
+        );
 
     if (slides.length > 0) {
 
         let currentSlide = 0;
 
-        slides[0].classList.add("active");
+        slides[0].classList.add(
+            "active"
+        );
 
         setInterval(function () {
 
             slides[currentSlide]
-                .classList.remove("active");
+                .classList.remove(
+                    "active"
+                );
 
             currentSlide =
                 (currentSlide + 1) %
                 slides.length;
 
             slides[currentSlide]
-                .classList.add("active");
+                .classList.add(
+                    "active"
+                );
 
         }, 4000);
     }
@@ -531,10 +610,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const mobileMenuButton =
-        document.querySelector(".show-div");
+        document.querySelector(
+            ".show-div"
+        );
 
     const navItems =
-        document.getElementById("nav-items");
+        document.getElementById(
+            "nav-items"
+        );
 
     if (
         mobileMenuButton &&
@@ -548,7 +631,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-                navItems.classList.toggle("open");
+                navItems.classList.toggle(
+                    "open"
+                );
             }
         );
     }
@@ -559,10 +644,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const contactForm =
-        document.getElementById("contactForm");
+        document.getElementById(
+            "contactForm"
+        );
 
     const contactToast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
     if (
         contactForm &&
@@ -575,11 +664,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-                contactToast.classList.add("show");
+                contactToast.classList.add(
+                    "show"
+                );
 
                 setTimeout(function () {
 
-                    contactToast.classList.remove("show");
+                    contactToast.classList.remove(
+                        "show"
+                    );
 
                 }, 2000);
 
@@ -594,19 +687,29 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const tabs =
-        document.querySelectorAll(".tab");
+        document.querySelectorAll(
+            ".tab"
+        );
 
     const forms =
-        document.querySelectorAll(".form");
+        document.querySelectorAll(
+            ".form"
+        );
 
     const emailInput =
-        document.getElementById("emailInput");
+        document.getElementById(
+            "emailInput"
+        );
 
     const phoneInput =
-        document.getElementById("phoneInput");
+        document.getElementById(
+            "phoneInput"
+        );
 
     const continueBtn =
-        document.getElementById("continueBtn");
+        document.getElementById(
+            "continueBtn"
+        );
 
     if (
         tabs.length > 0 &&
@@ -616,7 +719,8 @@ document.addEventListener("DOMContentLoaded", function () {
         continueBtn
     ) {
 
-        let activeTab = "emailForm";
+        let activeTab =
+            "emailForm";
 
         tabs.forEach(function (tab) {
 
@@ -642,7 +746,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     );
 
-                    tab.classList.add("active");
+                    tab.classList.add(
+                        "active"
+                    );
 
                     const targetForm =
                         document.getElementById(
@@ -667,7 +773,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function checkInput() {
 
-            if (activeTab === "emailForm") {
+            if (
+                activeTab ===
+                "emailForm"
+            ) {
 
                 continueBtn.disabled =
                     emailInput.value.trim() === "";
@@ -699,54 +808,89 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const userMenuBtn =
-        document.getElementById("userMenuBtn");
+        document.getElementById(
+            "userMenuBtn"
+        );
 
     const userPopover =
-        document.getElementById("userPopover");
+        document.getElementById(
+            "userPopover"
+        );
+
+    const userMenu =
+        document.querySelector(
+            ".user-menu"
+        );
 
     const userAvatar =
-        document.getElementById("userAvatar");
+        document.getElementById(
+            "userAvatar"
+        );
 
     const userAvatarImage =
-        document.getElementById("userAvatarImage");
+        document.getElementById(
+            "userAvatarImage"
+        );
 
     const userAvatarDefault =
-        document.getElementById("userAvatarDefault");
+        document.getElementById(
+            "userAvatarDefault"
+        );
 
     const popoverName =
-        document.getElementById("popoverName");
+        document.getElementById(
+            "popoverName"
+        );
 
     const popoverEmail =
-        document.getElementById("popoverEmail");
+        document.getElementById(
+            "popoverEmail"
+        );
 
     const userFullname =
-        document.getElementById("userFullname");
+        document.getElementById(
+            "userFullname"
+        );
 
     const userPhone =
-        document.getElementById("userPhone");
+        document.getElementById(
+            "userPhone"
+        );
 
     const userEmail =
-        document.getElementById("userEmail");
+        document.getElementById(
+            "userEmail"
+        );
 
     const accountStatus =
-        document.getElementById("accountStatus");
+        document.getElementById(
+            "accountStatus"
+        );
 
     const logoutBtn =
-        document.getElementById("logoutBtn");
+        document.getElementById(
+            "logoutBtn"
+        );
 
 
     /* =====================================================
-       PROFILE IMAGE VIEWER
+       PROFILE IMAGE ELEMENTS
     ===================================================== */
 
     const profileImageViewer =
-        document.getElementById("profileImageViewer");
+        document.getElementById(
+            "profileImageViewer"
+        );
 
     const largeProfileImage =
-        document.getElementById("largeProfileImage");
+        document.getElementById(
+            "largeProfileImage"
+        );
 
     const closeProfileViewer =
-        document.getElementById("closeProfileViewer");
+        document.getElementById(
+            "closeProfileViewer"
+        );
 
 
     /* =====================================================
@@ -767,11 +911,17 @@ document.addEventListener("DOMContentLoaded", function () {
             !user.profileImage
         ) {
 
-            userAvatarImage.removeAttribute("src");
+            userAvatarImage.removeAttribute(
+                "src"
+            );
 
-            userAvatarImage.classList.remove("show");
+            userAvatarImage.classList.remove(
+                "show"
+            );
 
-            userAvatarDefault.classList.remove("hide");
+            userAvatarDefault.classList.remove(
+                "hide"
+            );
 
             return;
         }
@@ -779,9 +929,13 @@ document.addEventListener("DOMContentLoaded", function () {
         userAvatarImage.src =
             user.profileImage;
 
-        userAvatarImage.classList.add("show");
+        userAvatarImage.classList.add(
+            "show"
+        );
 
-        userAvatarDefault.classList.add("hide");
+        userAvatarDefault.classList.add(
+            "hide"
+        );
     }
 
 
@@ -792,23 +946,28 @@ document.addEventListener("DOMContentLoaded", function () {
     function showGuestUser() {
 
         if (popoverName) {
-            popoverName.textContent = "Guest User";
+            popoverName.textContent =
+                "Guest User";
         }
 
         if (popoverEmail) {
-            popoverEmail.textContent = "Not logged in";
+            popoverEmail.textContent =
+                "Not logged in";
         }
 
         if (userFullname) {
-            userFullname.textContent = "Guest User";
+            userFullname.textContent =
+                "Guest User";
         }
 
         if (userPhone) {
-            userPhone.textContent = "Not available";
+            userPhone.textContent =
+                "Not available";
         }
 
         if (userEmail) {
-            userEmail.textContent = "Not available";
+            userEmail.textContent =
+                "Not available";
         }
 
         if (accountStatus) {
@@ -821,7 +980,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (logoutBtn) {
-            logoutBtn.style.display = "none";
+
+            logoutBtn.style.display =
+                "none";
         }
 
         updateUserAvatar(null);
@@ -843,7 +1004,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             showGuestUser();
-
             return;
         }
 
@@ -859,25 +1019,34 @@ document.addEventListener("DOMContentLoaded", function () {
             user.email ||
             "Not available";
 
-
         if (popoverName) {
-            popoverName.textContent = fullname;
+
+            popoverName.textContent =
+                fullname;
         }
 
         if (popoverEmail) {
-            popoverEmail.textContent = email;
+
+            popoverEmail.textContent =
+                email;
         }
 
         if (userFullname) {
-            userFullname.textContent = fullname;
+
+            userFullname.textContent =
+                fullname;
         }
 
         if (userPhone) {
-            userPhone.textContent = phone;
+
+            userPhone.textContent =
+                phone;
         }
 
         if (userEmail) {
-            userEmail.textContent = email;
+
+            userEmail.textContent =
+                email;
         }
 
         if (accountStatus) {
@@ -890,7 +1059,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (logoutBtn) {
-            logoutBtn.style.display = "flex";
+
+            logoutBtn.style.display =
+                "flex";
         }
 
         updateUserAvatar(user);
@@ -912,7 +1083,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         loadUserInformation();
 
-        userPopover.classList.add("show");
+        userPopover.classList.add(
+            "show"
+        );
     }
 
 
@@ -922,16 +1095,22 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        userPopover.classList.remove("show");
+        userPopover.classList.remove(
+            "show"
+        );
     }
 
 
     /* =====================================================
-       SETTINGS RETURN FLAG
+       SETTINGS RETURN STATE
     ===================================================== */
 
     let shouldReturnToUserPopover = false;
 
+
+    /* =====================================================
+       RETURN TO USER POPOVER
+    ===================================================== */
 
     function returnToUserPopover() {
 
@@ -948,7 +1127,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 loadUserInformation();
 
-                userPopover.classList.add("show");
+                userPopover.classList.add(
+                    "show"
+                );
             }
 
         }, 50);
@@ -957,6 +1138,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        USER MENU CLICK
+       IMPORTANT:
+       A DRAG MUST NOT TRIGGER A CLICK.
     ===================================================== */
 
     if (
@@ -968,34 +1151,37 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function (event) {
 
-                if (
-                    userMenuBtn.dataset.wasDragged === "true"
-                ) {
-
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    return;
-                }
-
                 event.preventDefault();
                 event.stopPropagation();
 
+                /*
+                 * If the click came after dragging,
+                 * the draggable section below will
+                 * stop this click from opening the popover.
+                 */
+
                 if (
-                    userPopover.classList.contains("show")
+                    userPopover.classList.contains(
+                        "show"
+                    )
                 ) {
 
                     closeUserMenu();
 
                 } else {
 
-                    shouldReturnToUserPopover = false;
+                    shouldReturnToUserPopover =
+                        false;
 
                     openUserMenu();
                 }
             }
         );
 
+
+        /* =================================================
+           CLICK INSIDE POPOVER
+        ================================================= */
 
         userPopover.addEventListener(
             "click",
@@ -1006,20 +1192,30 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
+        /* =================================================
+           CLICK OUTSIDE POPOVER
+        ================================================= */
+
         document.addEventListener(
             "click",
             function (event) {
 
                 if (
                     settingsModal &&
-                    settingsModal.classList.contains("show")
+                    settingsModal.classList.contains(
+                        "show"
+                    )
                 ) {
                     return;
                 }
 
                 if (
-                    !userPopover.contains(event.target) &&
-                    !userMenuBtn.contains(event.target)
+                    !userPopover.contains(
+                        event.target
+                    ) &&
+                    !userMenuBtn.contains(
+                        event.target
+                    )
                 ) {
 
                     closeUserMenu();
@@ -1039,13 +1235,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        profileImageViewer.classList.remove("show");
+        profileImageViewer.classList.remove(
+            "show"
+        );
 
         if (largeProfileImage) {
-            largeProfileImage.removeAttribute("src");
+
+            largeProfileImage.removeAttribute(
+                "src"
+            );
         }
 
-        document.body.style.overflow = "";
+        document.body.style.overflow =
+            "";
     }
 
 
@@ -1080,7 +1282,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     largeProfileImage.src =
                         currentUser.profileImage;
 
-                    profileImageViewer.classList.add("show");
+                    profileImageViewer.classList.add(
+                        "show"
+                    );
 
                     document.body.style.overflow =
                         "hidden";
@@ -1091,7 +1295,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE PROFILE VIEWER
+       CLOSE PROFILE IMAGE BUTTON
     ===================================================== */
 
     if (closeProfileViewer) {
@@ -1164,40 +1368,57 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                shouldReturnToUserPopover = true;
+                shouldReturnToUserPopover =
+                    true;
 
+
+                /* LOAD NAME */
 
                 if (settingsName) {
+
                     settingsName.value =
                         user.fullname || "";
                 }
 
 
+                /* LOAD EMAIL */
+
                 if (settingsEmail) {
+
                     settingsEmail.value =
                         user.email || "";
                 }
 
 
+                /* LOAD PHONE */
+
                 if (settingsPhone) {
+
                     settingsPhone.value =
                         user.phone || "";
                 }
 
 
+                /* RESET PASSWORD */
+
                 if (settingsPassword) {
 
-                    settingsPassword.value = "";
+                    settingsPassword.value =
+                        "";
 
                     settingsPassword.type =
                         "password";
                 }
 
 
+                /* RESET EYE ICON */
+
                 if (togglePassword) {
 
                     const icon =
-                        togglePassword.querySelector("i");
+                        togglePassword.querySelector(
+                            "i"
+                        );
 
                     if (icon) {
 
@@ -1211,6 +1432,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
+
+                /* LOAD PROFILE IMAGE */
 
                 if (
                     user.profileImage &&
@@ -1248,16 +1471,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* CLOSE USER POPOVER */
+
                 closeUserMenu();
 
-                settingsModal.classList.add("show");
+
+                /* OPEN SETTINGS */
+
+                settingsModal.classList.add(
+                    "show"
+                );
             }
         );
     }
 
 
     /* =====================================================
-       CLOSE SETTINGS
+       CLOSE SETTINGS BUTTON
     ===================================================== */
 
     if (
@@ -1272,7 +1502,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-                settingsModal.classList.remove("show");
+                settingsModal.classList.remove(
+                    "show"
+                );
 
                 returnToUserPopover();
             }
@@ -1313,7 +1545,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const settingsContainer =
-        document.querySelector(".settings-container");
+        document.querySelector(
+            ".settings-container"
+        );
 
     if (settingsContainer) {
 
@@ -1344,7 +1578,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
                 const icon =
-                    togglePassword.querySelector("i");
+                    togglePassword.querySelector(
+                        "i"
+                    );
 
                 if (
                     settingsPassword.type ===
@@ -1407,9 +1643,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 if (
-                    !file.type.startsWith("image/")
+                    !file.type.startsWith(
+                        "image/"
+                    )
                 ) {
 
                     showToast(
@@ -1417,7 +1654,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         "error"
                     );
 
-                    profileImageInput.value = "";
+                    profileImageInput.value =
+                        "";
 
                     return;
                 }
@@ -1432,7 +1670,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         const imageData =
                             loadEvent.target.result;
-
 
                         settingsProfileImage.src =
                             imageData;
@@ -1505,7 +1742,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             updateThemeToggle(false);
-
             return;
         }
 
@@ -1517,7 +1753,9 @@ document.addEventListener("DOMContentLoaded", function () {
             isDark
         );
 
-        updateThemeToggle(isDark);
+        updateThemeToggle(
+            isDark
+        );
     }
 
 
@@ -1553,40 +1791,28 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 const isDark =
                     !document.body.classList.contains(
                         "dark-mode"
                     );
-
 
                 document.body.classList.toggle(
                     "dark-mode",
                     isDark
                 );
 
-
                 currentUser.theme =
-                    isDark ? "dark" : "light";
+                    isDark
+                        ? "dark"
+                        : "light";
 
+                updateUser(
+                    currentUser
+                );
 
-                const updated =
-                    updateUser(currentUser);
-
-
-                if (!updated) {
-
-                    showToast(
-                        "Unable to save your theme.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                updateThemeToggle(isDark);
-
+                updateThemeToggle(
+                    isDark
+                );
 
                 showToast(
                     isDark
@@ -1615,10 +1841,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-
                 const currentUser =
                     getFreshCurrentUser();
 
+
+                /* LOGIN CHECK */
 
                 if (
                     !isLoggedIn() ||
@@ -1634,11 +1861,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* GET VALUES */
+
                 const name =
                     settingsName
                         ? settingsName.value.trim()
                         : "";
-
 
                 const email =
                     settingsEmail
@@ -1647,18 +1875,18 @@ document.addEventListener("DOMContentLoaded", function () {
                             .toLowerCase()
                         : "";
 
-
                 const phone =
                     settingsPhone
                         ? settingsPhone.value.trim()
                         : "";
-
 
                 const password =
                     settingsPassword
                         ? settingsPassword.value.trim()
                         : "";
 
+
+                /* NAME VALIDATION */
 
                 if (!name) {
 
@@ -1675,6 +1903,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* EMAIL VALIDATION */
+
                 if (!email) {
 
                     showToast(
@@ -1690,9 +1920,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* BASIC EMAIL VALIDATION */
+
                 const emailPattern =
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 
                 if (
                     !emailPattern.test(email)
@@ -1711,9 +1942,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* CHECK DUPLICATE EMAIL */
+
                 const users =
                     getAllUsers();
-
 
                 const emailUsedByAnotherUser =
                     users.some(function (user) {
@@ -1730,7 +1962,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
 
 
-                if (emailUsedByAnotherUser) {
+                if (
+                    emailUsedByAnotherUser
+                ) {
 
                     showToast(
                         "Another account already uses this email.",
@@ -1741,6 +1975,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* UPDATE CURRENT USER */
+
                 currentUser.fullname =
                     name;
 
@@ -1750,6 +1986,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentUser.phone =
                     phone;
 
+
+                /* CHANGE PASSWORD */
 
                 if (password !== "") {
 
@@ -1774,6 +2012,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* SAVE PROFILE IMAGE */
+
                 if (
                     settingsProfileImage &&
                     settingsProfileImage.classList.contains(
@@ -1787,6 +2027,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* DEFAULT THEME */
+
                 if (!currentUser.theme) {
 
                     currentUser.theme =
@@ -1794,9 +2036,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                const updated =
-                    updateUser(currentUser);
+                /* SAVE USER */
 
+                const updated =
+                    updateUser(
+                        currentUser
+                    );
 
                 if (!updated) {
 
@@ -1815,29 +2060,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
+                /* REFRESH USER INFORMATION */
+
                 loadUserInformation();
 
-                updateUserAvatar(currentUser);
+                updateUserAvatar(
+                    currentUser
+                );
 
+
+                /* CLOSE SETTINGS */
 
                 settingsModal.classList.remove(
                     "show"
                 );
 
 
+                /* RESET PASSWORD FIELD */
+
                 if (settingsPassword) {
 
-                    settingsPassword.value = "";
+                    settingsPassword.value =
+                        "";
 
                     settingsPassword.type =
                         "password";
                 }
 
 
+                /* RESET EYE ICON */
+
                 if (togglePassword) {
 
                     const icon =
-                        togglePassword.querySelector("i");
+                        togglePassword.querySelector(
+                            "i"
+                        );
 
                     if (icon) {
 
@@ -1852,11 +2110,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /* SUCCESS TOAST */
+
                 showToast(
                     "Your settings have been saved successfully.",
                     "success"
                 );
 
+
+                /* RETURN TO USER POPOVER */
 
                 returnToUserPopover();
             }
@@ -1872,16 +2134,24 @@ document.addEventListener("DOMContentLoaded", function () {
         "keydown",
         function (event) {
 
-            if (event.key !== "Escape") {
+            if (
+                event.key !==
+                "Escape"
+            ) {
                 return;
             }
+
 
             closeProfileImageViewer();
 
 
+            /* SETTINGS */
+
             if (
                 settingsModal &&
-                settingsModal.classList.contains("show")
+                settingsModal.classList.contains(
+                    "show"
+                )
             ) {
 
                 settingsModal.classList.remove(
@@ -1949,190 +2219,266 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-});
 
+    /* =========================================================
+       DRAGGABLE RESPONSIVE PROFILE MENU
+       
+       IMPORTANT:
+       - MENU IS FIXED TO VIEWPORT
+       - BODY DOES NOT MOVE
+       - MENU DOES NOT SCROLL WITH BODY
+       - POPOVER DOES NOT FOLLOW MENU
+       - MENU STAYS ABOVE POPOVER
+       - POSITION IS SAVED PER ACCOUNT
+    ========================================================= */
 
-/* =========================================================
-   EASY RIDE
-   REAL DRAGGABLE MOBILE THREE-DOT MENU
+    if (
+        userMenu &&
+        userMenuBtn
+    ) {
 
-   IMPORTANT:
-   - The menu can be dragged anywhere on the screen.
-   - Position is saved.
-   - Dragging does NOT open the menu.
-   - Normal tap still opens the menu.
-   - Desktop is not affected.
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const userMenu =
-            document.querySelector(".user-menu");
-
-        const userMenuBtn =
-            document.querySelector(".user-menu-btn");
-
-        if (
-            !userMenu ||
-            !userMenuBtn
-        ) {
-            return;
-        }
-
-
-        /* =================================================
-           MOBILE CHECK
-        ================================================= */
-
-        function isMobile() {
-
-            return window.innerWidth <= 767;
-        }
-
-
-        /* =================================================
-           DRAG VARIABLES
-        ================================================= */
-
-        let dragging = false;
-
+        let isDragging = false;
         let hasMoved = false;
-
-        let pointerId = null;
+        let suppressNextClick = false;
 
         let startX = 0;
-
         let startY = 0;
 
         let startLeft = 0;
-
         let startTop = 0;
 
 
         /* =================================================
-           MAKE THE MENU ABSOLUTELY POSITIONED
-
-           This is the important part.
-
-           The menu is removed from normal layout flow
-           when dragging on mobile.
+           GET ACCOUNT-SPECIFIC MENU POSITION KEY
         ================================================= */
 
-        function prepareMobileMenu() {
+        function getProfileMenuPositionKey() {
 
-            if (!isMobile()) {
-                return;
+            const currentUser =
+                getCurrentUser();
+
+            if (
+                currentUser &&
+                currentUser.id
+            ) {
+
+                return `easyRideProfileMenuPosition_${currentUser.id}`;
             }
 
-            const rect =
-                userMenu.getBoundingClientRect();
-
-            userMenu.style.position = "fixed";
-
-            userMenu.style.left =
-                rect.left + "px";
-
-            userMenu.style.top =
-                rect.top + "px";
-
-            userMenu.style.right = "auto";
-
-            userMenu.style.bottom = "auto";
-
-            userMenu.style.margin = "0";
-
-            userMenu.style.transform = "none";
-
-            userMenu.style.zIndex = "99999";
+            return "easyRideProfileMenuPosition_guest";
         }
 
 
         /* =================================================
-           LOAD SAVED POSITION
+           SET FIXED POSITION
         ================================================= */
 
-        function loadSavedMenuPosition() {
+        function makeProfileMenuFixed() {
 
-            if (!isMobile()) {
+            if (
+                window.innerWidth > 1024
+            ) {
                 return;
             }
 
-            const saved =
+            userMenu.style.position =
+                "fixed";
+
+            userMenu.style.right =
+                "auto";
+
+            userMenu.style.bottom =
+                "auto";
+
+            /*
+             * VERY IMPORTANT:
+             * The menu itself is above the popover.
+             */
+
+            userMenu.style.zIndex =
+                "99999";
+
+            if (userPopover) {
+
+                /*
+                 * Popover remains independent.
+                 * It does NOT get moved here.
+                 */
+
+                userPopover.style.zIndex =
+                    "99990";
+            }
+        }
+
+
+        /* =================================================
+           SET DEFAULT RIGHT-MIDDLE POSITION
+        ================================================= */
+
+        function setDefaultProfileMenuPosition() {
+
+            if (
+                window.innerWidth > 1024
+            ) {
+                return;
+            }
+
+            makeProfileMenuFixed();
+
+            const menuWidth =
+                userMenu.offsetWidth;
+
+            const menuHeight =
+                userMenu.offsetHeight;
+
+
+            /*
+             * RIGHT SIDE
+             */
+
+            let left =
+                window.innerWidth -
+                menuWidth -
+                25;
+
+
+            /*
+             * MIDDLE OF SCREEN
+             */
+
+            let top =
+                (window.innerHeight -
+                    menuHeight) / 2;
+
+
+            /*
+             * Keep inside screen
+             */
+
+            left = Math.max(
+                0,
+                Math.min(
+                    left,
+                    window.innerWidth -
+                    menuWidth
+                )
+            );
+
+            top = Math.max(
+                0,
+                Math.min(
+                    top,
+                    window.innerHeight -
+                    menuHeight
+                )
+            );
+
+
+            userMenu.style.left =
+                left + "px";
+
+            userMenu.style.top =
+                top + "px";
+
+            userMenu.style.transform =
+                "none";
+        }
+
+
+        /* =================================================
+           RESTORE SAVED POSITION
+        ================================================= */
+
+        function restoreProfileMenuPosition() {
+
+            if (
+                window.innerWidth > 1024
+            ) {
+                return;
+            }
+
+            makeProfileMenuFixed();
+
+
+            const storageKey =
+                getProfileMenuPositionKey();
+
+            const savedPosition =
                 localStorage.getItem(
-                    "easyRideMenuPosition"
+                    storageKey
                 );
 
-            if (!saved) {
 
-                prepareMobileMenu();
+            /*
+             * If there is no saved position,
+             * put it on the right-middle.
+             */
+
+            if (!savedPosition) {
+
+                setDefaultProfileMenuPosition();
 
                 return;
             }
+
 
             try {
 
                 const position =
-                    JSON.parse(saved);
+                    JSON.parse(
+                        savedPosition
+                    );
 
-                const rect =
-                    userMenu.getBoundingClientRect();
+
+                if (
+                    typeof position.left !==
+                        "number" ||
+                    typeof position.top !==
+                        "number"
+                ) {
+
+                    setDefaultProfileMenuPosition();
+
+                    return;
+                }
+
 
                 const menuWidth =
-                    rect.width;
+                    userMenu.offsetWidth;
 
                 const menuHeight =
-                    rect.height;
+                    userMenu.offsetHeight;
 
-                const maxLeft =
-                    window.innerWidth -
-                    menuWidth -
-                    5;
-
-                const maxTop =
-                    window.innerHeight -
-                    menuHeight -
-                    5;
 
                 let left =
-                    Number(position.left);
+                    position.left;
 
                 let top =
-                    Number(position.top);
+                    position.top;
 
 
-                if (!Number.isFinite(left)) {
-                    left = 5;
-                }
+                /*
+                 * Keep menu inside viewport
+                 */
 
-                if (!Number.isFinite(top)) {
-                    top = 5;
-                }
+                left = Math.max(
+                    0,
+                    Math.min(
+                        left,
+                        window.innerWidth -
+                        menuWidth
+                    )
+                );
 
+                top = Math.max(
+                    0,
+                    Math.min(
+                        top,
+                        window.innerHeight -
+                        menuHeight
+                    )
+                );
 
-                left =
-                    Math.max(
-                        5,
-                        Math.min(
-                            left,
-                            Math.max(5, maxLeft)
-                        )
-                    );
-
-
-                top =
-                    Math.max(
-                        5,
-                        Math.min(
-                            top,
-                            Math.max(5, maxTop)
-                        )
-                    );
-
-
-                userMenu.style.position =
-                    "fixed";
 
                 userMenu.style.left =
                     left + "px";
@@ -2146,23 +2492,18 @@ document.addEventListener(
                 userMenu.style.bottom =
                     "auto";
 
-                userMenu.style.margin =
-                    "0";
-
                 userMenu.style.transform =
                     "none";
 
-                userMenu.style.zIndex =
-                    "99999";
 
             } catch (error) {
 
                 console.error(
-                    "Unable to load menu position:",
+                    "Could not restore profile menu position:",
                     error
                 );
 
-                prepareMobileMenu();
+                setDefaultProfileMenuPosition();
             }
         }
 
@@ -2175,34 +2516,46 @@ document.addEventListener(
             "pointerdown",
             function (event) {
 
-                if (!isMobile()) {
+                if (
+                    window.innerWidth >
+                    1024
+                ) {
                     return;
                 }
 
 
-                /* Do not start drag with right click. */
+                /*
+                 * Only primary mouse button.
+                 */
 
                 if (
-                    event.pointerType === "mouse" &&
+                    event.pointerType ===
+                        "mouse" &&
                     event.button !== 0
                 ) {
                     return;
                 }
 
 
-                prepareMobileMenu();
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                makeProfileMenuFixed();
+
+
+                isDragging =
+                    true;
+
+                hasMoved =
+                    false;
+
+                suppressNextClick =
+                    false;
 
 
                 const rect =
                     userMenu.getBoundingClientRect();
-
-
-                dragging = true;
-
-                hasMoved = false;
-
-                pointerId =
-                    event.pointerId;
 
 
                 startX =
@@ -2218,8 +2571,29 @@ document.addEventListener(
                     rect.top;
 
 
-                userMenuBtn.style.cursor =
-                    "grabbing";
+                /*
+                 * Remove transform so
+                 * left/top control position.
+                 */
+
+                userMenu.style.transform =
+                    "none";
+
+
+                userMenu.style.left =
+                    startLeft + "px";
+
+                userMenu.style.top =
+                    startTop + "px";
+
+
+                /*
+                 * Prevent touch from
+                 * scrolling the page.
+                 */
+
+                userMenuBtn.style.touchAction =
+                    "none";
 
 
                 try {
@@ -2229,11 +2603,8 @@ document.addEventListener(
                     );
 
                 } catch (error) {
-                    console.log(error);
+                    // Ignore pointer capture errors
                 }
-
-
-                event.preventDefault();
             }
         );
 
@@ -2246,42 +2617,53 @@ document.addEventListener(
             "pointermove",
             function (event) {
 
-                if (!dragging) {
-                    return;
-                }
-
                 if (
-                    pointerId !== null &&
-                    event.pointerId !== pointerId
+                    !isDragging ||
+                    window.innerWidth >
+                    1024
                 ) {
                     return;
                 }
 
 
-                const deltaX =
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                const moveX =
                     event.clientX -
                     startX;
 
-                const deltaY =
+                const moveY =
                     event.clientY -
                     startY;
 
 
-                /* Only count it as dragging after
-                   moving a few pixels. */
+                /*
+                 * Determine whether the
+                 * user actually dragged.
+                 */
 
                 if (
-                    Math.abs(deltaX) > 5 ||
-                    Math.abs(deltaY) > 5
+                    Math.abs(moveX) > 5 ||
+                    Math.abs(moveY) > 5
                 ) {
 
-                    hasMoved = true;
+                    hasMoved =
+                        true;
+
+                    suppressNextClick =
+                        true;
                 }
 
 
-                if (!hasMoved) {
-                    return;
-                }
+                let newLeft =
+                    startLeft +
+                    moveX;
+
+                let newTop =
+                    startTop +
+                    moveY;
 
 
                 const menuWidth =
@@ -2291,87 +2673,56 @@ document.addEventListener(
                     userMenu.offsetHeight;
 
 
-                const screenWidth =
-                    window.innerWidth;
+                const maxLeft =
+                    window.innerWidth -
+                    menuWidth;
 
-                const screenHeight =
-                    window.innerHeight;
-
-
-                const minimumLeft = 5;
-
-                const minimumTop = 5;
+                const maxTop =
+                    window.innerHeight -
+                    menuHeight;
 
 
-                const maximumLeft =
-                    Math.max(
-                        minimumLeft,
-                        screenWidth -
-                        menuWidth -
-                        5
-                    );
+                /*
+                 * Keep inside left edge.
+                 */
+
+                if (newLeft < 0) {
+                    newLeft = 0;
+                }
 
 
-                const maximumTop =
-                    Math.max(
-                        minimumTop,
-                        screenHeight -
-                        menuHeight -
-                        5
-                    );
+                /*
+                 * Keep inside top edge.
+                 */
+
+                if (newTop < 0) {
+                    newTop = 0;
+                }
 
 
-                let newLeft =
-                    startLeft +
-                    deltaX;
+                /*
+                 * Keep inside right edge.
+                 */
 
-                let newTop =
-                    startTop +
-                    deltaY;
-
-
-                /* Keep menu inside screen. */
-
-                newLeft =
-                    Math.max(
-                        minimumLeft,
-                        Math.min(
-                            newLeft,
-                            maximumLeft
-                        )
-                    );
+                if (newLeft > maxLeft) {
+                    newLeft = maxLeft;
+                }
 
 
-                newTop =
-                    Math.max(
-                        minimumTop,
-                        Math.min(
-                            newTop,
-                            maximumTop
-                        )
-                    );
+                /*
+                 * Keep inside bottom edge.
+                 */
 
+                if (newTop > maxTop) {
+                    newTop = maxTop;
+                }
 
-                userMenu.style.position =
-                    "fixed";
 
                 userMenu.style.left =
                     newLeft + "px";
 
                 userMenu.style.top =
                     newTop + "px";
-
-                userMenu.style.right =
-                    "auto";
-
-                userMenu.style.bottom =
-                    "auto";
-
-                userMenu.style.transform =
-                    "none";
-
-
-                event.preventDefault();
             }
         );
 
@@ -2384,63 +2735,17 @@ document.addEventListener(
             "pointerup",
             function (event) {
 
-                if (!dragging) {
+                if (!isDragging) {
                     return;
                 }
 
 
-                if (
-                    pointerId !== null &&
-                    event.pointerId !== pointerId
-                ) {
-                    return;
-                }
+                event.preventDefault();
+                event.stopPropagation();
 
 
-                dragging = false;
-
-
-                userMenuBtn.style.cursor =
-                    "grab";
-
-
-                if (hasMoved) {
-
-                    const rect =
-                        userMenu.getBoundingClientRect();
-
-
-                    /* Save the position. */
-
-                    localStorage.setItem(
-                        "easyRideMenuPosition",
-                        JSON.stringify({
-
-                            left: rect.left,
-
-                            top: rect.top
-
-                        })
-                    );
-
-
-                    /* Tell the normal click
-                       handler not to open menu. */
-
-                    userMenuBtn.dataset.wasDragged =
-                        "true";
-
-
-                    setTimeout(
-                        function () {
-
-                            userMenuBtn.dataset.wasDragged =
-                                "false";
-
-                        },
-                        200
-                    );
-                }
+                isDragging =
+                    false;
 
 
                 try {
@@ -2450,13 +2755,75 @@ document.addEventListener(
                     );
 
                 } catch (error) {
-                    console.log(error);
+                    // Ignore pointer capture errors
                 }
 
 
-                pointerId = null;
+                /*
+                 * Restore normal touch behavior
+                 * after dragging is finished.
+                 */
 
-                event.preventDefault();
+                userMenuBtn.style.touchAction =
+                    "none";
+
+
+                /*
+                 * Save ONLY if the menu was
+                 * actually moved.
+                 */
+
+                if (hasMoved) {
+
+                    const storageKey =
+                        getProfileMenuPositionKey();
+
+
+                    const currentLeft =
+                        parseFloat(
+                            userMenu.style.left
+                        ) || 0;
+
+                    const currentTop =
+                        parseFloat(
+                            userMenu.style.top
+                        ) || 0;
+
+
+                    localStorage.setItem(
+                        storageKey,
+                        JSON.stringify({
+
+                            left:
+                                currentLeft,
+
+                            top:
+                                currentTop
+                        })
+                    );
+
+
+                    /*
+                     * IMPORTANT:
+                     * The click that normally fires
+                     * after pointerup must NOT open
+                     * or close the popover.
+                     */
+
+                    suppressNextClick =
+                        true;
+
+
+                    setTimeout(
+                        function () {
+
+                            suppressNextClick =
+                                false;
+
+                        },
+                        150
+                    );
+                }
             }
         );
 
@@ -2467,20 +2834,59 @@ document.addEventListener(
 
         userMenuBtn.addEventListener(
             "pointercancel",
-            function () {
+            function (event) {
 
-                dragging = false;
+                isDragging =
+                    false;
 
-                pointerId = null;
 
-                userMenuBtn.style.cursor =
-                    "grab";
+                try {
+
+                    userMenuBtn.releasePointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {
+                    // Ignore pointer capture errors
+                }
+
+
+                suppressNextClick =
+                    true;
+
+
+                setTimeout(
+                    function () {
+
+                        suppressNextClick =
+                            false;
+
+                    },
+                    150
+                );
             }
         );
 
 
         /* =================================================
-           BLOCK CLICK AFTER DRAG
+           PREVENT DRAG IMAGE
+        ================================================= */
+
+        userMenuBtn.addEventListener(
+            "dragstart",
+            function (event) {
+
+                event.preventDefault();
+            }
+        );
+
+
+        /* =================================================
+           STOP CLICK AFTER DRAG
+           
+           This is important because without
+           this the browser fires a click after
+           dragging and the popover opens.
         ================================================= */
 
         userMenuBtn.addEventListener(
@@ -2488,15 +2894,16 @@ document.addEventListener(
             function (event) {
 
                 if (
-                    userMenuBtn.dataset.wasDragged ===
-                    "true"
+                    suppressNextClick
                 ) {
 
                     event.preventDefault();
+                    event.stopPropagation();
 
-                    event.stopImmediatePropagation();
+                    suppressNextClick =
+                        false;
 
-                    return false;
+                    return;
                 }
             },
             true
@@ -2504,78 +2911,126 @@ document.addEventListener(
 
 
         /* =================================================
-           PREVENT TOUCH SCROLL WHILE DRAGGING
+           INITIAL POSITION
         ================================================= */
 
-        userMenuBtn.style.touchAction =
-            "none";
+        if (
+            window.innerWidth <=
+            1024
+        ) {
 
-        userMenuBtn.style.cursor =
-            "grab";
+            /*
+             * Wait for the menu dimensions
+             * to be available.
+             */
+
+            requestAnimationFrame(
+                function () {
+
+                    restoreProfileMenuPosition();
+                }
+            );
+        }
 
 
         /* =================================================
-           RESIZE
-
-           If mobile:
-           keep saved position.
-
-           If desktop:
-           remove mobile positioning.
+           WINDOW LOAD
         ================================================= */
 
         window.addEventListener(
-            "resize",
+            "load",
             function () {
 
-                if (window.innerWidth <= 767) {
+                if (
+                    window.innerWidth <=
+                    1024
+                ) {
 
-                    loadSavedMenuPosition();
-
-                } else {
-
-                    userMenu.style.position =
-                        "";
-
-                    userMenu.style.left =
-                        "";
-
-                    userMenu.style.top =
-                        "";
-
-                    userMenu.style.right =
-                        "";
-
-                    userMenu.style.bottom =
-                        "";
-
-                    userMenu.style.margin =
-                        "";
-
-                    userMenu.style.transform =
-                        "";
-
-                    userMenu.style.zIndex =
-                        "";
+                    restoreProfileMenuPosition();
                 }
             }
         );
 
 
         /* =================================================
-           INITIALIZE
+           WINDOW RESIZE
         ================================================= */
 
-        if (isMobile()) {
+        window.addEventListener(
+            "resize",
+            function () {
 
-            requestAnimationFrame(
-                function () {
-
-                    loadSavedMenuPosition();
-
+                if (
+                    window.innerWidth >
+                    1024
+                ) {
+                    return;
                 }
-            );
-        }
 
+
+                makeProfileMenuFixed();
+
+
+                const rect =
+                    userMenu.getBoundingClientRect();
+
+
+                const menuWidth =
+                    userMenu.offsetWidth;
+
+                const menuHeight =
+                    userMenu.offsetHeight;
+
+
+                let left =
+                    rect.left;
+
+                let top =
+                    rect.top;
+
+
+                /*
+                 * Keep current position
+                 * inside the new viewport.
+                 */
+
+                left = Math.max(
+                    0,
+                    Math.min(
+                        left,
+                        window.innerWidth -
+                        menuWidth
+                    )
+                );
+
+                top = Math.max(
+                    0,
+                    Math.min(
+                        top,
+                        window.innerHeight -
+                        menuHeight
+                    )
+                );
+
+
+                userMenu.style.left =
+                    left + "px";
+
+                userMenu.style.top =
+                    top + "px";
+
+                userMenu.style.right =
+                    "auto";
+
+                userMenu.style.bottom =
+                    "auto";
+
+                userMenu.style.transform =
+                    "none";
+            }
+        );
     }
-);
+
+});
+
+
