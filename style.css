@@ -9,9 +9,12 @@
     font-family: "Montserrat Alternates", sans-serif;
     text-decoration: none;
 }
-
+html,
 body {
     overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
 
 }
 
@@ -2559,8 +2562,8 @@ body.dark-mode .close-settings {
 
 .texticon p {
     max-width: 60vh;
-     color: #000;
-    
+    color: #000;
+
 }
 
 .imagetext {
@@ -5416,26 +5419,26 @@ input {
     }
 }
 
-    
 
-    /* Keep the clickable profile button above the popover */
-    .user-menu-btn {
-        position: relative !important;
-        z-index: 2147483647 !important;
-    }
 
-    /* Keep the profile image/icon above the popover */
-    #userAvatar,
-    #userAvatarImage,
-    #userAvatarDefault {
-        position: relative !important;
-        z-index: 2147483647 !important;
-    }
+/* Keep the clickable profile button above the popover */
+.user-menu-btn {
+    position: relative !important;
+    z-index: 2147483647 !important;
+}
 
-    /* Popover stays underneath the profile menu */
-    #userPopover {
-        z-index: 2147483646 !important;
-    }
+/* Keep the profile image/icon above the popover */
+#userAvatar,
+#userAvatarImage,
+#userAvatarDefault {
+    position: relative !important;
+    z-index: 2147483647 !important;
+}
+
+/* Popover stays underneath the profile menu */
+#userPopover {
+    z-index: 2147483646 !important;
+}
 
 
 
