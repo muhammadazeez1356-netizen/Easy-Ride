@@ -5416,7 +5416,7 @@ input {
     }
 }
 
-    }
+    
 
     /* Keep the clickable profile button above the popover */
     .user-menu-btn {
@@ -5436,7 +5436,7 @@ input {
     #userPopover {
         z-index: 2147483646 !important;
     }
-}
+
 
 
 /* =========================================================

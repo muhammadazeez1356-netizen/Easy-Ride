@@ -1072,7 +1072,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       USER MENU OPEN / CLOSE
+       OPEN / CLOSE USER MENU
     ===================================================== */
 
     function openUserMenu() {
@@ -1109,6 +1109,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
+       SETTINGS POSITION STATE
+
+       This remembers exactly where the first
+       profile popover was located.
+
+       The settings popover will use this same
+       position.
+    ===================================================== */
+
+    let savedUserPopoverPosition = null;
+
+
+    /* =====================================================
        RETURN TO USER POPOVER
     ===================================================== */
 
@@ -1137,7 +1150,244 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
+       SETTINGS CONTAINER
+    ===================================================== */
+
+    const settingsContainer =
+        document.querySelector(
+            ".settings-container"
+        );
+
+
+    /* =====================================================
+       SAVE CURRENT USER POPOVER POSITION
+    ===================================================== */
+
+    function saveCurrentUserPopoverPosition() {
+
+        if (!userPopover) {
+            return;
+        }
+
+        const rect =
+            userPopover.getBoundingClientRect();
+
+        savedUserPopoverPosition = {
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height
+        };
+    }
+
+
+    /* =====================================================
+       POSITION SETTINGS LIKE USER POPOVER
+       
+       IMPORTANT:
+       The settings box uses the SAME viewport
+       position as the first profile popover.
+
+       It is also kept inside the screen.
+    ===================================================== */
+
+    function positionSettingsLikeUserPopover() {
+
+        if (
+            !settingsContainer ||
+            !userMenu
+        ) {
+            return;
+        }
+
+        let referenceRect = null;
+
+        if (savedUserPopoverPosition) {
+
+            referenceRect = {
+                left: savedUserPopoverPosition.left,
+                top: savedUserPopoverPosition.top,
+                width: savedUserPopoverPosition.width,
+                height: savedUserPopoverPosition.height
+            };
+
+        } else if (userPopover) {
+
+            referenceRect =
+                userPopover.getBoundingClientRect();
+        }
+
+        if (!referenceRect) {
+            return;
+        }
+
+
+        /* =================================================
+           GET SETTINGS SIZE
+        ================================================= */
+
+        const settingsRect =
+            settingsContainer.getBoundingClientRect();
+
+        let settingsWidth =
+            settingsRect.width;
+
+        let settingsHeight =
+            settingsRect.height;
+
+
+        /*
+         * If the element has not received its
+         * dimensions yet, use its offset dimensions.
+         */
+
+        if (!settingsWidth) {
+            settingsWidth =
+                settingsContainer.offsetWidth;
+        }
+
+        if (!settingsHeight) {
+            settingsHeight =
+                settingsContainer.offsetHeight;
+        }
+
+
+        /*
+         * Make settings container independently
+         * positioned inside the viewport.
+         */
+
+        settingsContainer.style.position =
+            "fixed";
+
+        settingsContainer.style.transform =
+            "none";
+
+        settingsContainer.style.right =
+            "auto";
+
+        settingsContainer.style.bottom =
+            "auto";
+
+
+        /*
+         * Put the settings container at the
+         * same LEFT and TOP position as the
+         * first user popover.
+         */
+
+        let left =
+            referenceRect.left;
+
+        let top =
+            referenceRect.top;
+
+
+        /*
+         * Keep the settings box inside
+         * the viewport horizontally.
+         */
+
+        const maxLeft =
+            Math.max(
+                0,
+                window.innerWidth -
+                settingsWidth
+            );
+
+        const maxTop =
+            Math.max(
+                0,
+                window.innerHeight -
+                settingsHeight
+            );
+
+
+        left =
+            Math.max(
+                0,
+                Math.min(
+                    left,
+                    maxLeft
+                )
+            );
+
+        top =
+            Math.max(
+                0,
+                Math.min(
+                    top,
+                    maxTop
+                )
+            );
+
+
+        settingsContainer.style.left =
+            left + "px";
+
+        settingsContainer.style.top =
+            top + "px";
+
+
+        /*
+         * The profile menu MUST remain above
+         * the settings popover.
+         */
+
+        if (userMenu) {
+
+            userMenu.style.zIndex =
+                "100000";
+        }
+
+        if (userPopover) {
+
+            userPopover.style.zIndex =
+                "100001";
+        }
+
+
+        /*
+         * Settings is below the profile menu.
+         */
+
+        settingsContainer.style.zIndex =
+            "99990";
+
+
+        /*
+         * The settings background/modal itself
+         * stays below the profile menu.
+         */
+
+        if (settingsModal) {
+
+            settingsModal.style.zIndex =
+                "99900";
+        }
+    }
+
+
+    /* =====================================================
+       RESTORE SETTINGS POSITION WHEN WINDOW CHANGES
+    ===================================================== */
+
+    function refreshSettingsPosition() {
+
+        if (
+            !settingsModal ||
+            !settingsModal.classList.contains("show")
+        ) {
+            return;
+        }
+
+        positionSettingsLikeUserPopover();
+    }
+
+
+    /* =====================================================
        USER MENU CLICK
+       
        IMPORTANT:
        A DRAG MUST NOT TRIGGER A CLICK.
     ===================================================== */
@@ -1155,9 +1405,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
                 /*
-                 * If the click came after dragging,
-                 * the draggable section below will
-                 * stop this click from opening the popover.
+                 * Drag suppression is handled by
+                 * the draggable section below.
                  */
 
                 if (
@@ -1337,6 +1586,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        SETTINGS OPEN
+       
+       IMPORTANT:
+       The user popover position is captured BEFORE
+       the user popover is closed.
+
+       Settings then opens in the same position.
     ===================================================== */
 
     if (
@@ -1372,7 +1627,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     true;
 
 
-                /* LOAD NAME */
+                /* =========================================
+                   CAPTURE FIRST POPOVER POSITION
+                ========================================= */
+
+                if (userPopover) {
+
+                    const popoverRect =
+                        userPopover.getBoundingClientRect();
+
+                    savedUserPopoverPosition = {
+                        left: popoverRect.left,
+                        top: popoverRect.top,
+                        width: popoverRect.width,
+                        height: popoverRect.height
+                    };
+                }
+
+
+                /* =========================================
+                   LOAD NAME
+                ========================================= */
 
                 if (settingsName) {
 
@@ -1381,7 +1656,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* LOAD EMAIL */
+                /* =========================================
+                   LOAD EMAIL
+                ========================================= */
 
                 if (settingsEmail) {
 
@@ -1390,7 +1667,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* LOAD PHONE */
+                /* =========================================
+                   LOAD PHONE
+                ========================================= */
 
                 if (settingsPhone) {
 
@@ -1399,7 +1678,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* RESET PASSWORD */
+                /* =========================================
+                   RESET PASSWORD
+                ========================================= */
 
                 if (settingsPassword) {
 
@@ -1411,7 +1692,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* RESET EYE ICON */
+                /* =========================================
+                   RESET EYE ICON
+                ========================================= */
 
                 if (togglePassword) {
 
@@ -1433,7 +1716,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* LOAD PROFILE IMAGE */
+                /* =========================================
+                   LOAD PROFILE IMAGE
+                ========================================= */
 
                 if (
                     user.profileImage &&
@@ -1471,16 +1756,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* CLOSE USER POPOVER */
+                /* =========================================
+                   CLOSE USER POPOVER
+                ========================================= */
 
                 closeUserMenu();
 
 
-                /* OPEN SETTINGS */
+                /* =========================================
+                   OPEN SETTINGS
+                ========================================= */
 
                 settingsModal.classList.add(
                     "show"
                 );
+
+
+                /*
+                 * Wait until the settings box is
+                 * rendered so its dimensions are available.
+                 */
+
+                requestAnimationFrame(function () {
+
+                    positionSettingsLikeUserPopover();
+
+                    requestAnimationFrame(function () {
+
+                        positionSettingsLikeUserPopover();
+                    });
+                });
             }
         );
     }
@@ -1505,6 +1810,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 settingsModal.classList.remove(
                     "show"
                 );
+
+                /*
+                 * Remove temporary settings positioning.
+                 * This allows the original CSS to control
+                 * the settings when it is opened again.
+                 */
+
+                if (settingsContainer) {
+
+                    settingsContainer.style.position =
+                        "";
+
+                    settingsContainer.style.left =
+                        "";
+
+                    settingsContainer.style.top =
+                        "";
+
+                    settingsContainer.style.right =
+                        "";
+
+                    settingsContainer.style.bottom =
+                        "";
+
+                    settingsContainer.style.transform =
+                        "";
+
+                    settingsContainer.style.zIndex =
+                        "";
+                }
+
+                if (settingsModal) {
+
+                    settingsModal.style.zIndex =
+                        "";
+                }
 
                 returnToUserPopover();
             }
@@ -1533,6 +1874,36 @@ document.addEventListener("DOMContentLoaded", function () {
                         "show"
                     );
 
+
+                    if (settingsContainer) {
+
+                        settingsContainer.style.position =
+                            "";
+
+                        settingsContainer.style.left =
+                            "";
+
+                        settingsContainer.style.top =
+                            "";
+
+                        settingsContainer.style.right =
+                            "";
+
+                        settingsContainer.style.bottom =
+                            "";
+
+                        settingsContainer.style.transform =
+                            "";
+
+                        settingsContainer.style.zIndex =
+                            "";
+                    }
+
+
+                    settingsModal.style.zIndex =
+                        "";
+
+
                     returnToUserPopover();
                 }
             }
@@ -1543,11 +1914,6 @@ document.addEventListener("DOMContentLoaded", function () {
     /* =====================================================
        STOP SETTINGS CONTAINER CLICKS
     ===================================================== */
-
-    const settingsContainer =
-        document.querySelector(
-            ".settings-container"
-        );
 
     if (settingsContainer) {
 
@@ -1845,7 +2211,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     getFreshCurrentUser();
 
 
-                /* LOGIN CHECK */
+                /* =========================================
+                   LOGIN CHECK
+                ========================================= */
 
                 if (
                     !isLoggedIn() ||
@@ -1861,7 +2229,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* GET VALUES */
+                /* =========================================
+                   GET VALUES
+                ========================================= */
 
                 const name =
                     settingsName
@@ -1886,7 +2256,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         : "";
 
 
-                /* NAME VALIDATION */
+                /* =========================================
+                   NAME VALIDATION
+                ========================================= */
 
                 if (!name) {
 
@@ -1903,7 +2275,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* EMAIL VALIDATION */
+                /* =========================================
+                   EMAIL VALIDATION
+                ========================================= */
 
                 if (!email) {
 
@@ -1920,7 +2294,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* BASIC EMAIL VALIDATION */
+                /* =========================================
+                   BASIC EMAIL VALIDATION
+                ========================================= */
 
                 const emailPattern =
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1942,7 +2318,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* CHECK DUPLICATE EMAIL */
+                /* =========================================
+                   CHECK DUPLICATE EMAIL
+                ========================================= */
 
                 const users =
                     getAllUsers();
@@ -1975,7 +2353,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* UPDATE CURRENT USER */
+                /* =========================================
+                   UPDATE CURRENT USER
+                ========================================= */
 
                 currentUser.fullname =
                     name;
@@ -1987,7 +2367,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     phone;
 
 
-                /* CHANGE PASSWORD */
+                /* =========================================
+                   CHANGE PASSWORD
+                ========================================= */
 
                 if (password !== "") {
 
@@ -2012,7 +2394,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* SAVE PROFILE IMAGE */
+                /* =========================================
+                   SAVE PROFILE IMAGE
+                ========================================= */
 
                 if (
                     settingsProfileImage &&
@@ -2027,7 +2411,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* DEFAULT THEME */
+                /* =========================================
+                   DEFAULT THEME
+                ========================================= */
 
                 if (!currentUser.theme) {
 
@@ -2036,7 +2422,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* SAVE USER */
+                /* =========================================
+                   SAVE USER
+                ========================================= */
 
                 const updated =
                     updateUser(
@@ -2060,7 +2448,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /* REFRESH USER INFORMATION */
+                /* =========================================
+                   REFRESH USER INFORMATION
+                ========================================= */
 
                 loadUserInformation();
 
@@ -2069,14 +2459,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /* CLOSE SETTINGS */
+                /* =========================================
+                   CLOSE SETTINGS
+                ========================================= */
 
                 settingsModal.classList.remove(
                     "show"
                 );
 
 
-                /* RESET PASSWORD FIELD */
+                /* =========================================
+                   RESET SETTINGS POSITION
+                ========================================= */
+
+                if (settingsContainer) {
+
+                    settingsContainer.style.position =
+                        "";
+
+                    settingsContainer.style.left =
+                        "";
+
+                    settingsContainer.style.top =
+                        "";
+
+                    settingsContainer.style.right =
+                        "";
+
+                    settingsContainer.style.bottom =
+                        "";
+
+                    settingsContainer.style.transform =
+                        "";
+
+                    settingsContainer.style.zIndex =
+                        "";
+                }
+
+                settingsModal.style.zIndex =
+                    "";
+
+
+                /* =========================================
+                   RESET PASSWORD FIELD
+                ========================================= */
 
                 if (settingsPassword) {
 
@@ -2088,7 +2514,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* RESET EYE ICON */
+                /* =========================================
+                   RESET EYE ICON
+                ========================================= */
 
                 if (togglePassword) {
 
@@ -2110,7 +2538,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-                /* SUCCESS TOAST */
+                /* =========================================
+                   SUCCESS TOAST
+                ========================================= */
 
                 showToast(
                     "Your settings have been saved successfully.",
@@ -2118,7 +2548,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
-                /* RETURN TO USER POPOVER */
+                /* =========================================
+                   RETURN TO USER POPOVER
+                ========================================= */
 
                 returnToUserPopover();
             }
@@ -2145,7 +2577,9 @@ document.addEventListener("DOMContentLoaded", function () {
             closeProfileImageViewer();
 
 
-            /* SETTINGS */
+            /* =============================================
+               SETTINGS
+            ============================================= */
 
             if (
                 settingsModal &&
@@ -2157,6 +2591,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 settingsModal.classList.remove(
                     "show"
                 );
+
+
+                if (settingsContainer) {
+
+                    settingsContainer.style.position =
+                        "";
+
+                    settingsContainer.style.left =
+                        "";
+
+                    settingsContainer.style.top =
+                        "";
+
+                    settingsContainer.style.right =
+                        "";
+
+                    settingsContainer.style.bottom =
+                        "";
+
+                    settingsContainer.style.transform =
+                        "";
+
+                    settingsContainer.style.zIndex =
+                        "";
+                }
+
+
+                settingsModal.style.zIndex =
+                    "";
+
 
                 returnToUserPopover();
 
@@ -2222,14 +2686,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================================
        DRAGGABLE RESPONSIVE PROFILE MENU
-       
+
        IMPORTANT:
+
        - MENU IS FIXED TO VIEWPORT
        - BODY DOES NOT MOVE
        - MENU DOES NOT SCROLL WITH BODY
        - POPOVER DOES NOT FOLLOW MENU
-       - MENU STAYS ABOVE POPOVER
-       - POSITION IS SAVED PER ACCOUNT
+       - MENU STAYS ABOVE SETTINGS
+       - MENU POSITION IS SAVED PER ACCOUNT
     ========================================================= */
 
     if (
@@ -2290,23 +2755,36 @@ document.addEventListener("DOMContentLoaded", function () {
             userMenu.style.bottom =
                 "auto";
 
-            /*
-             * VERY IMPORTANT:
-             * The menu itself is above the popover.
-             */
-
             userMenu.style.zIndex =
-                "99999";
+                "100000";
+
+
+            /*
+             * The profile popover is also kept
+             * above the settings layer.
+             */
 
             if (userPopover) {
 
-                /*
-                 * Popover remains independent.
-                 * It does NOT get moved here.
-                 */
-
                 userPopover.style.zIndex =
+                    "100001";
+            }
+
+
+            /*
+             * Settings stays below the profile menu.
+             */
+
+            if (settingsContainer) {
+
+                settingsContainer.style.zIndex =
                     "99990";
+            }
+
+            if (settingsModal) {
+
+                settingsModal.style.zIndex =
+                    "99900";
             }
         }
 
@@ -2347,8 +2825,10 @@ document.addEventListener("DOMContentLoaded", function () {
              */
 
             let top =
-                (window.innerHeight -
-                    menuHeight) / 2;
+                (
+                    window.innerHeight -
+                    menuHeight
+                ) / 2;
 
 
             /*
@@ -2579,7 +3059,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 userMenu.style.transform =
                     "none";
 
-
                 userMenu.style.left =
                     startLeft + "px";
 
@@ -2603,7 +3082,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 } catch (error) {
-                    // Ignore pointer capture errors
+
+                    /* Ignore pointer capture errors */
                 }
             }
         );
@@ -2755,13 +3235,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 } catch (error) {
-                    // Ignore pointer capture errors
+
+                    /* Ignore pointer capture errors */
                 }
 
 
                 /*
-                 * Restore normal touch behavior
-                 * after dragging is finished.
+                 * Keep touch action disabled
+                 * so a following click does not
+                 * cause unwanted page movement.
                  */
 
                 userMenuBtn.style.touchAction =
@@ -2804,10 +3286,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /*
-                     * IMPORTANT:
-                     * The click that normally fires
-                     * after pointerup must NOT open
-                     * or close the popover.
+                     * The next browser click
+                     * must not open/close the menu.
                      */
 
                     suppressNextClick =
@@ -2847,7 +3327,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 } catch (error) {
-                    // Ignore pointer capture errors
+
+                    /* Ignore pointer capture errors */
                 }
 
 
@@ -2883,10 +3364,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /* =================================================
            STOP CLICK AFTER DRAG
-           
-           This is important because without
-           this the browser fires a click after
-           dragging and the popover opens.
         ================================================= */
 
         userMenuBtn.addEventListener(
@@ -2918,11 +3395,6 @@ document.addEventListener("DOMContentLoaded", function () {
             window.innerWidth <=
             1024
         ) {
-
-            /*
-             * Wait for the menu dimensions
-             * to be available.
-             */
 
             requestAnimationFrame(
                 function () {
@@ -3027,10 +3499,122 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 userMenu.style.transform =
                     "none";
+
+
+                /*
+                 * If Settings is open,
+                 * keep it aligned correctly.
+                 */
+
+                refreshSettingsPosition();
             }
         );
     }
 
+
+    /* =====================================================
+       EXTRA SETTINGS POSITION UPDATE
+       
+       This makes sure that if the browser changes
+       size while Settings is open, the Settings
+       popover remains properly positioned.
+    ===================================================== */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (
+                settingsModal &&
+                settingsModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                setTimeout(function () {
+
+                    positionSettingsLikeUserPopover();
+
+                }, 30);
+            }
+        }
+    );
+
+
+    /* =====================================================
+       FINAL PROFILE MENU LAYER
+       
+       Always keep the profile menu above settings.
+    ===================================================== */
+
+    function keepProfileMenuAboveSettings() {
+
+        if (!userMenu) {
+            return;
+        }
+
+        if (
+            window.innerWidth <=
+            1024
+        ) {
+
+            userMenu.style.zIndex =
+                "100000";
+
+            if (userPopover) {
+
+                userPopover.style.zIndex =
+                    "100001";
+            }
+
+            if (settingsContainer) {
+
+                settingsContainer.style.zIndex =
+                    "99990";
+            }
+
+            if (settingsModal) {
+
+                settingsModal.style.zIndex =
+                    "99900";
+            }
+        }
+    }
+
+
+    keepProfileMenuAboveSettings();
+
+
+    /* =====================================================
+       FINAL INITIALIZATION
+    ===================================================== */
+
+    setTimeout(function () {
+
+        keepProfileMenuAboveSettings();
+
+        if (
+            window.innerWidth <=
+            1024 &&
+            userMenu
+        ) {
+
+            if (
+                !userMenu.style.left ||
+                !userMenu.style.top
+            ) {
+
+                /*
+                 * Restore the account-specific
+                 * saved position one final time.
+                 */
+
+                if (typeof restoreProfileMenuPosition === "function") {
+                    restoreProfileMenuPosition();
+                }
+            }
+        }
+
+    }, 100);
+
 });
-
-
