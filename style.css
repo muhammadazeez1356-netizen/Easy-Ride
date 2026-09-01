@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -9,13 +12,30 @@
     font-family: "Montserrat Alternates", sans-serif;
     text-decoration: none;
 }
-html,
-body {
-    overflow-x: hidden !important;
+
+html {
     width: 100%;
     max-width: 100%;
     margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+    scroll-behavior: smooth;
+}
 
+body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+}
+
+#main-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 :root {
@@ -24,15 +44,21 @@ body {
     --third-color: #6B7280;
     --fourth-color: #ffd900;
     --last-colour: #D1D5DB;
+
+    --header-height: 64px;
 }
 
-/* Splash */
+
+/* =========================================================
+   SPLASH SCREEN
+========================================================= */
 
 #splash {
     position: fixed;
     inset: 0;
     width: 100%;
-    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
     background: linear-gradient(150deg, #dcdada, #141313);
     display: flex;
     flex-direction: column;
@@ -44,6 +70,8 @@ body {
 
 #splash img {
     width: 30%;
+    max-width: 300px;
+    height: auto;
     margin-bottom: 20px;
 }
 
@@ -58,22 +86,55 @@ body {
 }
 
 
-
-#main-content {
-    display: none;
-}
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header1 {
     width: 100%;
-    padding-inline: 25px;
+    max-width: 100%;
+    min-height: var(--header-height);
+    height: var(--header-height);
+
+    margin: 0 !important;
+    padding: 0 25px !important;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     gap: 20px;
-    z-index: 10;
+
     background-color: #000000cf;
+
     position: sticky;
     top: 0;
+
+    z-index: 10000;
+}
+
+.header1 img {
+    display: block;
+    width: 120px;
+    max-width: 45vw;
+    height: auto;
+
+    flex: 0 1 auto;
+    object-fit: contain;
+}
+
+.header1 button {
+    border: none;
+    padding: 10px 22px;
+    border-radius: 30px;
+    background: #fff;
+    cursor: pointer;
+
+    min-width: 90px;
+    max-width: 40vw;
+
+    white-space: nowrap;
+    flex: 0 0 auto;
 }
 
 .header1 button:hover {
@@ -84,22 +145,6 @@ body {
     cursor: pointer;
 }
 
-.header1 img {
-    width: 120px;
-    flex-shrink: 0;
-}
-
-.header1 button {
-    border: none;
-    padding: 10px 22px;
-    border-radius: 30px;
-    background: #fff;
-    cursor: pointer;
-    min-width: 90px;
-    /* keeps button visible */
-    white-space: nowrap;
-}
-
 .header1 button a {
     text-decoration: none;
     color: #000;
@@ -107,66 +152,36 @@ body {
     display: block;
 }
 
-/* =========================
-   TABLET
-========================= */
 
-@media (max-width: 768px) {
-
-    .header1 {
-        padding: 14px 18px;
-        gap: 14px;
-    }
-
-    .header1 img {
-        width: 105px;
-    }
-
-    .header1 button {
-        padding: 8px 18px;
-        min-width: 80px;
-        font-size: 14px;
-    }
-}
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 480px) {
-
-    .header1 {
-        padding: 12px 14px;
-        gap: 10px;
-    }
-
-    .header1 img {
-        width: 95px;
-    }
-
-    .header1 button {
-        padding: 7px 16px;
-        min-width: 72px;
-        font-size: 13px;
-    }
-}
-
-/* ===== WORKING SLIDESHOW ===== */
+/* =========================================================
+   HERO SLIDESHOW
+========================================================= */
 
 .slider {
     position: relative;
+
     width: 100%;
-    height: 100vh;
+    max-width: 100%;
+
+    height: calc(100svh - var(--header-height));
+    min-height: 520px;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
     overflow: hidden;
 }
 
 .slide {
     position: absolute;
     inset: 0;
+
     width: 100%;
+    max-width: 100%;
     height: 100%;
+
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
 
     opacity: 0;
@@ -177,336 +192,10 @@ body {
     opacity: 1;
 }
 
-/* dark overlay */
-.overlays {
-    position: absolute;
-    top: 5rem;
-    /* below header */
-    left: 0;
-    width: 100%;
-    height: 120vh;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 1;
-}
 
-/* hero text */
-.tex {
-    position: absolute;
-    left: 50vh;
-    transform: translate(-50%, -50%);
-    width: min(90%, 700px);
-    text-align: center;
-    color: #fff;
-    z-index: 2;
-    margin-top: 20vh;
-}
-
-.tex h1 {
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1.2;
-    margin-bottom: 20px;
-}
-
-.tex p {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.6;
-}
-
-.tex #downloadBtn {
-    margin-top: 25px;
-    width: 220px;
-    max-width: 100%;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 35px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-
-
-.login-modal {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100vh;
-    background: transparent;
-    /* no white background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s ease;
-    z-index: 99999;
-}
-
-.login-modal.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Close button */
-
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 18px;
-
-    background: transparent;
-    border: none;
-
-    font-size: 28px;
-    cursor: pointer;
-    color: #555;
-}
-
-/* Make card relative */
-
-.card {
-    position: relative;
-}
-
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    /* min-height:auto;     */
-    background: transparent;
-    position: relative;
-    top: 5vh;
-}
-
-.card {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    background: white;
-    border-radius: 25px;
-    padding: 50px 45px;
-    text-align: center;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
-}
-
-.card h1 {
-
-    font-size: 48px;
-    color: #d89b00;
-    margin-bottom: 15px;
-
-}
-
-.card span {
-
-    color: black;
-
-}
-
-.card p {
-
-    color: #666;
-    line-height: 28px;
-    margin-bottom: 40px;
-    font-size: 18px;
-
-}
-
-.buttons {
-
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-}
-
-.buttons a {
-
-    padding: 18px;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: bold;
-
-    transition: .3s;
-
-}
-
-.user-btn {
-
-    background: #F4B400;
-    color: white;
-
-}
-
-.user-btn:hover {
-
-    background: #d89b00;
-    transform: translateY(-3px);
-
-}
-
-.driver-btn {
-
-    background: #15803d;
-    color: white;
-
-}
-
-.driver-btn:hover {
-
-    background: #1b9a4a;
-    transform: translateY(-3px);
-
-}
-
-.buttons i {
-
-    margin-right: 10px;
-
-}
-
-@media(max-width:600px) {
-
-    .card {
-
-        width: 100%;
-        padding: 35px 25px;
-
-    }
-
-    .card h1 {
-
-        font-size: 38px;
-
-    }
-
-    .buttons a {
-
-        font-size: 17px;
-
-    }
-
-}
-
-
-#downloadBtn {
-    padding: 12px 25px;
-    border: none;
-    background: #ffd900;
-    color: #000;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* Modal background */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-/* Modal box */
-.modal-content {
-    background: #fff;
-    width: 320px;
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
-    animation: popup 0.3s ease;
-}
-
-.modal-content p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.modal-content button {
-    padding: 10px 20px;
-    border: none;
-    background: #ffd900;
-    color: #000;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-@keyframes popup {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-
-
-#downloadBtn {
-    padding: 12px 25px;
-    background: #ffd900;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#downloadBtn:hover {
-    background-color: #000;
-    color: #fff;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 25px;
-    width: 320px;
-    text-align: center;
-    border-radius: 12px;
-}
-
-.modal-content button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #ffd900;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-
-.slide img {
-    width: 300px;
-    margin-top: 20px;
-    border-radius: 10px;
-}
+/* =========================================================
+   SLIDE IMAGES
+========================================================= */
 
 .slide1 {
     background-image: url(image/image3.jfif);
@@ -538,25 +227,148 @@ body {
     background-size: cover;
 }
 
-.tex {
-    color: var(--primary-colour);
-    position: absolute;
-    top: 30%;
-    text-align: start;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 55rem;
-    font-size: 30px;
-    padding-left: 40px;
+.slide img {
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
-.tex button {
-    width: 30%;
-    font-weight: 800;
-    cursor: pointer;
+
+/* =========================================================
+   HERO OVERLAY
+========================================================= */
+
+.overlay {
+    position: absolute;
+
+    /* COVER THE COMPLETE SLIDER */
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    /* COVER THE COMPLETE SLIDER */
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.overlays {
+    position: absolute;
+
+    /* COVER THE COMPLETE SLIDER */
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    /* COVER THE COMPLETE SLIDER */
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.tex {
+    position: absolute;
+
+    /*
+       DESKTOP:
+       Moved UP slightly as requested.
+       Everything inside .tex moves up together.
+    */
+    top: calc(
+        var(--header-height) +
+        ((100svh - var(--header-height)) * 0.10)
+    );
+
+    left: 0;
+
+    width: min(92%, 760px);
+    max-width: 760px;
+
+    margin: 0;
+    padding: 0 40px;
+
+    transform: none;
+
+    color: var(--primary-colour);
+
+    text-align: start;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    z-index: 3;
+
+    font-size: clamp(18px, 2.2vw, 30px);
+
+    overflow: visible;
+}
+
+.tex h1 {
+    width: 100%;
+    max-width: 720px;
+
+    margin: 0 0 8px;
+
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.15;
+
+    overflow-wrap: break-word;
+}
+
+.tex p {
+    width: 100%;
+    max-width: 650px;
+
+    margin: 0;
+
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.55;
+
+    overflow-wrap: break-word;
+}
+
+.tex button,
+.tex #downloadBtn {
     position: relative;
-    top: 10vh;
+
+    top: auto;
+    left: auto;
+
+    width: min(220px, 100%);
+    max-width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 18px;
+
+    padding: 12px 20px;
+
+    align-self: flex-start;
 }
 
 .tex button:hover {
@@ -564,107 +376,516 @@ body {
     color: white;
     font-weight: 800;
     outline: invert;
-
 }
 
-.hero-section1 {
-    background-color: #ffffff14;
-    height: 85rem;
 
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+#downloadBtn {
+    padding: 12px 25px;
+
+    border: none;
+
+    background: #ffd900;
+    color: #000;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    cursor: pointer;
 }
+
+#downloadBtn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+/* =========================================================
+   PEOPLE / TRUSTED SECTION
+========================================================= */
 
 .img-text {
+    width: 100%;
+    max-width: 100%;
+
     display: flex;
-    gap: 5px;
     align-items: center;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
+
+    overflow: hidden;
 }
 
 .img-text img {
-    width: 5%;
-    border-radius: 40rem;
+    width: 38px;
+    max-width: 38px;
+
+    height: 38px;
+
+    object-fit: cover;
+
+    flex: 0 0 auto;
+
     position: relative;
-    top: 130px;
+    top: auto;
+
+    border-radius: 40rem;
 }
 
 .img-text p {
     position: relative;
-    top: 130px;
-    font-size: 15px;
+    top: auto;
+
+    margin: 0;
+
+    max-width: calc(100% - 100px);
+
+    font-size: clamp(12px, 1.5vw, 15px);
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   LOGIN MODAL
+========================================================= */
+
+.login-modal {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100svh;
+
+    padding: 20px;
+
+    background: transparent;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+
+    z-index: 99999;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.login-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.login-modal .container {
+    width: 100%;
+    max-width: 520px;
+
+    min-width: 0;
+
+    margin: auto;
+
+    padding: 0;
+
+    background: transparent;
+
+    position: relative;
+
+    top: 0;
+}
+
+.card {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+
+    min-width: 0;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 50px 45px;
+
+    text-align: center;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+
+    max-height: calc(100svh - 40px);
+
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    background: transparent;
+    border: none;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: #555;
+}
+
+.card h1 {
+    font-size: 48px;
+
+    color: #d89b00;
+
+    margin-bottom: 15px;
+
+    line-height: 1.15;
+}
+
+.card span {
+    color: black;
+}
+
+.card p {
+    color: #666;
+
+    line-height: 28px;
+
+    margin-bottom: 40px;
+
+    font-size: 18px;
+}
+
+.buttons {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.buttons a {
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    transition: .3s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow-wrap: break-word;
+}
+
+.user-btn {
+    background: #F4B400;
+    color: white;
+}
+
+.user-btn:hover {
+    background: #d89b00;
+    transform: translateY(-3px);
+}
+
+.driver-btn {
+    background: #15803d;
+    color: white;
+}
+
+.driver-btn:hover {
+    background: #1b9a4a;
+    transform: translateY(-3px);
+}
+
+.buttons i {
+    margin-right: 10px;
+}
+
+
+/* =========================================================
+   DOWNLOAD MODAL
+========================================================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100svh;
+
+    background: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    overflow: auto;
+
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+
+    width: min(320px, calc(100vw - 40px));
+    max-width: 100%;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    animation: popup 0.3s ease;
+}
+
+.modal-content p {
+    font-size: 16px;
+
+    margin-bottom: 20px;
+
+    color: #333;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+
+    border: none;
+
+    background: #ffd900;
+
+    color: #000;
+
+    font-weight: 600;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   TESTIMONIAL SECTION
+========================================================= */
+
+.hero-section1 {
+    width: 100%;
+    max-width: 100%;
+
+    background-color: #ffffff14;
+
+    height: auto;
+
+    min-height: 85rem;
+
+    padding: 80px 5% 100px;
+
+    overflow: hidden;
 }
 
 .div-text {
+    width: 100%;
+    max-width: 100%;
+
     display: flex;
+
     flex-direction: column;
+
     gap: 20px;
+
     justify-content: center;
     align-items: center;
+
     position: relative;
-    top: 5rem;
+
+    top: auto;
+
+    margin: 0 0 55px;
+
+    text-align: center;
 }
 
 .heading-text1 {
-    font-size: 50px;
+    max-width: 100%;
+
+    font-size: clamp(2rem, 5vw, 50px);
+
+    line-height: 1.2;
+
     color: var(--third-color);
+
+    text-align: center;
 }
 
 .text-p {
-    font-size: 20px;
+    max-width: 800px;
+
+    font-size: clamp(1rem, 2vw, 20px);
+
+    line-height: 1.5;
+
     color: var(--third-color);
+
+    text-align: center;
 }
 
 .image-text-div {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
     display: flex;
-    justify-content: space-around;
+
+    justify-content: space-between;
+
+    align-items: stretch;
+
+    gap: 30px;
 }
 
 .div-text-image {
     background-color: var(--primary-colour);
-    width: 40%;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 5px 5px #f5f5f5;
-    margin-bottom: 30px;
-    position: relative;
-    top: 10rem;
 
+    width: calc(50% - 15px);
+
+    max-width: 100%;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow: 0 5px 5px #f5f5f5;
+
+    margin: 0 0 30px;
+
+    position: relative;
+
+    top: auto;
+
+    overflow: hidden;
+}
+
+.div-text-image img {
+    display: block;
+
+    width: min(30%, 120px);
+
+    max-width: 120px;
+
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+.div-text-background {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
 }
 
 .content-p-text1 {
     color: var(--third-color);
+
+    max-width: 100%;
+
+    line-height: 1.5;
 }
 
 .content-p-text {
     color: var(--third-color);
-}
 
-.div-text-image img {
-    width: 30%;
-}
+    max-width: 100%;
 
-.div-text-background {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    line-height: 1.5;
+
+    overflow-wrap: break-word;
 }
 
 
-
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer {
+    width: 100%;
+    max-width: 100%;
+
     background: #111;
+
     color: white;
+
     padding: 60px 8% 20px;
+
+    overflow: hidden;
 }
 
 .footer-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
     gap: 40px;
+}
+
+.footer-box {
+    min-width: 0;
 }
 
 .footer-box h2 {
     font-size: 32px;
+
     margin-bottom: 20px;
 }
 
@@ -674,13 +895,20 @@ body {
 
 .footer-box h3 {
     color: #FFD700;
+
     margin-bottom: 20px;
+
     font-size: 22px;
 }
 
 .footer-box p {
     line-height: 1.8;
+
     color: #ccc;
+
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
 }
 
 .footer-box ul {
@@ -689,55 +917,847 @@ body {
 
 .footer-box ul li {
     margin: 12px 0;
+
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
 }
 
 .footer-box ul li a {
     text-decoration: none;
+
     color: #ccc;
+
     transition: .3s;
 }
 
 .footer-box ul li a:hover {
     color: #FFD700;
+
     padding-left: 8px;
 }
 
 .social-icons {
     margin-top: 20px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
 }
 
 .social-icons a {
     display: inline-flex;
+
     justify-content: center;
     align-items: center;
+
     width: 45px;
     height: 45px;
-    margin-right: 10px;
+
+    margin-right: 0;
+
     background: #FFD700;
+
     color: #111;
+
     text-decoration: none;
+
     border-radius: 50%;
+
     font-size: 20px;
+
     transition: .4s;
+
+    flex: 0 0 45px;
 }
 
 .social-icons a:hover {
     background: white;
+
     transform: translateY(-5px);
 }
 
 hr {
     margin: 40px 0 20px;
+
     border: none;
+
     height: 1px;
+
     background: #444;
 }
 
 .footer-bottom {
+    width: 100%;
+    max-width: 100%;
+
     text-align: center;
+
     color: #aaa;
+
     font-size: 15px;
 }
+
+.footer-bottom p {
+    max-width: 100%;
+
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    :root {
+        --header-height: 62px;
+    }
+
+    .header1 {
+        min-height: var(--header-height);
+        height: var(--header-height);
+
+        padding: 0 22px !important;
+    }
+
+    .slider {
+        height: calc(100svh - var(--header-height));
+        min-height: 500px;
+    }
+
+    .overlay,
+    .overlays {
+        /* COVER THE COMPLETE SLIDER */
+        top: 0;
+
+        height: 100%;
+    }
+
+    /*
+       Slightly lower on tablet/small laptop.
+    */
+    .tex {
+        top: calc(
+            var(--header-height) +
+            ((100svh - var(--header-height)) * 0.25)
+        );
+
+        width: min(88%, 650px);
+
+        padding-left: 35px;
+        padding-right: 25px;
+    }
+
+    .tex h1 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+    }
+
+    .tex button,
+    .tex #downloadBtn {
+        width: 210px;
+    }
+
+    .hero-section1 {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .header1 {
+        min-height: var(--header-height);
+        height: var(--header-height);
+
+        padding: 0 18px !important;
+
+        gap: 12px;
+    }
+
+    .header1 img {
+        width: 105px;
+        max-width: 45vw;
+    }
+
+    .header1 button {
+        min-width: 80px;
+        max-width: 35vw;
+
+        padding: 8px 18px;
+
+        font-size: 14px;
+    }
+
+    .slider {
+        height: calc(100svh - var(--header-height));
+
+        min-height: 500px;
+    }
+
+    .slide {
+        background-position: center center;
+    }
+
+    .overlay,
+    .overlays {
+        /* COVER THE COMPLETE SLIDER */
+        top: 0;
+
+        height: 100%;
+    }
+
+    /*
+       LOWER than desktop/tablet before.
+       This puts the hero text comfortably below the header.
+    */
+    .tex {
+        top: calc(
+            var(--header-height) +
+            ((100svh - var(--header-height)) * 0.20)
+        );
+
+        left: 0;
+
+        width: 100%;
+        max-width: 100%;
+
+        padding: 0 28px;
+
+        font-size: 18px;
+    }
+
+    .tex h1 {
+        max-width: 650px;
+
+        font-size: clamp(2rem, 7vw, 3.2rem);
+
+        line-height: 1.12;
+    }
+
+    .tex p {
+        max-width: 600px;
+
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+
+        line-height: 1.5;
+    }
+
+    .tex button,
+    .tex #downloadBtn {
+        width: 200px;
+
+        max-width: 100%;
+
+        margin-top: 15px;
+    }
+
+    .img-text img {
+        width: 30px;
+        max-width: 30px;
+
+        height: 30px;
+    }
+
+    .img-text p {
+        font-size: 12px;
+    }
+
+    .hero-section1 {
+        min-height: 0;
+
+        height: auto;
+
+        padding: 70px 25px 80px;
+    }
+
+    .div-text {
+        margin-bottom: 45px;
+    }
+
+    .heading-text1 {
+        font-size: clamp(2rem, 7vw, 3rem);
+    }
+
+    .text-p {
+        font-size: clamp(15px, 2.5vw, 18px);
+    }
+
+    .image-text-div {
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .div-text-image {
+        width: 100%;
+
+        margin-bottom: 25px;
+
+        padding: 20px;
+    }
+
+    .div-text-image img {
+        width: 80px;
+
+        max-width: 80px;
+
+        height: 80px;
+    }
+
+    .footer {
+        padding: 55px 7% 20px;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 35px 25px;
+    }
+
+    .footer-box h2 {
+        font-size: 28px;
+    }
+
+    .footer-box h3 {
+        font-size: 20px;
+    }
+
+    .login-modal {
+        padding: 16px;
+    }
+
+    .login-modal .card {
+        max-height: calc(100svh - 32px);
+
+        padding: 42px 28px 30px;
+
+        border-radius: 20px;
+    }
+
+    .close-btn {
+        top: 10px;
+
+        right: 12px;
+
+        font-size: 26px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    :root {
+        --header-height: 56px;
+    }
+
+    .header1 {
+        min-height: var(--header-height);
+        height: var(--header-height);
+
+        padding: 0 14px !important;
+
+        gap: 10px;
+    }
+
+    .header1 img {
+        width: 95px;
+    }
+
+    .header1 button {
+        min-width: 72px;
+
+        padding: 7px 15px;
+
+        font-size: 13px;
+    }
+
+    .slider {
+        height: calc(100svh - var(--header-height));
+
+        min-height: 480px;
+    }
+
+    .overlay,
+    .overlays {
+        /* COVER THE COMPLETE MOBILE SLIDER */
+        top: 0;
+
+        height: 100%;
+    }
+
+    /*
+       MOBILE:
+       Move everything lower.
+    */
+    .tex {
+        top: calc(
+            var(--header-height) +
+            ((100svh - var(--header-height)) * 0.20)
+        );
+
+        left: 0;
+
+        width: 100%;
+        max-width: 100%;
+
+        padding: 0 20px;
+
+        gap: 8px;
+
+        font-size: 16px;
+    }
+
+    .tex h1 {
+        max-width: 100%;
+
+        font-size: clamp(1.8rem, 9vw, 2.6rem);
+
+        line-height: 1.12;
+
+        margin-bottom: 5px;
+    }
+
+    .tex p {
+        max-width: 100%;
+
+        font-size: 0.95rem;
+
+        line-height: 1.45;
+    }
+
+    .tex button,
+    .tex #downloadBtn {
+        width: min(190px, 100%);
+
+        min-height: 46px;
+
+        padding: 11px 16px;
+
+        font-size: 14px;
+
+        margin-top: 12px;
+    }
+
+    .img-text {
+        width: 100%;
+        max-width: 100%;
+
+        margin-top: 2px;
+    }
+
+    .img-text img {
+        width: 27px;
+        max-width: 27px;
+
+        height: 27px;
+    }
+
+    .img-text p {
+        max-width: calc(100% - 100px);
+
+        font-size: 11px;
+    }
+
+    .hero-section1 {
+        padding: 60px 18px 70px;
+    }
+
+    .div-text {
+        margin-bottom: 35px;
+    }
+
+    .heading-text1 {
+        font-size: clamp(1.9rem, 9vw, 2.6rem);
+
+        line-height: 1.15;
+    }
+
+    .text-p {
+        font-size: 15px;
+
+        line-height: 1.5;
+    }
+
+    .div-text-image {
+        width: 100%;
+
+        padding: 18px;
+
+        border-radius: 16px;
+    }
+
+    .div-text-image img {
+        width: 65px;
+        max-width: 65px;
+
+        height: 65px;
+    }
+
+    .content-p-text1 {
+        font-size: 17px;
+    }
+
+    .content-p-text {
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+    .footer {
+        padding: 45px 20px 18px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+    }
+
+    .footer-box h2 {
+        font-size: 26px;
+    }
+
+    .footer-box h3 {
+        font-size: 19px;
+
+        margin-bottom: 14px;
+    }
+
+    .footer-box p,
+    .footer-box li {
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .footer-bottom p {
+        font-size: 12px;
+
+        line-height: 1.6;
+    }
+
+    .social-icons a {
+        width: 42px;
+        height: 42px;
+
+        flex-basis: 42px;
+    }
+
+    .login-modal {
+        padding: 12px;
+    }
+
+    .login-modal .container {
+        max-width: 100%;
+    }
+
+    .login-modal .card {
+        width: 100%;
+        max-width: 100%;
+
+        max-height: calc(100svh - 24px);
+
+        padding: 40px 20px 24px;
+
+        border-radius: 18px;
+    }
+
+    .card h1 {
+        font-size: 32px;
+    }
+
+    .card p {
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        margin-bottom: 25px;
+    }
+
+    .buttons {
+        gap: 14px;
+    }
+
+    .buttons a {
+        padding: 14px 12px;
+
+        min-height: 50px;
+
+        font-size: 15px;
+    }
+
+    .modal {
+        padding: 15px;
+    }
+
+    .modal-content {
+        width: min(320px, calc(100vw - 30px));
+
+        padding: 22px 18px;
+    }
+
+    .modal-content p {
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+    /* =====================================================
+       MOBILE SPLASH IMAGE
+    ===================================================== */
+
+    #splash img {
+        width: 55%;
+        max-width: 360px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    :root {
+        --header-height: 54px;
+    }
+
+    .header1 {
+        min-height: var(--header-height);
+        height: var(--header-height);
+
+        padding: 0 11px !important;
+    }
+
+    .header1 img {
+        width: 88px;
+    }
+
+    .header1 button {
+        min-width: 68px;
+
+        padding: 6px 12px;
+
+        font-size: 12px;
+    }
+
+    .slider {
+        height: calc(100svh - var(--header-height));
+
+        min-height: 450px;
+    }
+
+    .overlay,
+    .overlays {
+        /* COVER THE COMPLETE SLIDER */
+        top: 0;
+
+        height: 100%;
+    }
+
+    /*
+       Keep very small phones lower as requested,
+       but prevent the text from becoming too low.
+    */
+    .tex {
+        top: calc(
+            var(--header-height) +
+            ((100svh - var(--header-height)) * 0.18)
+        );
+
+        padding: 0 16px;
+    }
+
+    .tex h1 {
+        font-size: clamp(1.65rem, 9vw, 2.1rem);
+    }
+
+    .tex p {
+        font-size: 0.88rem;
+    }
+
+    .tex button,
+    .tex #downloadBtn {
+        width: 175px;
+
+        font-size: 13px;
+    }
+
+    .img-text img {
+        width: 24px;
+        max-width: 24px;
+
+        height: 24px;
+    }
+
+    .img-text p {
+        font-size: 10px;
+    }
+
+    .hero-section1 {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .div-text-image {
+        padding: 15px;
+    }
+
+    .div-text-image img {
+        width: 58px;
+        max-width: 58px;
+
+        height: 58px;
+    }
+
+    .content-p-text1 {
+        font-size: 16px;
+    }
+
+    .content-p-text {
+        font-size: 13px;
+    }
+
+    .footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONES
+========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    :root {
+        --header-height: 54px;
+    }
+
+    .header1 {
+        min-height: var(--header-height);
+        height: var(--header-height);
+
+        padding: 0 15px !important;
+    }
+
+    .header1 img {
+        width: 90px;
+    }
+
+    .header1 button {
+        padding: 6px 15px;
+
+        min-width: 72px;
+
+        font-size: 12px;
+    }
+
+    .slider {
+        height: calc(100svh - var(--header-height));
+
+        min-height: 360px;
+    }
+
+    .overlay,
+    .overlays {
+        /* COVER THE COMPLETE SLIDER */
+        top: 0;
+
+        height: 100%;
+    }
+
+    /*
+       Landscape needs a smaller percentage because
+       the screen is short vertically.
+    */
+    .tex {
+        top: calc(
+            var(--header-height) +
+            ((100svh - var(--header-height)) * 0.13)
+        );
+
+        left: 0;
+
+        width: 70%;
+        max-width: 600px;
+
+        padding: 0 25px;
+
+        gap: 5px;
+    }
+
+    .tex h1 {
+        font-size: clamp(1.5rem, 4vw, 2.2rem);
+    }
+
+    .tex p {
+        font-size: 0.85rem;
+
+        line-height: 1.35;
+    }
+
+    .tex button,
+    .tex #downloadBtn {
+        width: 170px;
+
+        min-height: 40px;
+
+        padding: 8px 15px;
+
+        margin-top: 5px;
+
+        font-size: 12px;
+    }
+
+    .img-text img {
+        width: 22px;
+        max-width: 22px;
+
+        height: 22px;
+    }
+
+    .img-text p {
+        font-size: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /* Landing Page */
@@ -4425,186 +5445,6 @@ input {
 
 
 
-
-
-
-
-
-
-
-/* RESPONSIVE */
-
-
-@media (max-width: 992px) {
-
-    .tex {
-        max-width: 500px;
-        right: 30px;
-    }
-
-    .tex h1 {
-        font-size: 2.8rem;
-    }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
-
-    .header1 {
-        flex-direction: row;
-        /* stay flex */
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 18px;
-    }
-
-    .header1 img {
-        width: 105px;
-    }
-
-    .header1 button {
-        padding: 8px 18px;
-        font-size: 14px;
-    }
-
-    .slider {
-        height: 100vh;
-    }
-
-    .tex {
-        position: absolute;
-        top: 42%;
-        /* raise it up */
-        left: 20px;
-        right: 20px;
-        transform: translateY(-50%);
-        width: auto;
-        max-width: 320px;
-
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        /* align text to start */
-
-        text-align: left;
-        /* left text */
-        gap: 14px;
-    }
-
-    .tex h1 {
-        font-size: 2rem;
-        line-height: 1.25;
-        margin: 0;
-    }
-
-    .tex p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    .tex button {
-        width: 100%;
-        max-width: 240px;
-        align-self: flex-start;
-        /* button stays left */
-    }
-
-    .img-text {
-        justify-content: flex-start;
-        gap: 8px;
-    }
-
-    .img-text p {
-        width: auto;
-        text-align: left;
-        font-size: 0.85rem;
-    }
-}
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 480px) {
-
-    .header1 {
-        padding: 12px 14px;
-    }
-
-    .header1 img {
-        width: 95px;
-    }
-
-    .header1 button {
-        padding: 7px 16px;
-        font-size: 13px;
-    }
-
-    .tex {
-        top: 40%;
-        left: 16px;
-        right: 16px;
-        max-width: 290px;
-    }
-
-    .tex h1 {
-        font-size: 1.8rem;
-    }
-
-    .tex p {
-        font-size: 0.9rem;
-    }
-
-    #typing-texts {
-        font-size: 1.6rem;
-    }
-
-    #splash img {
-        width: 100%;
-    }
-}
-
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 480px) {
-
-    .footer {
-        padding: 45px 15px 18px;
-    }
-
-    .footer-box h2 {
-        font-size: 1.5rem;
-    }
-
-    .footer-box h3 {
-        font-size: 1.05rem;
-    }
-
-    .footer-box p,
-    .footer-box ul li {
-        font-size: 0.9rem;
-    }
-
-    .social-icons {
-        gap: 12px;
-    }
-
-    .social-icons a {
-        width: 38px;
-        height: 38px;
-    }
-
-    .footer-bottom p {
-        font-size: 0.8rem;
-    }
-}
 
 
 
