@@ -1,5 +1,10 @@
 /* =========================================================
    EASY RIDE - MAIN JAVASCRIPT
+   ACCOUNT SYSTEM
+   ---------------------------------------------------------
+   easyRideUsers    = ALL REGISTERED ACCOUNTS
+   easyRideUser     = CURRENT LOGGED-IN ACCOUNT
+   easyRideLoggedIn = CURRENT LOGIN SESSION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -46,14 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       ACCOUNT HELPERS
-       EACH ACCOUNT IS COMPLETELY SEPARATE
+       GET ALL REGISTERED USERS
+       
+       IMPORTANT:
+       This is the permanent account database.
+       NEVER remove this during logout.
     ===================================================== */
 
     function getAllUsers() {
 
-        const usersData =
-            localStorage.getItem("easyRideUsers");
+        const usersData = localStorage.getItem("easyRideUsers");
 
         if (!usersData) {
             return [];
@@ -63,37 +70,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const users = JSON.parse(usersData);
 
-            return Array.isArray(users)
-                ? users
-                : [];
+            if (Array.isArray(users)) {
+                return users;
+            }
 
         } catch (error) {
 
             console.error(
-                "Unable to read users:",
+                "Unable to read Easy Ride accounts:",
+                error
+            );
+        }
+
+        return [];
+    }
+
+
+    /* =====================================================
+       SAVE ALL REGISTERED USERS
+    ===================================================== */
+
+    function saveAllUsers(users) {
+
+        if (!Array.isArray(users)) {
+            return false;
+        }
+
+        try {
+
+            localStorage.setItem(
+                "easyRideUsers",
+                JSON.stringify(users)
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "Unable to save Easy Ride accounts:",
                 error
             );
 
-            return [];
+            return false;
         }
     }
 
 
     /* =====================================================
-       SAVE ALL ACCOUNTS
-    ===================================================== */
-
-    function saveAllUsers(users) {
-
-        localStorage.setItem(
-            "easyRideUsers",
-            JSON.stringify(users)
-        );
-    }
-
-
-    /* =====================================================
-       GET CURRENT LOGGED-IN ACCOUNT
+       GET CURRENT SESSION USER
+       
+       This is NOT the permanent account database.
     ===================================================== */
 
     function getCurrentUser() {
@@ -130,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SAVE CURRENT ACCOUNT SESSION
+       SAVE CURRENT SESSION USER
     ===================================================== */
 
     function saveCurrentUser(user) {
@@ -139,18 +166,32 @@ document.addEventListener("DOMContentLoaded", function () {
             !user ||
             !user.id
         ) {
-            return;
+            return false;
         }
 
-        localStorage.setItem(
-            "easyRideUser",
-            JSON.stringify(user)
-        );
+        try {
+
+            localStorage.setItem(
+                "easyRideUser",
+                JSON.stringify(user)
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "Unable to save current user:",
+                error
+            );
+
+            return false;
+        }
     }
 
 
     /* =====================================================
-       GET ACCOUNT BY ID
+       GET USER BY ID
     ===================================================== */
 
     function getUserById(userId) {
@@ -159,26 +200,26 @@ document.addEventListener("DOMContentLoaded", function () {
             return null;
         }
 
-        const users =
-            getAllUsers();
+        const users = getAllUsers();
 
         return users.find(function (user) {
 
-            return String(user.id) ===
-                String(userId);
+            return (
+                user &&
+                String(user.id) === String(userId)
+            );
 
         }) || null;
     }
 
 
     /* =====================================================
-       GET LOGGED-IN ACCOUNT ID
+       GET CURRENT USER ID
     ===================================================== */
 
     function getCurrentUserId() {
 
-        const user =
-            getCurrentUser();
+        const user = getCurrentUser();
 
         if (
             !user ||
@@ -319,6 +360,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        GET FRESH CURRENT ACCOUNT
+       
+       IMPORTANT:
+       Always reload the account from easyRideUsers.
+       This prevents old session information from
+       overwriting the permanent account.
     ===================================================== */
 
     function getFreshCurrentUser() {
@@ -326,20 +372,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const currentUser =
             getCurrentUser();
 
-        if (!currentUser) {
+        if (!currentUser || !currentUser.id) {
             return null;
         }
 
         const savedUser =
-            getUserById(
-                currentUser.id
-            );
+            getUserById(currentUser.id);
 
         if (savedUser) {
 
-            saveCurrentUser(
-                savedUser
-            );
+            saveCurrentUser(savedUser);
 
             return savedUser;
         }
@@ -349,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       UPDATE ONLY THE CURRENT ACCOUNT
+       UPDATE ONLY CURRENT ACCOUNT
     ===================================================== */
 
     function updateUser(updatedUser) {
@@ -367,8 +409,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const userIndex =
             users.findIndex(function (user) {
 
-                return String(user.id) ===
-                    String(updatedUser.id);
+                return (
+                    user &&
+                    String(user.id) ===
+                    String(updatedUser.id)
+                );
 
             });
 
@@ -381,7 +426,12 @@ document.addEventListener("DOMContentLoaded", function () {
             ...updatedUser
         };
 
-        saveAllUsers(users);
+        const saved =
+            saveAllUsers(users);
+
+        if (!saved) {
+            return false;
+        }
 
         saveCurrentUser(
             users[userIndex]
@@ -396,69 +446,43 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const settingsBtn =
-        document.getElementById(
-            "settingsBtn"
-        );
+        document.getElementById("settingsBtn");
 
     const settingsModal =
-        document.getElementById(
-            "settingsModal"
-        );
+        document.getElementById("settingsModal");
 
     const closeSettings =
-        document.getElementById(
-            "closeSettings"
-        );
+        document.getElementById("closeSettings");
 
     const saveSettings =
-        document.getElementById(
-            "saveSettings"
-        );
+        document.getElementById("saveSettings");
 
     const settingsName =
-        document.getElementById(
-            "settingsName"
-        );
+        document.getElementById("settingsName");
 
     const settingsEmail =
-        document.getElementById(
-            "settingsEmail"
-        );
+        document.getElementById("settingsEmail");
 
     const settingsPhone =
-        document.getElementById(
-            "settingsPhone"
-        );
+        document.getElementById("settingsPhone");
 
     const settingsPassword =
-        document.getElementById(
-            "settingsPassword"
-        );
+        document.getElementById("settingsPassword");
 
     const togglePassword =
-        document.getElementById(
-            "togglePassword"
-        );
+        document.getElementById("togglePassword");
 
     const themeToggle =
-        document.getElementById(
-            "themeToggle"
-        );
+        document.getElementById("themeToggle");
 
     const profileImageInput =
-        document.getElementById(
-            "profileImageInput"
-        );
+        document.getElementById("profileImageInput");
 
     const settingsProfileImage =
-        document.getElementById(
-            "settingsProfileImage"
-        );
+        document.getElementById("settingsProfileImage");
 
     const settingsDefaultAvatar =
-        document.getElementById(
-            "settingsDefaultAvatar"
-        );
+        document.getElementById("settingsDefaultAvatar");
 
 
     /* =====================================================
@@ -469,9 +493,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("splash");
 
     const mainContent =
-        document.getElementById(
-            "main-content"
-        );
+        document.getElementById("main-content");
 
     if (
         splash &&
@@ -495,9 +517,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const typingTexts =
-        document.getElementById(
-            "typing-texts"
-        );
+        document.getElementById("typing-texts");
 
     if (typingTexts) {
 
@@ -506,8 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let index = 0;
 
-        typingTexts.textContent =
-            "";
+        typingTexts.textContent = "";
 
         function typeWriter() {
 
@@ -534,9 +553,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const typing =
-        document.getElementById(
-            "typing"
-        );
+        document.getElementById("typing");
 
     if (typing) {
 
@@ -545,8 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let index = 0;
 
-        typing.textContent =
-            "";
+        typing.textContent = "";
 
         function typeHeroText() {
 
@@ -573,33 +589,25 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const slides =
-        document.querySelectorAll(
-            ".slide"
-        );
+        document.querySelectorAll(".slide");
 
     if (slides.length > 0) {
 
         let currentSlide = 0;
 
-        slides[0].classList.add(
-            "active"
-        );
+        slides[0].classList.add("active");
 
         setInterval(function () {
 
             slides[currentSlide]
-                .classList.remove(
-                    "active"
-                );
+                .classList.remove("active");
 
             currentSlide =
                 (currentSlide + 1) %
                 slides.length;
 
             slides[currentSlide]
-                .classList.add(
-                    "active"
-                );
+                .classList.add("active");
 
         }, 4000);
     }
@@ -610,14 +618,10 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const mobileMenuButton =
-        document.querySelector(
-            ".show-div"
-        );
+        document.querySelector(".show-div");
 
     const navItems =
-        document.getElementById(
-            "nav-items"
-        );
+        document.getElementById("nav-items");
 
     if (
         mobileMenuButton &&
@@ -631,9 +635,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-                navItems.classList.toggle(
-                    "open"
-                );
+                navItems.classList.toggle("open");
             }
         );
     }
@@ -644,14 +646,10 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const contactForm =
-        document.getElementById(
-            "contactForm"
-        );
+        document.getElementById("contactForm");
 
     const contactToast =
-        document.getElementById(
-            "toast"
-        );
+        document.getElementById("toast");
 
     if (
         contactForm &&
@@ -664,15 +662,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-                contactToast.classList.add(
-                    "show"
-                );
+                contactToast.classList.add("show");
 
                 setTimeout(function () {
 
-                    contactToast.classList.remove(
-                        "show"
-                    );
+                    contactToast.classList.remove("show");
 
                 }, 2000);
 
@@ -687,29 +681,19 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const tabs =
-        document.querySelectorAll(
-            ".tab"
-        );
+        document.querySelectorAll(".tab");
 
     const forms =
-        document.querySelectorAll(
-            ".form"
-        );
+        document.querySelectorAll(".form");
 
     const emailInput =
-        document.getElementById(
-            "emailInput"
-        );
+        document.getElementById("emailInput");
 
     const phoneInput =
-        document.getElementById(
-            "phoneInput"
-        );
+        document.getElementById("phoneInput");
 
     const continueBtn =
-        document.getElementById(
-            "continueBtn"
-        );
+        document.getElementById("continueBtn");
 
     if (
         tabs.length > 0 &&
@@ -719,8 +703,7 @@ document.addEventListener("DOMContentLoaded", function () {
         continueBtn
     ) {
 
-        let activeTab =
-            "emailForm";
+        let activeTab = "emailForm";
 
         tabs.forEach(function (tab) {
 
@@ -746,9 +729,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     );
 
-                    tab.classList.add(
-                        "active"
-                    );
+                    tab.classList.add("active");
 
                     const targetForm =
                         document.getElementById(
@@ -774,8 +755,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function checkInput() {
 
             if (
-                activeTab ===
-                "emailForm"
+                activeTab === "emailForm"
             ) {
 
                 continueBtn.disabled =
@@ -808,89 +788,57 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const userMenuBtn =
-        document.getElementById(
-            "userMenuBtn"
-        );
+        document.getElementById("userMenuBtn");
 
     const userPopover =
-        document.getElementById(
-            "userPopover"
-        );
+        document.getElementById("userPopover");
 
     const userMenu =
-        document.querySelector(
-            ".user-menu"
-        );
+        document.querySelector(".user-menu");
 
     const userAvatar =
-        document.getElementById(
-            "userAvatar"
-        );
+        document.getElementById("userAvatar");
 
     const userAvatarImage =
-        document.getElementById(
-            "userAvatarImage"
-        );
+        document.getElementById("userAvatarImage");
 
     const userAvatarDefault =
-        document.getElementById(
-            "userAvatarDefault"
-        );
+        document.getElementById("userAvatarDefault");
 
     const popoverName =
-        document.getElementById(
-            "popoverName"
-        );
+        document.getElementById("popoverName");
 
     const popoverEmail =
-        document.getElementById(
-            "popoverEmail"
-        );
+        document.getElementById("popoverEmail");
 
     const userFullname =
-        document.getElementById(
-            "userFullname"
-        );
+        document.getElementById("userFullname");
 
     const userPhone =
-        document.getElementById(
-            "userPhone"
-        );
+        document.getElementById("userPhone");
 
     const userEmail =
-        document.getElementById(
-            "userEmail"
-        );
+        document.getElementById("userEmail");
 
     const accountStatus =
-        document.getElementById(
-            "accountStatus"
-        );
+        document.getElementById("accountStatus");
 
     const logoutBtn =
-        document.getElementById(
-            "logoutBtn"
-        );
+        document.getElementById("logoutBtn");
 
 
     /* =====================================================
-       PROFILE IMAGE ELEMENTS
+       PROFILE IMAGE VIEWER
     ===================================================== */
 
     const profileImageViewer =
-        document.getElementById(
-            "profileImageViewer"
-        );
+        document.getElementById("profileImageViewer");
 
     const largeProfileImage =
-        document.getElementById(
-            "largeProfileImage"
-        );
+        document.getElementById("largeProfileImage");
 
     const closeProfileViewer =
-        document.getElementById(
-            "closeProfileViewer"
-        );
+        document.getElementById("closeProfileViewer");
 
 
     /* =====================================================
@@ -911,17 +859,11 @@ document.addEventListener("DOMContentLoaded", function () {
             !user.profileImage
         ) {
 
-            userAvatarImage.removeAttribute(
-                "src"
-            );
+            userAvatarImage.removeAttribute("src");
 
-            userAvatarImage.classList.remove(
-                "show"
-            );
+            userAvatarImage.classList.remove("show");
 
-            userAvatarDefault.classList.remove(
-                "hide"
-            );
+            userAvatarDefault.classList.remove("hide");
 
             return;
         }
@@ -929,13 +871,9 @@ document.addEventListener("DOMContentLoaded", function () {
         userAvatarImage.src =
             user.profileImage;
 
-        userAvatarImage.classList.add(
-            "show"
-        );
+        userAvatarImage.classList.add("show");
 
-        userAvatarDefault.classList.add(
-            "hide"
-        );
+        userAvatarDefault.classList.add("hide");
     }
 
 
@@ -1004,6 +942,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             showGuestUser();
+
             return;
         }
 
@@ -1020,31 +959,26 @@ document.addEventListener("DOMContentLoaded", function () {
             "Not available";
 
         if (popoverName) {
-
             popoverName.textContent =
                 fullname;
         }
 
         if (popoverEmail) {
-
             popoverEmail.textContent =
                 email;
         }
 
         if (userFullname) {
-
             userFullname.textContent =
                 fullname;
         }
 
         if (userPhone) {
-
             userPhone.textContent =
                 phone;
         }
 
         if (userEmail) {
-
             userEmail.textContent =
                 email;
         }
@@ -1083,9 +1017,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         loadUserInformation();
 
-        userPopover.classList.add(
-            "show"
-        );
+        userPopover.classList.add("show");
     }
 
 
@@ -1095,9 +1027,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        userPopover.classList.remove(
-            "show"
-        );
+        userPopover.classList.remove("show");
     }
 
 
@@ -1107,18 +1037,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let shouldReturnToUserPopover = false;
 
+    let savedUserPopoverPosition = null;
+
 
     /* =====================================================
-       SETTINGS POSITION STATE
-
-       This remembers exactly where the first
-       profile popover was located.
-
-       The settings popover will use this same
-       position.
+       SETTINGS CONTAINER
     ===================================================== */
 
-    let savedUserPopoverPosition = null;
+    const settingsContainer =
+        document.querySelector(".settings-container");
+
+
+    /* =====================================================
+       SAVE USER POPOVER POSITION
+    ===================================================== */
+
+    function saveCurrentUserPopoverPosition() {
+
+        if (!userPopover) {
+            return;
+        }
+
+        const rect =
+            userPopover.getBoundingClientRect();
+
+        savedUserPopoverPosition = {
+
+            left: rect.left,
+
+            top: rect.top,
+
+            width: rect.width,
+
+            height: rect.height
+        };
+    }
 
 
     /* =====================================================
@@ -1140,9 +1093,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 loadUserInformation();
 
-                userPopover.classList.add(
-                    "show"
-                );
+                userPopover.classList.add("show");
             }
 
         }, 50);
@@ -1150,45 +1101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SETTINGS CONTAINER
-    ===================================================== */
-
-    const settingsContainer =
-        document.querySelector(
-            ".settings-container"
-        );
-
-
-    /* =====================================================
-       SAVE CURRENT USER POPOVER POSITION
-    ===================================================== */
-
-    function saveCurrentUserPopoverPosition() {
-
-        if (!userPopover) {
-            return;
-        }
-
-        const rect =
-            userPopover.getBoundingClientRect();
-
-        savedUserPopoverPosition = {
-            left: rect.left,
-            top: rect.top,
-            width: rect.width,
-            height: rect.height
-        };
-    }
-
-
-    /* =====================================================
        POSITION SETTINGS LIKE USER POPOVER
-       
-       IMPORTANT:
-       The settings box uses the SAME viewport
-       position as the first profile popover.
-
-       It is also kept inside the screen.
     ===================================================== */
 
     function positionSettingsLikeUserPopover() {
@@ -1205,10 +1118,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (savedUserPopoverPosition) {
 
             referenceRect = {
-                left: savedUserPopoverPosition.left,
-                top: savedUserPopoverPosition.top,
-                width: savedUserPopoverPosition.width,
-                height: savedUserPopoverPosition.height
+
+                left:
+                    savedUserPopoverPosition.left,
+
+                top:
+                    savedUserPopoverPosition.top,
+
+                width:
+                    savedUserPopoverPosition.width,
+
+                height:
+                    savedUserPopoverPosition.height
             };
 
         } else if (userPopover) {
@@ -1221,11 +1142,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /* =================================================
-           GET SETTINGS SIZE
-        ================================================= */
-
         const settingsRect =
             settingsContainer.getBoundingClientRect();
 
@@ -1235,27 +1151,17 @@ document.addEventListener("DOMContentLoaded", function () {
         let settingsHeight =
             settingsRect.height;
 
-
-        /*
-         * If the element has not received its
-         * dimensions yet, use its offset dimensions.
-         */
-
         if (!settingsWidth) {
+
             settingsWidth =
                 settingsContainer.offsetWidth;
         }
 
         if (!settingsHeight) {
+
             settingsHeight =
                 settingsContainer.offsetHeight;
         }
-
-
-        /*
-         * Make settings container independently
-         * positioned inside the viewport.
-         */
 
         settingsContainer.style.position =
             "fixed";
@@ -1269,24 +1175,11 @@ document.addEventListener("DOMContentLoaded", function () {
         settingsContainer.style.bottom =
             "auto";
 
-
-        /*
-         * Put the settings container at the
-         * same LEFT and TOP position as the
-         * first user popover.
-         */
-
         let left =
             referenceRect.left;
 
         let top =
             referenceRect.top;
-
-
-        /*
-         * Keep the settings box inside
-         * the viewport horizontally.
-         */
 
         const maxLeft =
             Math.max(
@@ -1301,7 +1194,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.innerHeight -
                 settingsHeight
             );
-
 
         left =
             Math.max(
@@ -1321,18 +1213,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             );
 
-
         settingsContainer.style.left =
             left + "px";
 
         settingsContainer.style.top =
             top + "px";
-
-
-        /*
-         * The profile menu MUST remain above
-         * the settings popover.
-         */
 
         if (userMenu) {
 
@@ -1346,19 +1231,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 "100001";
         }
 
-
-        /*
-         * Settings is below the profile menu.
-         */
-
         settingsContainer.style.zIndex =
             "99990";
-
-
-        /*
-         * The settings background/modal itself
-         * stays below the profile menu.
-         */
 
         if (settingsModal) {
 
@@ -1369,7 +1243,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       RESTORE SETTINGS POSITION WHEN WINDOW CHANGES
+       REFRESH SETTINGS POSITION
     ===================================================== */
 
     function refreshSettingsPosition() {
@@ -1387,9 +1261,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        USER MENU CLICK
-       
-       IMPORTANT:
-       A DRAG MUST NOT TRIGGER A CLICK.
     ===================================================== */
 
     if (
@@ -1404,15 +1275,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-                /*
-                 * Drag suppression is handled by
-                 * the draggable section below.
-                 */
-
                 if (
-                    userPopover.classList.contains(
-                        "show"
-                    )
+                    userPopover.classList.contains("show")
                 ) {
 
                     closeUserMenu();
@@ -1428,10 +1292,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /* =================================================
-           CLICK INSIDE POPOVER
-        ================================================= */
-
         userPopover.addEventListener(
             "click",
             function (event) {
@@ -1441,30 +1301,20 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /* =================================================
-           CLICK OUTSIDE POPOVER
-        ================================================= */
-
         document.addEventListener(
             "click",
             function (event) {
 
                 if (
                     settingsModal &&
-                    settingsModal.classList.contains(
-                        "show"
-                    )
+                    settingsModal.classList.contains("show")
                 ) {
                     return;
                 }
 
                 if (
-                    !userPopover.contains(
-                        event.target
-                    ) &&
-                    !userMenuBtn.contains(
-                        event.target
-                    )
+                    !userPopover.contains(event.target) &&
+                    !userMenuBtn.contains(event.target)
                 ) {
 
                     closeUserMenu();
@@ -1484,19 +1334,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        profileImageViewer.classList.remove(
-            "show"
-        );
+        profileImageViewer.classList.remove("show");
 
         if (largeProfileImage) {
 
-            largeProfileImage.removeAttribute(
-                "src"
-            );
+            largeProfileImage.removeAttribute("src");
         }
 
-        document.body.style.overflow =
-            "";
+        document.body.style.overflow = "";
     }
 
 
@@ -1544,7 +1389,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE PROFILE IMAGE BUTTON
+       CLOSE PROFILE VIEWER
     ===================================================== */
 
     if (closeProfileViewer) {
@@ -1563,7 +1408,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLICK OUTSIDE PROFILE IMAGE
+       CLICK OUTSIDE PROFILE VIEWER
     ===================================================== */
 
     if (profileImageViewer) {
@@ -1586,12 +1431,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        SETTINGS OPEN
-       
-       IMPORTANT:
-       The user popover position is captured BEFORE
-       the user popover is closed.
-
-       Settings then opens in the same position.
     ===================================================== */
 
     if (
@@ -1622,32 +1461,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 shouldReturnToUserPopover =
                     true;
 
-
-                /* =========================================
-                   CAPTURE FIRST POPOVER POSITION
-                ========================================= */
-
                 if (userPopover) {
 
-                    const popoverRect =
-                        userPopover.getBoundingClientRect();
-
-                    savedUserPopoverPosition = {
-                        left: popoverRect.left,
-                        top: popoverRect.top,
-                        width: popoverRect.width,
-                        height: popoverRect.height
-                    };
+                    saveCurrentUserPopoverPosition();
                 }
-
-
-                /* =========================================
-                   LOAD NAME
-                ========================================= */
 
                 if (settingsName) {
 
@@ -1655,32 +1475,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         user.fullname || "";
                 }
 
-
-                /* =========================================
-                   LOAD EMAIL
-                ========================================= */
-
                 if (settingsEmail) {
 
                     settingsEmail.value =
                         user.email || "";
                 }
 
-
-                /* =========================================
-                   LOAD PHONE
-                ========================================= */
-
                 if (settingsPhone) {
 
                     settingsPhone.value =
                         user.phone || "";
                 }
-
-
-                /* =========================================
-                   RESET PASSWORD
-                ========================================= */
 
                 if (settingsPassword) {
 
@@ -1691,17 +1496,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         "password";
                 }
 
-
-                /* =========================================
-                   RESET EYE ICON
-                ========================================= */
-
                 if (togglePassword) {
 
                     const icon =
-                        togglePassword.querySelector(
-                            "i"
-                        );
+                        togglePassword.querySelector("i");
 
                     if (icon) {
 
@@ -1714,11 +1512,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                     }
                 }
-
-
-                /* =========================================
-                   LOAD PROFILE IMAGE
-                ========================================= */
 
                 if (
                     user.profileImage &&
@@ -1755,27 +1548,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
                 }
 
-
-                /* =========================================
-                   CLOSE USER POPOVER
-                ========================================= */
-
                 closeUserMenu();
 
-
-                /* =========================================
-                   OPEN SETTINGS
-                ========================================= */
-
-                settingsModal.classList.add(
-                    "show"
-                );
-
-
-                /*
-                 * Wait until the settings box is
-                 * rendered so its dimensions are available.
-                 */
+                settingsModal.classList.add("show");
 
                 requestAnimationFrame(function () {
 
@@ -1792,8 +1567,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CLOSE SETTINGS BUTTON
+       CLOSE SETTINGS
     ===================================================== */
+
+    function resetSettingsPosition() {
+
+        if (settingsContainer) {
+
+            settingsContainer.style.position = "";
+
+            settingsContainer.style.left = "";
+
+            settingsContainer.style.top = "";
+
+            settingsContainer.style.right = "";
+
+            settingsContainer.style.bottom = "";
+
+            settingsContainer.style.transform = "";
+
+            settingsContainer.style.zIndex = "";
+        }
+
+        if (settingsModal) {
+
+            settingsModal.style.zIndex = "";
+        }
+    }
+
 
     if (
         closeSettings &&
@@ -1807,45 +1608,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
-                settingsModal.classList.remove(
-                    "show"
-                );
+                settingsModal.classList.remove("show");
 
-                /*
-                 * Remove temporary settings positioning.
-                 * This allows the original CSS to control
-                 * the settings when it is opened again.
-                 */
-
-                if (settingsContainer) {
-
-                    settingsContainer.style.position =
-                        "";
-
-                    settingsContainer.style.left =
-                        "";
-
-                    settingsContainer.style.top =
-                        "";
-
-                    settingsContainer.style.right =
-                        "";
-
-                    settingsContainer.style.bottom =
-                        "";
-
-                    settingsContainer.style.transform =
-                        "";
-
-                    settingsContainer.style.zIndex =
-                        "";
-                }
-
-                if (settingsModal) {
-
-                    settingsModal.style.zIndex =
-                        "";
-                }
+                resetSettingsPosition();
 
                 returnToUserPopover();
             }
@@ -1874,35 +1639,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         "show"
                     );
 
-
-                    if (settingsContainer) {
-
-                        settingsContainer.style.position =
-                            "";
-
-                        settingsContainer.style.left =
-                            "";
-
-                        settingsContainer.style.top =
-                            "";
-
-                        settingsContainer.style.right =
-                            "";
-
-                        settingsContainer.style.bottom =
-                            "";
-
-                        settingsContainer.style.transform =
-                            "";
-
-                        settingsContainer.style.zIndex =
-                            "";
-                    }
-
-
-                    settingsModal.style.zIndex =
-                        "";
-
+                    resetSettingsPosition();
 
                     returnToUserPopover();
                 }
@@ -1944,9 +1681,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
 
                 const icon =
-                    togglePassword.querySelector(
-                        "i"
-                    );
+                    togglePassword.querySelector("i");
 
                 if (
                     settingsPassword.type ===
@@ -2010,9 +1745,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 if (
-                    !file.type.startsWith(
-                        "image/"
-                    )
+                    !file.type.startsWith("image/")
                 ) {
 
                     showToast(
@@ -2026,10 +1759,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 const reader =
                     new FileReader();
-
 
                 reader.onload =
                     function (loadEvent) {
@@ -2048,7 +1779,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             "hide"
                         );
 
-
                         const currentUser =
                             getFreshCurrentUser();
 
@@ -2057,18 +1787,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             currentUser.profileImage =
                                 imageData;
 
+                            updateUser(
+                                currentUser
+                            );
+
                             updateUserAvatar(
                                 currentUser
                             );
                         }
-
 
                         showToast(
                             "Profile picture updated.",
                             "success"
                         );
                     };
-
 
                 reader.readAsDataURL(file);
             }
@@ -2108,6 +1840,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             updateThemeToggle(false);
+
             return;
         }
 
@@ -2210,11 +1943,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const currentUser =
                     getFreshCurrentUser();
 
-
-                /* =========================================
-                   LOGIN CHECK
-                ========================================= */
-
                 if (
                     !isLoggedIn() ||
                     !currentUser
@@ -2227,11 +1955,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     return;
                 }
-
-
-                /* =========================================
-                   GET VALUES
-                ========================================= */
 
                 const name =
                     settingsName
@@ -2255,11 +1978,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         ? settingsPassword.value.trim()
                         : "";
 
-
-                /* =========================================
-                   NAME VALIDATION
-                ========================================= */
-
                 if (!name) {
 
                     showToast(
@@ -2274,11 +1992,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   EMAIL VALIDATION
-                ========================================= */
-
                 if (!email) {
 
                     showToast(
@@ -2292,11 +2005,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     return;
                 }
-
-
-                /* =========================================
-                   BASIC EMAIL VALIDATION
-                ========================================= */
 
                 const emailPattern =
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -2317,19 +2025,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   CHECK DUPLICATE EMAIL
-                ========================================= */
-
                 const users =
                     getAllUsers();
 
                 const emailUsedByAnotherUser =
                     users.some(function (user) {
 
+                        if (
+                            !user ||
+                            !user.email
+                        ) {
+                            return false;
+                        }
+
                         return (
-                            user.email &&
                             user.email
                                 .trim()
                                 .toLowerCase() ===
@@ -2338,7 +2047,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             String(currentUser.id)
                         );
                     });
-
 
                 if (
                     emailUsedByAnotherUser
@@ -2352,11 +2060,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
-                /* =========================================
-                   UPDATE CURRENT USER
-                ========================================= */
-
                 currentUser.fullname =
                     name;
 
@@ -2365,11 +2068,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 currentUser.phone =
                     phone;
-
-
-                /* =========================================
-                   CHANGE PASSWORD
-                ========================================= */
 
                 if (password !== "") {
 
@@ -2393,11 +2091,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         password;
                 }
 
-
-                /* =========================================
-                   SAVE PROFILE IMAGE
-                ========================================= */
-
                 if (
                     settingsProfileImage &&
                     settingsProfileImage.classList.contains(
@@ -2410,26 +2103,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         settingsProfileImage.src;
                 }
 
-
-                /* =========================================
-                   DEFAULT THEME
-                ========================================= */
-
                 if (!currentUser.theme) {
 
                     currentUser.theme =
                         "light";
                 }
 
-
-                /* =========================================
-                   SAVE USER
-                ========================================= */
-
                 const updated =
-                    updateUser(
-                        currentUser
-                    );
+                    updateUser(currentUser);
 
                 if (!updated) {
 
@@ -2441,16 +2122,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 localStorage.setItem(
                     "easyRideLoggedIn",
                     "true"
                 );
-
-
-                /* =========================================
-                   REFRESH USER INFORMATION
-                ========================================= */
 
                 loadUserInformation();
 
@@ -2458,51 +2133,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     currentUser
                 );
 
-
-                /* =========================================
-                   CLOSE SETTINGS
-                ========================================= */
-
                 settingsModal.classList.remove(
                     "show"
                 );
 
-
-                /* =========================================
-                   RESET SETTINGS POSITION
-                ========================================= */
-
-                if (settingsContainer) {
-
-                    settingsContainer.style.position =
-                        "";
-
-                    settingsContainer.style.left =
-                        "";
-
-                    settingsContainer.style.top =
-                        "";
-
-                    settingsContainer.style.right =
-                        "";
-
-                    settingsContainer.style.bottom =
-                        "";
-
-                    settingsContainer.style.transform =
-                        "";
-
-                    settingsContainer.style.zIndex =
-                        "";
-                }
-
-                settingsModal.style.zIndex =
-                    "";
-
-
-                /* =========================================
-                   RESET PASSWORD FIELD
-                ========================================= */
+                resetSettingsPosition();
 
                 if (settingsPassword) {
 
@@ -2513,17 +2148,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         "password";
                 }
 
-
-                /* =========================================
-                   RESET EYE ICON
-                ========================================= */
-
                 if (togglePassword) {
 
                     const icon =
-                        togglePassword.querySelector(
-                            "i"
-                        );
+                        togglePassword.querySelector("i");
 
                     if (icon) {
 
@@ -2537,20 +2165,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
-
-                /* =========================================
-                   SUCCESS TOAST
-                ========================================= */
-
                 showToast(
                     "Your settings have been saved successfully.",
                     "success"
                 );
-
-
-                /* =========================================
-                   RETURN TO USER POPOVER
-                ========================================= */
 
                 returnToUserPopover();
             }
@@ -2567,60 +2185,23 @@ document.addEventListener("DOMContentLoaded", function () {
         function (event) {
 
             if (
-                event.key !==
-                "Escape"
+                event.key !== "Escape"
             ) {
                 return;
             }
 
-
             closeProfileImageViewer();
-
-
-            /* =============================================
-               SETTINGS
-            ============================================= */
 
             if (
                 settingsModal &&
-                settingsModal.classList.contains(
-                    "show"
-                )
+                settingsModal.classList.contains("show")
             ) {
 
                 settingsModal.classList.remove(
                     "show"
                 );
 
-
-                if (settingsContainer) {
-
-                    settingsContainer.style.position =
-                        "";
-
-                    settingsContainer.style.left =
-                        "";
-
-                    settingsContainer.style.top =
-                        "";
-
-                    settingsContainer.style.right =
-                        "";
-
-                    settingsContainer.style.bottom =
-                        "";
-
-                    settingsContainer.style.transform =
-                        "";
-
-                    settingsContainer.style.zIndex =
-                        "";
-                }
-
-
-                settingsModal.style.zIndex =
-                    "";
-
+                resetSettingsPosition();
 
                 returnToUserPopover();
 
@@ -2634,6 +2215,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        LOGOUT
+       
+       VERY IMPORTANT:
+       
+       DO NOT DELETE easyRideUsers.
+       
+       easyRideUsers contains the permanent
+       registered accounts.
+       
+       Logout only removes the current session.
     ===================================================== */
 
     if (logoutBtn) {
@@ -2645,6 +2235,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 event.stopPropagation();
 
+                /*
+                 * Remove ONLY the current login session.
+                 */
 
                 localStorage.removeItem(
                     "easyRideLoggedIn"
@@ -2654,20 +2247,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     "easyRideUser"
                 );
 
+                /*
+                 * DO NOT DO THIS:
+                 *
+                 * localStorage.removeItem("easyRideUsers");
+                 *
+                 * because that would delete every
+                 * registered account.
+                 */
 
                 document.body.classList.remove(
                     "dark-mode"
                 );
 
-
                 shouldReturnToUserPopover =
                     false;
-
 
                 closeUserMenu();
 
                 closeProfileImageViewer();
-
 
                 if (settingsModal) {
 
@@ -2676,6 +2274,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
                 }
 
+                resetSettingsPosition();
+
+                /*
+                 * The permanent account database
+                 * easyRideUsers remains untouched.
+                 */
 
                 window.location.href =
                     "/website/login.html";
@@ -2686,15 +2290,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================================
        DRAGGABLE RESPONSIVE PROFILE MENU
-
-       IMPORTANT:
-
-       - MENU IS FIXED TO VIEWPORT
-       - BODY DOES NOT MOVE
-       - MENU DOES NOT SCROLL WITH BODY
-       - POPOVER DOES NOT FOLLOW MENU
-       - MENU STAYS ABOVE SETTINGS
-       - MENU POSITION IS SAVED PER ACCOUNT
     ========================================================= */
 
     if (
@@ -2713,10 +2308,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let startTop = 0;
 
 
-        /* =================================================
-           GET ACCOUNT-SPECIFIC MENU POSITION KEY
-        ================================================= */
-
         function getProfileMenuPositionKey() {
 
             const currentUser =
@@ -2727,16 +2318,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentUser.id
             ) {
 
-                return `easyRideProfileMenuPosition_${currentUser.id}`;
+                return (
+                    `easyRideProfileMenuPosition_${currentUser.id}`
+                );
             }
 
-            return "easyRideProfileMenuPosition_guest";
+            return (
+                "easyRideProfileMenuPosition_guest"
+            );
         }
 
-
-        /* =================================================
-           SET FIXED POSITION
-        ================================================= */
 
         function makeProfileMenuFixed() {
 
@@ -2758,22 +2349,11 @@ document.addEventListener("DOMContentLoaded", function () {
             userMenu.style.zIndex =
                 "100000";
 
-
-            /*
-             * The profile popover is also kept
-             * above the settings layer.
-             */
-
             if (userPopover) {
 
                 userPopover.style.zIndex =
                     "100001";
             }
-
-
-            /*
-             * Settings stays below the profile menu.
-             */
 
             if (settingsContainer) {
 
@@ -2788,10 +2368,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-
-        /* =================================================
-           SET DEFAULT RIGHT-MIDDLE POSITION
-        ================================================= */
 
         function setDefaultProfileMenuPosition() {
 
@@ -2809,31 +2385,16 @@ document.addEventListener("DOMContentLoaded", function () {
             const menuHeight =
                 userMenu.offsetHeight;
 
-
-            /*
-             * RIGHT SIDE
-             */
-
             let left =
                 window.innerWidth -
                 menuWidth -
                 25;
-
-
-            /*
-             * MIDDLE OF SCREEN
-             */
 
             let top =
                 (
                     window.innerHeight -
                     menuHeight
                 ) / 2;
-
-
-            /*
-             * Keep inside screen
-             */
 
             left = Math.max(
                 0,
@@ -2853,7 +2414,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             );
 
-
             userMenu.style.left =
                 left + "px";
 
@@ -2865,10 +2425,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* =================================================
-           RESTORE SAVED POSITION
-        ================================================= */
-
         function restoreProfileMenuPosition() {
 
             if (
@@ -2879,7 +2435,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             makeProfileMenuFixed();
 
-
             const storageKey =
                 getProfileMenuPositionKey();
 
@@ -2888,19 +2443,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     storageKey
                 );
 
-
-            /*
-             * If there is no saved position,
-             * put it on the right-middle.
-             */
-
             if (!savedPosition) {
 
                 setDefaultProfileMenuPosition();
 
                 return;
             }
-
 
             try {
 
@@ -2909,12 +2457,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         savedPosition
                     );
 
-
                 if (
                     typeof position.left !==
-                        "number" ||
+                    "number" ||
                     typeof position.top !==
-                        "number"
+                    "number"
                 ) {
 
                     setDefaultProfileMenuPosition();
@@ -2922,24 +2469,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 const menuWidth =
                     userMenu.offsetWidth;
 
                 const menuHeight =
                     userMenu.offsetHeight;
 
-
                 let left =
                     position.left;
 
                 let top =
                     position.top;
-
-
-                /*
-                 * Keep menu inside viewport
-                 */
 
                 left = Math.max(
                     0,
@@ -2959,7 +2499,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 );
 
-
                 userMenu.style.left =
                     left + "px";
 
@@ -2974,7 +2513,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 userMenu.style.transform =
                     "none";
-
 
             } catch (error) {
 
@@ -2997,46 +2535,31 @@ document.addEventListener("DOMContentLoaded", function () {
             function (event) {
 
                 if (
-                    window.innerWidth >
-                    1024
+                    window.innerWidth > 1024
                 ) {
                     return;
                 }
 
-
-                /*
-                 * Only primary mouse button.
-                 */
-
                 if (
-                    event.pointerType ===
-                        "mouse" &&
+                    event.pointerType === "mouse" &&
                     event.button !== 0
                 ) {
                     return;
                 }
 
-
                 event.preventDefault();
                 event.stopPropagation();
 
-
                 makeProfileMenuFixed();
 
+                isDragging = true;
 
-                isDragging =
-                    true;
+                hasMoved = false;
 
-                hasMoved =
-                    false;
-
-                suppressNextClick =
-                    false;
-
+                suppressNextClick = false;
 
                 const rect =
                     userMenu.getBoundingClientRect();
-
 
                 startX =
                     event.clientX;
@@ -3050,12 +2573,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 startTop =
                     rect.top;
 
-
-                /*
-                 * Remove transform so
-                 * left/top control position.
-                 */
-
                 userMenu.style.transform =
                     "none";
 
@@ -3065,15 +2582,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 userMenu.style.top =
                     startTop + "px";
 
-
-                /*
-                 * Prevent touch from
-                 * scrolling the page.
-                 */
-
                 userMenuBtn.style.touchAction =
                     "none";
-
 
                 try {
 
@@ -3083,7 +2593,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 } catch (error) {
 
-                    /* Ignore pointer capture errors */
+                    /* Ignore */
                 }
             }
         );
@@ -3099,16 +2609,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (
                     !isDragging ||
-                    window.innerWidth >
-                    1024
+                    window.innerWidth > 1024
                 ) {
                     return;
                 }
 
-
                 event.preventDefault();
                 event.stopPropagation();
-
 
                 const moveX =
                     event.clientX -
@@ -3118,24 +2625,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     event.clientY -
                     startY;
 
-
-                /*
-                 * Determine whether the
-                 * user actually dragged.
-                 */
-
                 if (
                     Math.abs(moveX) > 5 ||
                     Math.abs(moveY) > 5
                 ) {
 
-                    hasMoved =
-                        true;
+                    hasMoved = true;
 
                     suppressNextClick =
                         true;
                 }
-
 
                 let newLeft =
                     startLeft +
@@ -3145,58 +2644,43 @@ document.addEventListener("DOMContentLoaded", function () {
                     startTop +
                     moveY;
 
-
                 const menuWidth =
                     userMenu.offsetWidth;
 
                 const menuHeight =
                     userMenu.offsetHeight;
 
-
                 const maxLeft =
-                    window.innerWidth -
-                    menuWidth;
+                    Math.max(
+                        0,
+                        window.innerWidth -
+                        menuWidth
+                    );
 
                 const maxTop =
-                    window.innerHeight -
-                    menuHeight;
+                    Math.max(
+                        0,
+                        window.innerHeight -
+                        menuHeight
+                    );
 
+                newLeft =
+                    Math.max(
+                        0,
+                        Math.min(
+                            newLeft,
+                            maxLeft
+                        )
+                    );
 
-                /*
-                 * Keep inside left edge.
-                 */
-
-                if (newLeft < 0) {
-                    newLeft = 0;
-                }
-
-
-                /*
-                 * Keep inside top edge.
-                 */
-
-                if (newTop < 0) {
-                    newTop = 0;
-                }
-
-
-                /*
-                 * Keep inside right edge.
-                 */
-
-                if (newLeft > maxLeft) {
-                    newLeft = maxLeft;
-                }
-
-
-                /*
-                 * Keep inside bottom edge.
-                 */
-
-                if (newTop > maxTop) {
-                    newTop = maxTop;
-                }
-
+                newTop =
+                    Math.max(
+                        0,
+                        Math.min(
+                            newTop,
+                            maxTop
+                        )
+                    );
 
                 userMenu.style.left =
                     newLeft + "px";
@@ -3219,14 +2703,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 event.preventDefault();
                 event.stopPropagation();
 
-
-                isDragging =
-                    false;
-
+                isDragging = false;
 
                 try {
 
@@ -3236,30 +2716,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 } catch (error) {
 
-                    /* Ignore pointer capture errors */
+                    /* Ignore */
                 }
-
-
-                /*
-                 * Keep touch action disabled
-                 * so a following click does not
-                 * cause unwanted page movement.
-                 */
 
                 userMenuBtn.style.touchAction =
                     "none";
-
-
-                /*
-                 * Save ONLY if the menu was
-                 * actually moved.
-                 */
 
                 if (hasMoved) {
 
                     const storageKey =
                         getProfileMenuPositionKey();
-
 
                     const currentLeft =
                         parseFloat(
@@ -3270,7 +2736,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         parseFloat(
                             userMenu.style.top
                         ) || 0;
-
 
                     localStorage.setItem(
                         storageKey,
@@ -3284,15 +2749,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                     );
 
-
-                    /*
-                     * The next browser click
-                     * must not open/close the menu.
-                     */
-
                     suppressNextClick =
                         true;
-
 
                     setTimeout(
                         function () {
@@ -3316,9 +2774,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "pointercancel",
             function (event) {
 
-                isDragging =
-                    false;
-
+                isDragging = false;
 
                 try {
 
@@ -3328,13 +2784,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 } catch (error) {
 
-                    /* Ignore pointer capture errors */
+                    /* Ignore */
                 }
 
-
-                suppressNextClick =
-                    true;
-
+                suppressNextClick = true;
 
                 setTimeout(
                     function () {
@@ -3350,7 +2803,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* =================================================
-           PREVENT DRAG IMAGE
+           PREVENT IMAGE DRAG
         ================================================= */
 
         userMenuBtn.addEventListener(
@@ -3370,9 +2823,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function (event) {
 
-                if (
-                    suppressNextClick
-                ) {
+                if (suppressNextClick) {
 
                     event.preventDefault();
                     event.stopPropagation();
@@ -3392,8 +2843,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ================================================= */
 
         if (
-            window.innerWidth <=
-            1024
+            window.innerWidth <= 1024
         ) {
 
             requestAnimationFrame(
@@ -3414,8 +2864,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 if (
-                    window.innerWidth <=
-                    1024
+                    window.innerWidth <= 1024
                 ) {
 
                     restoreProfileMenuPosition();
@@ -3433,19 +2882,15 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 if (
-                    window.innerWidth >
-                    1024
+                    window.innerWidth > 1024
                 ) {
                     return;
                 }
 
-
                 makeProfileMenuFixed();
-
 
                 const rect =
                     userMenu.getBoundingClientRect();
-
 
                 const menuWidth =
                     userMenu.offsetWidth;
@@ -3453,18 +2898,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 const menuHeight =
                     userMenu.offsetHeight;
 
-
                 let left =
                     rect.left;
 
                 let top =
                     rect.top;
-
-
-                /*
-                 * Keep current position
-                 * inside the new viewport.
-                 */
 
                 left = Math.max(
                     0,
@@ -3484,7 +2922,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 );
 
-
                 userMenu.style.left =
                     left + "px";
 
@@ -3500,12 +2937,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 userMenu.style.transform =
                     "none";
 
-
-                /*
-                 * If Settings is open,
-                 * keep it aligned correctly.
-                 */
-
                 refreshSettingsPosition();
             }
         );
@@ -3514,10 +2945,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =====================================================
        EXTRA SETTINGS POSITION UPDATE
-       
-       This makes sure that if the browser changes
-       size while Settings is open, the Settings
-       popover remains properly positioned.
     ===================================================== */
 
     window.addEventListener(
@@ -3526,25 +2953,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (
                 settingsModal &&
-                settingsModal.classList.contains(
-                    "show"
-                )
+                settingsModal.classList.contains("show")
             ) {
 
-                setTimeout(function () {
+                setTimeout(
+                    function () {
 
-                    positionSettingsLikeUserPopover();
+                        positionSettingsLikeUserPopover();
 
-                }, 30);
+                    },
+                    30
+                );
             }
         }
     );
 
 
     /* =====================================================
-       FINAL PROFILE MENU LAYER
-       
-       Always keep the profile menu above settings.
+       KEEP PROFILE MENU ABOVE SETTINGS
     ===================================================== */
 
     function keepProfileMenuAboveSettings() {
@@ -3554,8 +2980,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (
-            window.innerWidth <=
-            1024
+            window.innerWidth <= 1024
         ) {
 
             userMenu.style.zIndex =
@@ -3589,32 +3014,32 @@ document.addEventListener("DOMContentLoaded", function () {
        FINAL INITIALIZATION
     ===================================================== */
 
-    setTimeout(function () {
+    setTimeout(
+        function () {
 
-        keepProfileMenuAboveSettings();
-
-        if (
-            window.innerWidth <=
-            1024 &&
-            userMenu
-        ) {
+            keepProfileMenuAboveSettings();
 
             if (
-                !userMenu.style.left ||
-                !userMenu.style.top
+                window.innerWidth <= 1024 &&
+                userMenu
             ) {
 
-                /*
-                 * Restore the account-specific
-                 * saved position one final time.
-                 */
+                if (
+                    !userMenu.style.left ||
+                    !userMenu.style.top
+                ) {
 
-                if (typeof restoreProfileMenuPosition === "function") {
+                    /*
+                     * Restore account-specific
+                     * position.
+                     */
+
                     restoreProfileMenuPosition();
                 }
             }
-        }
 
-    }, 100);
+        },
+        100
+    );
 
 });
