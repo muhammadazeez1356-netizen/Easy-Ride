@@ -13,36 +13,433 @@
 </head>
 
 <body>
-     <!-- HEADER -->
+   <!-- HEADER -->
     <header class="header2">
-        <img src="/image/file_000000007b407230b9a83d4f923e3676.png" alt="">
+
+        <!-- LOGO -->
+        <img src="/image/file_000000007b407230b9a83d4f923e3676.png" alt="Easy Ride Logo">
 
 
+        <!-- NAVIGATION -->
         <nav id="nav-items">
+
             <div class="divnave">
+
                 <a href="home-page.html">Home</a>
+
                 <a href="About.html">About Us</a>
+
                 <a href="Service.html">Service</a>
+
                 <a href="Contact.html">Contact Us</a>
+
                 <a href="Booking-ride.html">Book Online</a>
+
             </div>
-          <div>
-                <a href="Adriver.html" class="button1"> Applie as Driver
-                    <i class="fa-solid fa-arrow-trend-up"></i>
-                </a>
-            </div>
+
         </nav>
 
 
+        <!-- USER MENU -->
+        <!-- USER MENU -->
+        <div class="user-menu">
 
-        <div class="show-div">
+            <!-- MENU BUTTON -->
+            <button type="button" id="userMenuBtn" class="user-menu-btn" aria-label="Open user menu">
+
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+
+            </button>
+
+            <div id="toast"></div>
+            <!-- USER POPOVER -->
+            <div id="userPopover" class="user-popover">
+
+                <!-- USER HEADER -->
+                <div class="user-popover-header">
+
+                    <div class="user-avatar" id="userAvatar" title="View profile picture">
+
+                        <img id="userAvatarImage" src="" alt="Profile Picture">
+
+                        <i id="userAvatarDefault" class="fa-solid fa-user">
+                        </i>
+
+                    </div>
+
+                    <div class="user-header-text">
+
+                        <h3 id="popoverName">
+                            Guest User
+                        </h3>
+
+                        <p id="popoverEmail">
+                            Not logged in
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- USER INFORMATION -->
+                <div class="user-info">
+
+                    <!-- NAME -->
+                    <div class="user-info-item">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        <div>
+
+                            <span>Name</span>
+
+                            <strong id="userFullname">
+                                Guest User
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="user-info-item">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <div>
+
+                            <span>Phone</span>
+
+                            <strong id="userPhone">
+                                Not available
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="user-info-item">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <div>
+
+                            <span>Email</span>
+
+                            <strong id="userEmail">
+                                Not available
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACCOUNT STATUS -->
+                    <div class="user-info-item">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+
+                            <span>Account</span>
+
+                            <strong id="accountStatus">
+                                Not logged in
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MENU LINKS -->
+                <div class="user-popover-links">
+
+                    <!-- BOOK RIDE -->
+                    <a href="Booking-ride.html">
+
+                        <i class="fa-solid fa-car"></i>
+
+                        Book a Ride
+
+                    </a>
+
+
+                    <!-- SETTINGS -->
+                    <button type="button" id="settingsBtn">
+
+                        <i class="fa-solid fa-gear"></i>
+
+                        Settings
+
+                    </button>
+
+
+                    <!-- LOGOUT -->
+                    <button type="button" id="logoutBtn">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="settingsModal" class="settings-modal">
+
+            <div class="settings-container">
+
+                <!-- SETTINGS HEADER -->
+                <div class="settings-top">
+
+                    <div>
+                        <h2>
+                            <i class="fa-solid fa-gear"></i>
+                            Settings
+                        </h2>
+
+                        <p>
+                            Manage your Easy Ride account
+                        </p>
+                    </div>
+
+                    <button type="button" id="closeSettings" class="close-settings">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- SETTINGS CONTENT -->
+                <div class="settings-content">
+
+                    <!-- PROFILE -->
+                    <section class="settings-section">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <div>
+                                <h3>Profile</h3>
+                                <p>Manage your profile information</p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- PROFILE PHOTO -->
+                        <div class="profile-setting">
+
+                            <div class="profile-picture">
+
+                                <img id="settingsProfileImage" src="" alt="Profile Picture">
+
+                                <i id="settingsDefaultAvatar" class="fa-solid fa-user">
+                                </i>
+
+                            </div>
+
+                            <div>
+
+                                <h4>Profile Picture</h4>
+
+                                <p>
+                                    Upload a new profile picture
+                                </p>
+
+                                <label for="profileImageInput" class="change-photo-btn">
+
+                                    <i class="fa-solid fa-camera"></i>
+
+                                    Change Photo
+
+                                </label>
+
+                                <input type="file" id="profileImageInput" accept="image/*" hidden>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- PERSONAL INFORMATION -->
+                    <section class="settings-section">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-address-card"></i>
+
+                            <div>
+                                <h3>Personal Information</h3>
+                                <p>Change your account information</p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- NAME -->
+                        <div class="settings-input">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <div class="settings-input-box">
+
+                                <i class="fa-solid fa-user"></i>
+
+                                <input type="text" id="settingsName" placeholder="Enter your full name">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+                        <div class="settings-input">
+
+                            <label>
+                                Gmail / Email
+                            </label>
+
+                            <div class="settings-input-box">
+
+                                <i class="fa-solid fa-envelope"></i>
+
+                                <input type="email" id="settingsEmail" placeholder="Enter your email">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+                        <div class="settings-input">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <div class="settings-input-box">
+
+                                <i class="fa-solid fa-phone"></i>
+
+                                <input type="tel" id="settingsPhone" placeholder="Enter your phone number">
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- APPEARANCE -->
+                    <section class="settings-section">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-palette"></i>
+
+                            <div>
+                                <h3>Appearance</h3>
+                                <p>Choose how Easy Ride looks</p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- THEME TOGGLE -->
+                        <div class="theme-setting">
+
+                            <div class="theme-info">
+
+                                <div class="theme-icon light-icon">
+
+                                    <i class="fa-solid fa-sun"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4>Light Mode</h4>
+
+                                    <p>
+                                        Use the light appearance
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- TOGGLE -->
+                            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+
+                                <span class="toggle-icon sun-icon">
+                                    <i class="fa-solid fa-sun"></i>
+                                </span>
+
+                                <span class="toggle-circle"></span>
+
+                                <span class="toggle-icon moon-icon">
+                                    <i class="fa-solid fa-moon"></i>
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+
+
+                    </section>
+
+
+                    <!-- SAVE -->
+                    <button type="button" id="saveSettings" class="save-settings">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU BUTTON -->
+        <div class="show-div" onclick="show_nav()">
+
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"
-                onclick="show_nav()">
+                stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+
                 <line x1="3" y1="12" x2="21" y2="12"></line>
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <line x1="3" y1="18" x2="21" y2="18"></line>
+
             </svg>
+
+        </div>
+
     </header>
 
     <section class="hero-section2">

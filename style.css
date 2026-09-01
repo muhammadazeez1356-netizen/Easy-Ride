@@ -7074,3 +7074,898 @@ input {
         scroll-behavior: auto !important;
     }
 }
+
+
+
+
+
+/* ABOUT */
+
+
+/* =========================================================
+   EASY RIDE - RESPONSIVENESS ONLY
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   TABLET - 1024px
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    /* HEADER */
+    .header2 {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .header2 > img {
+        width: 140px;
+        height: auto;
+    }
+
+    .header2 nav {
+        gap: 20px;
+    }
+
+    .divnave {
+        gap: 18px;
+    }
+
+
+    /* FIRST SECTION */
+    .hero-section2 {
+        width: 100%;
+        min-height: 460px;
+    }
+
+    .overlays {
+        width: 100%;
+        min-height: 460px;
+        padding: 60px 8%;
+    }
+
+    .overlays h3 {
+        max-width: 100%;
+        font-size: 22px;
+    }
+
+    .overlays h1 {
+        width: 100%;
+        max-width: 800px;
+        font-size: 52px;
+        line-height: 1.12;
+        overflow-wrap: break-word;
+    }
+
+    .overlays p {
+        width: 100%;
+        max-width: 720px;
+        font-size: 16px;
+        line-height: 1.7;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* SECOND SECTION */
+    .hero-section3 {
+        width: 100%;
+        padding: 70px 6%;
+        gap: 45px;
+    }
+
+    .text-images {
+        width: 52%;
+        min-width: 0;
+    }
+
+    .image-car {
+        width: 48%;
+        min-width: 0;
+    }
+
+    .text-images h1 {
+        font-size: 42px;
+        line-height: 1.2;
+    }
+
+    .text-images p {
+        line-height: 1.7;
+    }
+
+
+    /* FOOTER */
+    .footer-container {
+        grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+        gap: 30px;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE NAV - 850px
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    /* HEADER */
+    .header2 {
+        width: 100%;
+        min-height: 70px;
+        padding: 12px 22px;
+    }
+
+    .header2 > img {
+        width: 130px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    /* Hide desktop navigation */
+    .header2 nav {
+        display: none;
+    }
+
+    /* Show hamburger */
+    .show-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .show-div svg {
+        width: 30px;
+        height: 30px;
+    }
+
+
+    /* FIRST SECTION */
+    .hero-section2 {
+        width: 100%;
+        min-height: 430px;
+    }
+
+    .overlays {
+        width: 100%;
+        min-height: 430px;
+        padding: 55px 8%;
+    }
+
+    .overlays h3 {
+        width: 100%;
+        font-size: 20px;
+        line-height: 1.3;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .overlays h1 {
+        width: 100%;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(36px, 6vw, 48px);
+        line-height: 1.12;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .overlays p {
+        width: 100%;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        line-height: 1.7;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* SECOND SECTION */
+    .hero-section3 {
+        flex-direction: column;
+        width: 100%;
+        padding: 65px 8%;
+        gap: 45px;
+    }
+
+    .text-images {
+        width: 100%;
+    }
+
+    .image-car {
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .text-images h1 {
+        font-size: 40px;
+        line-height: 1.2;
+    }
+
+
+    /* FOOTER */
+    .footer-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 45px 35px;
+        padding: 55px 7%;
+    }
+}
+
+
+/* =========================================================
+   MOBILE - 600px
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* HEADER */
+    .header2 {
+        width: 100%;
+        min-height: 65px;
+        padding: 10px 18px;
+    }
+
+    .header2 > img {
+        width: 115px;
+        max-width: 60%;
+        height: auto;
+    }
+
+    .show-div {
+        width: 40px;
+        height: 40px;
+    }
+
+    .show-div svg {
+        width: 27px;
+        height: 27px;
+    }
+
+
+    /* =====================================================
+       MOBILE NAVIGATION
+       ===================================================== */
+
+    .header2 nav.active,
+    .header2 nav.show,
+    .header2 nav.open {
+        display: flex;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: 100%;
+        max-width: 100%;
+
+        padding: 15px 18px 22px;
+
+        margin: 0;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 12px;
+
+        background: #fff;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        max-height: calc(100vh - 65px);
+
+        z-index: 9999;
+    }
+
+    .header2 nav.active .divnave,
+    .header2 nav.show .divnave,
+    .header2 nav.open .divnave {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .header2 nav.active .divnave a,
+    .header2 nav.show .divnave a,
+    .header2 nav.open .divnave a {
+        display: block;
+        width: 100%;
+        padding: 13px 8px;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .header2 nav.active > div:last-child,
+    .header2 nav.show > div:last-child,
+    .header2 nav.open > div:last-child {
+        width: 100%;
+    }
+
+    .header2 nav.active .button1,
+    .header2 nav.show .button1,
+    .header2 nav.open .button1 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    /* =====================================================
+       FIRST SECTION - IMPORTANT
+       ===================================================== */
+
+    .hero-section2 {
+        width: 100%;
+        min-height: 390px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+    .overlays {
+        width: 100%;
+        min-height: 390px;
+
+        padding: 45px 20px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+    }
+
+    .overlays h3 {
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0 0 10px;
+
+        font-size: clamp(15px, 4vw, 19px);
+        line-height: 1.3;
+
+        overflow-wrap: break-word;
+    }
+
+    .overlays h1 {
+        width: 100%;
+        max-width: 650px;
+
+        margin: 0 auto 15px;
+
+        font-size: clamp(29px, 8.5vw, 43px);
+        line-height: 1.1;
+
+        text-align: center;
+
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .overlays p {
+        width: 100%;
+        max-width: 540px;
+
+        margin: 0 auto;
+
+        font-size: clamp(13px, 3.5vw, 15px);
+        line-height: 1.7;
+
+        text-align: center;
+
+        overflow-wrap: break-word;
+        word-break: normal;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* =====================================================
+       SECOND SECTION
+       ===================================================== */
+
+    .hero-section3 {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 55px 20px;
+
+        gap: 40px;
+    }
+
+    .text-images {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .text-images h1 {
+        width: 100%;
+        max-width: 100%;
+
+        font-size: clamp(28px, 7.5vw, 38px);
+        line-height: 1.18;
+
+        overflow-wrap: break-word;
+    }
+
+    .text-images p {
+        width: 100%;
+        max-width: 100%;
+
+        font-size: 14px;
+        line-height: 1.8;
+
+        overflow-wrap: break-word;
+    }
+
+    .image-car {
+        display: block;
+
+        width: 100%;
+        max-width: 520px;
+        height: auto;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    /* =====================================================
+       NUMBERS / STATISTICS
+       ===================================================== */
+
+    .text-botton {
+        width: 100%;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        align-items: flex-start;
+
+        gap: 25px 40px;
+    }
+
+    .text-color {
+        min-width: 75px;
+        max-width: 150px;
+    }
+
+    .text-color h3 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.1;
+    }
+
+    .text-color p {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+
+    /* PRESENTATION LINK */
+    .a-a {
+        display: inline-block;
+
+        max-width: 100%;
+
+        font-size: 12px;
+        line-height: 1.5;
+
+        overflow-wrap: break-word;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .footer-container {
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        padding: 50px 20px;
+    }
+
+    .footer-box {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .footer-box p,
+    .footer-box li {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        line-height: 1.7;
+    }
+
+    .social-icons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        padding: 18px 20px;
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        max-width: 100%;
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE - 480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    /* HEADER */
+    .header2 {
+        min-height: 62px;
+        padding: 9px 15px;
+    }
+
+    .header2 > img {
+        width: 105px;
+    }
+
+    .show-div {
+        width: 38px;
+        height: 38px;
+    }
+
+    .show-div svg {
+        width: 25px;
+        height: 25px;
+    }
+
+
+    /* NAV */
+    .header2 nav.active,
+    .header2 nav.show,
+    .header2 nav.open {
+        max-height: calc(100vh - 62px);
+        padding: 12px 15px 20px;
+    }
+
+
+    /* =====================================================
+       FIRST SECTION
+       ===================================================== */
+
+    .hero-section2 {
+        min-height: 350px;
+    }
+
+    .overlays {
+        min-height: 350px;
+        padding: 38px 16px;
+    }
+
+    .overlays h3 {
+        font-size: 15px;
+        line-height: 1.3;
+        margin-bottom: 9px;
+    }
+
+    .overlays h1 {
+        width: 100%;
+        max-width: 360px;
+
+        font-size: clamp(27px, 8.8vw, 34px);
+        line-height: 1.12;
+
+        margin-bottom: 13px;
+    }
+
+    .overlays p {
+        width: 100%;
+        max-width: 390px;
+
+        font-size: 13px;
+        line-height: 1.7;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* SECOND SECTION */
+    .hero-section3 {
+        padding: 48px 16px;
+        gap: 35px;
+    }
+
+    .text-images h1 {
+        font-size: clamp(26px, 8vw, 31px);
+    }
+
+    .text-images p {
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .image-car {
+        width: 100%;
+    }
+
+
+    /* STATISTICS */
+    .text-botton {
+        gap: 20px 30px;
+    }
+
+    .text-color h3 {
+        font-size: 30px;
+    }
+
+    .text-color p {
+        font-size: 12px;
+    }
+
+    .a-a {
+        font-size: 11px;
+    }
+
+
+    /* FOOTER */
+    .footer-container {
+        padding: 42px 16px;
+        gap: 30px;
+    }
+
+    .footer-box h2 {
+        font-size: 26px;
+    }
+
+    .footer-box h3 {
+        font-size: 19px;
+    }
+
+    .footer-box p,
+    .footer-box li {
+        font-size: 13px;
+    }
+
+    .footer-bottom {
+        padding: 15px;
+    }
+
+    .footer-bottom p {
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE - 375px
+   ========================================================= */
+
+@media (max-width: 375px) {
+
+    /* HEADER */
+    .header2 {
+        min-height: 60px;
+        padding: 8px 12px;
+    }
+
+    .header2 > img {
+        width: 98px;
+    }
+
+    .show-div {
+        width: 36px;
+        height: 36px;
+    }
+
+    .show-div svg {
+        width: 24px;
+        height: 24px;
+    }
+
+
+    /* =====================================================
+       FIRST SECTION
+       ===================================================== */
+
+    .hero-section2 {
+        min-height: 330px;
+    }
+
+    .overlays {
+        min-height: 330px;
+        padding: 32px 14px;
+    }
+
+    .overlays h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .overlays h1 {
+        max-width: 340px;
+
+        font-size: clamp(25px, 8.5vw, 31px);
+        line-height: 1.12;
+
+        margin-bottom: 12px;
+    }
+
+    .overlays p {
+        max-width: 340px;
+
+        font-size: 12px;
+        line-height: 1.65;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* SECOND SECTION */
+    .hero-section3 {
+        padding: 42px 14px;
+    }
+
+    .text-images h1 {
+        font-size: 25px;
+    }
+
+    .text-images p {
+        font-size: 12px;
+    }
+
+    .text-color h3 {
+        font-size: 27px;
+    }
+
+    .text-color p {
+        font-size: 12px;
+    }
+
+
+    /* FOOTER */
+    .footer-container {
+        padding: 38px 14px;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONE - 320px
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+    /* HEADER */
+    .header2 {
+        min-height: 58px;
+        padding: 8px 10px;
+    }
+
+    .header2 > img {
+        width: 90px;
+    }
+
+    .show-div {
+        width: 34px;
+        height: 34px;
+    }
+
+    .show-div svg {
+        width: 22px;
+        height: 22px;
+    }
+
+
+    /* FIRST SECTION */
+    .hero-section2 {
+        min-height: 315px;
+    }
+
+    .overlays {
+        min-height: 315px;
+        padding: 28px 12px;
+    }
+
+    .overlays h3 {
+        font-size: 13px;
+    }
+
+    .overlays h1 {
+        max-width: 300px;
+        font-size: 24px;
+        line-height: 1.12;
+    }
+
+    .overlays p {
+        max-width: 295px;
+        font-size: 11px;
+        line-height: 1.65;
+        position: relative;
+        top: 1vh;
+    }
+
+
+    /* SECOND SECTION */
+    .hero-section3 {
+        padding: 38px 12px;
+    }
+
+    .text-images h1 {
+        font-size: 23px;
+    }
+
+    .text-images p {
+        font-size: 12px;
+    }
+
+    .text-botton {
+        gap: 15px 20px;
+    }
+
+    .text-color h3 {
+        font-size: 25px;
+    }
+
+    .a-a {
+        font-size: 10px;
+    }
+
+
+    /* FOOTER */
+    .footer-container {
+        padding: 35px 12px;
+    }
+
+    .footer-bottom {
+        padding: 12px;
+    }
+}
