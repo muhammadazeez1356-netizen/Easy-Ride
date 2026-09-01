@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,32 +22,23 @@
 
 </head>
 
-
 <body>
 
     <div class="container">
 
-
-        <!-- =========================================
-             LEFT SIDE
-        ========================================== -->
-
         <div class="left">
 
-            <form id="loginForm"
+            <form
+                id="loginForm"
                 class="login-card">
 
                 <h1>
                     Welcome Back
                 </h1>
 
-
                 <p>
                     Login to continue using Easy Ride.
                 </p>
-
-
-                <!-- EMAIL -->
 
                 <div class="input-box">
 
@@ -61,9 +53,6 @@
 
                 </div>
 
-
-                <!-- PASSWORD -->
-
                 <div class="input-box">
 
                     <i class="fa-solid fa-lock"></i>
@@ -75,13 +64,12 @@
                         autocomplete="current-password"
                         required>
 
-                    <i class="fa-solid fa-eye-slash eye"
-                        id="loginPasswordEye"></i>
+                    <i
+                        class="fa-solid fa-eye-slash eye"
+                        id="loginPasswordEye">
+                    </i>
 
                 </div>
-
-
-                <!-- FORGOT PASSWORD -->
 
                 <div class="forgot-password-row">
 
@@ -96,13 +84,7 @@
 
                 </div>
 
-
-                <!-- LOGIN MESSAGE -->
-
                 <p id="loginMessage"></p>
-
-
-                <!-- LOGIN BUTTON -->
 
                 <button
                     id="submit"
@@ -112,9 +94,6 @@
 
                 </button>
 
-
-                <!-- DIVIDER -->
-
                 <div class="divider">
 
                     <span>
@@ -122,9 +101,6 @@
                     </span>
 
                 </div>
-
-
-                <!-- GOOGLE -->
 
                 <button
                     type="button"
@@ -137,10 +113,8 @@
 
                 </button>
 
-
-                <!-- GOOGLE TOAST -->
-
-                <div id="toast"
+                <div
+                    id="toast"
                     class="toast">
 
                     <i class="fa-solid fa-circle-info"></i>
@@ -154,9 +128,6 @@
                     </span>
 
                 </div>
-
-
-                <!-- SIGN UP -->
 
                 <p class="login-link">
 
@@ -172,11 +143,6 @@
 
         </div>
 
-
-        <!-- =========================================
-             RIGHT SIDE
-        ========================================== -->
-
         <div class="right">
 
             <div class="content">
@@ -184,7 +150,6 @@
                 <h1>
                     Easy <span>Ride</span>
                 </h1>
-
 
                 <p>
 
@@ -208,10 +173,6 @@
     </div>
 
 
-    <!-- =============================================
-         FORGOT PASSWORD POPOVER
-    ============================================== -->
-
     <div
         id="forgotPasswordOverlay"
         class="forgot-password-overlay">
@@ -219,9 +180,6 @@
         <div
             id="forgotPasswordPopover"
             class="forgot-password-popover">
-
-
-            <!-- CLOSE -->
 
             <button
                 type="button"
@@ -232,18 +190,15 @@
 
             </button>
 
-
             <div class="forgot-icon">
 
                 <i class="fa-solid fa-key"></i>
 
             </div>
 
-
             <h2>
                 Change Password
             </h2>
-
 
             <p class="forgot-description">
 
@@ -251,9 +206,6 @@
                 a new password.
 
             </p>
-
-
-            <!-- EMAIL -->
 
             <div class="forgot-input-box">
 
@@ -267,9 +219,6 @@
 
             </div>
 
-
-            <!-- NEW PASSWORD -->
-
             <div class="forgot-input-box">
 
                 <i class="fa-solid fa-lock"></i>
@@ -282,12 +231,10 @@
 
                 <i
                     class="fa-solid fa-eye-slash forgot-eye"
-                    id="newPasswordEye"></i>
+                    id="newPasswordEye">
+                </i>
 
             </div>
-
-
-            <!-- CONFIRM PASSWORD -->
 
             <div class="forgot-input-box">
 
@@ -301,20 +248,15 @@
 
                 <i
                     class="fa-solid fa-eye-slash forgot-eye"
-                    id="confirmNewPasswordEye"></i>
+                    id="confirmNewPasswordEye">
+                </i>
 
             </div>
-
-
-            <!-- RESET MESSAGE -->
 
             <p
                 id="forgotPasswordMessage"
                 class="forgot-password-message">
             </p>
-
-
-            <!-- CHANGE PASSWORD -->
 
             <button
                 type="button"
@@ -325,13 +267,15 @@
 
             </button>
 
-
         </div>
 
     </div>
 
 
-    <script src="login.js"></script>
+    <script
+        type="module"
+        src="login.js">
+    </script>
 
 </body>
 
