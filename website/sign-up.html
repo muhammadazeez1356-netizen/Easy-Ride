@@ -4,25 +4,22 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Easy Ride - Sign Up</title>
 
-    <link rel="icon"
-        href="/image/easy-ride logo.png">
+    <link rel="icon" href="/image/easy-ride logo.png">
 
-    <link rel="stylesheet"
-        href="signup.css">
+    <link rel="stylesheet" href="signup.css">
 </head>
 
 <body>
 
     <div class="container">
 
+        <!-- LEFT SIDE -->
         <div class="left">
 
             <form id="signupForm" class="signup-card">
@@ -33,97 +30,77 @@
                     Join Easy Ride and start booking rides quickly and safely.
                 </p>
 
+                <!-- FULL NAME -->
                 <div class="input-box">
 
                     <i class="fa-solid fa-user"></i>
 
-                    <input
-                        type="text"
-                        id="fullname"
-                        placeholder="Full Name"
-                        autocomplete="name"
-                        required>
+                    <input type="text" id="fullname" placeholder="Full Name" required>
 
                 </div>
 
+
+                <!-- EMAIL -->
                 <div class="input-box">
 
                     <i class="fa-solid fa-envelope"></i>
 
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Gmail Address"
-                        autocomplete="email"
-                        required>
+                    <input type="email" id="email" placeholder="Gmail Address" required>
 
                 </div>
 
+
+                 <!-- PHONE NUMBER -->
                 <div class="input-box">
 
                     <i class="fa-solid fa-phone"></i>
 
-                    <input
-                        type="tel"
-                        id="phone"
-                        placeholder="Phone Number"
-                        autocomplete="tel"
-                        required>
+                    <input type="number" id="phone" placeholder="Phone Number" required>
 
                 </div>
 
+
+                <!-- PASSWORD -->
                 <div class="input-box">
 
                     <i class="fa-solid fa-lock"></i>
 
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Password"
-                        autocomplete="new-password"
-                        required>
+                    <input type="password" id="password" placeholder="Password" required>
 
                     <i class="fa-solid fa-eye-slash eye"></i>
 
                 </div>
 
+
+                <!-- CONFIRM PASSWORD -->
                 <div class="input-box">
 
                     <i class="fa-solid fa-lock"></i>
 
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        placeholder="Confirm Password"
-                        autocomplete="new-password"
-                        required>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
 
                     <i class="fa-solid fa-eye-slash eye"></i>
 
                 </div>
 
+
+                <!-- MESSAGE -->
                 <p id="message"></p>
 
-                <button
-                    id="submit"
-                    type="submit">
 
+                <!-- SUBMIT -->
+                <button id="submit" type="submit">
                     Create Account
-
                 </button>
 
+
                 <div class="divider">
-
-                    <span>
-                        OR
-                    </span>
-
+                    <span>OR</span>
                 </div>
 
-                <button
-                    type="button"
-                    class="google-btn"
-                    id="googleBtn">
+
+                <!-- GOOGLE -->
+                <button type="button" class="google-btn" id="googleBtn">
 
                     <i class="fa-brands fa-google"></i>
 
@@ -131,9 +108,9 @@
 
                 </button>
 
-                <div
-                    id="toast"
-                    class="toast">
+
+                <!-- TOAST -->
+                <div id="toast" class="toast">
 
                     <i class="fa-solid fa-circle-info"></i>
 
@@ -144,13 +121,13 @@
 
                 </div>
 
+
+                <!-- LOGIN LINK -->
                 <p class="login-link">
 
                     Already have an account?
 
-                    <a href="login.html">
-                        Login
-                    </a>
+                    <a href="login.html">Login</a>
 
                 </p>
 
@@ -158,6 +135,8 @@
 
         </div>
 
+
+        <!-- RIGHT SIDE -->
         <div class="right">
 
             <div class="content">
@@ -185,7 +164,7 @@
     </div>
 
 
-    <script type="module" src="signup.js"></script>
+    <script src="signup.js"></script>
 
 </body>
 
