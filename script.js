@@ -3618,3 +3618,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 100);
 
 });
+
+
+
+
+
+function showDownloadToast(event) {
+    event.preventDefault();
+
+    const toast = document.getElementById("downloadToast");
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+
+document.getElementById("downloadBtn").addEventListener("click", function () {
+
+    const toast = document.getElementById("downloadToast");
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+
+});

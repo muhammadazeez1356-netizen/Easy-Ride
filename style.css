@@ -405,6 +405,51 @@ body {
 }
 
 
+#downloadToast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+
+    transform: translate(-50%, 100px);
+
+    width: min(90%, 420px);
+    padding: 15px 20px;
+
+    background: #222;
+    color: #fff;
+
+    border-radius: 8px;
+
+    text-align: center;
+    font-size: 15px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 99999;
+
+    transition: all 0.35s ease;
+}
+
+#downloadToast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+@media (max-width: 600px) {
+    #downloadToast {
+        width: calc(100% - 30px);
+        bottom: 20px;
+        font-size: 14px;
+    }
+}
+
+
+
+
+
 /* =========================================================
    PEOPLE / TRUSTED SECTION
 ========================================================= */
@@ -1501,6 +1546,8 @@ hr {
 
     .buttons {
         gap: 14px;
+        position: relative;
+        left: 4vh;
     }
 
     .buttons a {
@@ -3310,6 +3357,7 @@ body.dark-mode .close-settings {
     color: #FFD700;
     background: #ffffff14;
     font-size: 18px;
+    margin-top: 40px;
 }
 
 
@@ -3702,16 +3750,18 @@ body.dark-mode .close-settings {
 .primary {
     background: #FFD700;
     color: #fff;
+    max-width: 40vh;
 }
 
 .secondary {
     background: #fff;
     color: #222;
     width: 33%;
+    max-width: 40vh;
 }
 
 .secondary:hover {
-    background: #d7d6d6;
+    background: #f5f2f2;
     color: var(--primary-colour);
 }
 
@@ -3798,7 +3848,7 @@ body.dark-mode .close-settings {
 
 .text-images p {
     font-size: 18px;
-    color: var(--third-color);
+    color: #adacac;
     max-width: 43rem;
     line-height: 30px;
 }
@@ -4189,6 +4239,10 @@ body.dark-mode .close-settings {
     border-radius: 20px;
 }
 
+.text-color h3{
+    color: #bebbbb;
+}
+
 .text-images .a-a {
     background-color: #ffd900;
     width: 70%;
@@ -4407,9 +4461,63 @@ body.dark-mode .close-settings {
 }
 
 .secondary:hover {
-    background: #d7d6d6;
-    color: var(--primary-colour);
+    background: #f3f2f2;
+    color: #000;
 }
+
+
+
+/* DOWNLOAD TOAST */
+
+#downloadToast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+
+    transform: translate(-50%, 100px);
+
+    width: min(90%, 420px);
+    padding: 15px 20px;
+
+    background: #222;
+    color: #fff;
+
+    border-radius: 8px;
+
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 99999;
+
+    transition: all 0.35s ease;
+}
+
+#downloadToast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    #downloadToast {
+        width: calc(100% - 30px);
+        bottom: 20px;
+        font-size: 14px;
+        padding: 14px 15px;
+    }
+
+}
+
+
 
 
 
@@ -4458,6 +4566,14 @@ body.dark-mode .close-settings {
     display: flex;
     align-items: start;
     gap: 10px;
+}
+
+.text-divss h3{
+    color: #000;
+}
+
+.text-divss p{
+    color: #000;
 }
 
 
@@ -4517,12 +4633,13 @@ form h1 {
     color: #FFD700;
 }
 
-form input {
+#inputy {
     margin-bottom: 10px;
     height: 8vh;
     background-color: #c6c5c537;
-    border: none;
+    border-color: #ffd900;
     padding: 20px;
+    /* border: none; */
     border-radius: 10px;
     outline-color: #ffd900;
 }
@@ -4539,13 +4656,13 @@ form textarea {
 
 
 #form-submit {
-    color: var(--primary-colour);
-    background-color: #2d9b58;
-}
-
-#form-submit:hover {
+    color: #fff;
     background-color: #ffd900;
 }
+
+/* #form-submit:hover {
+    background-color: #ffd900;
+} */
 
 #toast {
     position: fixed;
@@ -5910,6 +6027,8 @@ input {
 
     .buttons {
         justify-content: center;
+        position: relative;
+        left: 4vh;
     }
 
     .buttons a {
@@ -8942,5 +9061,968 @@ footer {
 
     #form-submit {
         height: 46px;
+    }
+}
+
+
+
+
+
+/* ADRIVER */
+
+
+/* =========================================================
+   ADRIVER PAGE - FULL RESPONSIVENESS ONLY
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL RESPONSIVE FIX
+   ========================================================= */
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+.section-background2,
+.text-fuction,
+.footer {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
+   769px - 1100px
+   ========================================================= */
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+
+    /* ---------- HEADER ---------- */
+
+    .header2 {
+        width: 100%;
+        padding: 25px 35px;
+        box-sizing: border-box;
+    }
+
+    .header2 > img {
+        width: 150px;
+        max-width: 25%;
+        height: auto;
+    }
+
+    #nav-items {
+        gap: 25px;
+    }
+
+    #nav-items .divnave {
+        gap: 25px;
+    }
+
+    #nav-items a {
+        font-size: 14px;
+    }
+
+    #nav-items .button1 {
+        padding: 11px 16px;
+        white-space: nowrap;
+    }
+
+
+    /* ---------- WHY BECOME A DRIVER ---------- */
+
+    .section-background2 {
+        width: 100%;
+        padding: 70px 5%;
+        box-sizing: border-box;
+    }
+
+    .section-background2 > h1 {
+        width: 100%;
+        max-width: 850px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: clamp(35px, 5vw, 48px);
+        line-height: 1.15;
+    }
+
+    .section-background2 > p {
+        width: 100%;
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 17px;
+        line-height: 1.7;
+    }
+
+
+    /* ---------- CARDS ---------- */
+
+    .div-background2 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px;
+        margin-top: 40px;
+        box-sizing: border-box;
+    }
+
+    .service-cards {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .card-images {
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-images img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .card-contents {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card-contents h2 {
+        font-size: 21px;
+        line-height: 1.3;
+    }
+
+    .card-contents p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       DRIVER APP SECTION
+       ===================================================== */
+
+    .mobile-text {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        margin-top: 80px;
+        box-sizing: border-box;
+    }
+
+    /*
+       BIGGER IMAGE
+       NATURAL PROPORTION IS PRESERVED
+    */
+    .mobile-image {
+        width: 500px;
+        max-width: 48%;
+        height: auto;
+        flex: 0 0 auto;
+        display: block;
+    }
+
+    .text-mobile1 {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .text-mobile1 h3 {
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .text-mobile1 > p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .h-p-text {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .pptext {
+        font-size: 15px;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+    }
+
+
+    /* ---------- FAQ ---------- */
+
+    .text-fuction {
+        width: 100%;
+        padding: 70px 5%;
+        box-sizing: border-box;
+    }
+
+    .text-fuction > h1 {
+        font-size: clamp(35px, 5vw, 48px);
+        text-align: center;
+    }
+
+    .faq-section {
+        width: 100%;
+        max-width: 850px;
+        margin: 40px auto 0;
+    }
+
+    .faq-question {
+        gap: 20px;
+    }
+
+    .faq-question h3 {
+        font-size: 17px;
+        line-height: 1.4;
+    }
+
+    .faq-answer p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+        width: 100%;
+        padding: 60px 5% 30px;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 45px 35px;
+    }
+
+    .footer-box {
+        min-width: 0;
+    }
+
+    .footer-box p {
+        line-height: 1.6;
+    }
+
+    .footer-bottom p {
+        text-align: center;
+        line-height: 1.5;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   601px - 768px
+   ========================================================= */
+
+@media screen and (min-width: 601px) and (max-width: 768px) {
+
+    /* ---------- HEADER ---------- */
+
+    .header2 {
+        width: 100%;
+        padding: 22px 30px;
+        box-sizing: border-box;
+    }
+
+    .header2 > img {
+        width: 140px;
+        max-width: 35%;
+        height: auto;
+    }
+
+    #nav-items {
+        gap: 15px;
+    }
+
+    #nav-items .divnave {
+        gap: 18px;
+    }
+
+    #nav-items a {
+        font-size: 13px;
+    }
+
+    #nav-items .button1 {
+        padding: 10px 13px;
+        font-size: 13px;
+    }
+
+
+    /* ---------- MAIN CONTENT ---------- */
+
+    .section-background2 {
+        width: 100%;
+        padding: 60px 5%;
+        box-sizing: border-box;
+    }
+
+    .section-background2 > h1 {
+        width: 100%;
+        font-size: 38px;
+        line-height: 1.15;
+        text-align: center;
+    }
+
+    .section-background2 > p {
+        width: 100%;
+        font-size: 16px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+
+    /* ---------- CARDS ---------- */
+
+    .div-background2 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        box-sizing: border-box;
+    }
+
+    .service-cards {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .card-images {
+        width: 100%;
+    }
+
+    .card-images img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .card-contents h2 {
+        font-size: 19px;
+        line-height: 1.3;
+    }
+
+    .card-contents p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       DRIVER APP SECTION
+       ===================================================== */
+
+    .mobile-text {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+        margin-top: 65px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /*
+       BIG IMAGE
+       NATURAL PROPORTION PRESERVED
+    */
+    .mobile-image {
+        width: 500px;
+        max-width: 90%;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        flex: 0 0 auto;
+    }
+
+    .text-mobile1 {
+        width: 100%;
+        max-width: 650px;
+        box-sizing: border-box;
+    }
+
+    .text-mobile1 h3 {
+        font-size: 28px;
+        line-height: 1.25;
+    }
+
+    .text-mobile1 > p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .h-p-text {
+        width: 100%;
+        max-width: 600px;
+        margin: 30px auto 0;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    .pptext {
+        font-size: 15px;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+    }
+
+
+    /* ---------- FAQ ---------- */
+
+    .text-fuction {
+        width: 100%;
+        padding: 60px 5%;
+        box-sizing: border-box;
+    }
+
+    .text-fuction > h1 {
+        font-size: 36px;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .faq-section {
+        width: 100%;
+        margin-top: 35px;
+    }
+
+    .faq-question {
+        gap: 15px;
+    }
+
+    .faq-question h3 {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .faq-answer p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+        width: 100%;
+        padding: 55px 5% 30px;
+    }
+
+    .footer-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px 25px;
+    }
+
+    .footer-box {
+        min-width: 0;
+    }
+
+    .footer-box p,
+    .footer-box li {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .footer-bottom p {
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   600px AND BELOW
+   ========================================================= */
+
+@media screen and (max-width: 600px) {
+
+    /* ---------- HEADER ---------- */
+
+    .header2 {
+        width: 100%;
+        padding: 18px 20px;
+        box-sizing: border-box;
+        min-height: 70px;
+    }
+
+    .header2 > img {
+        width: 125px;
+        max-width: 45%;
+        height: auto;
+    }
+
+    #nav-items {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    /* ---------- MAIN SECTION ---------- */
+
+    .section-background2 {
+        width: 100%;
+        padding: 50px 18px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .section-background2 > h1 {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto 18px;
+        font-size: clamp(30px, 8vw, 40px);
+        line-height: 1.15;
+        text-align: center;
+        overflow-wrap: break-word;
+    }
+
+    .section-background2 > p {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        font-size: 15px;
+        line-height: 1.65;
+        text-align: center;
+        overflow-wrap: break-word;
+    }
+
+
+    /* ---------- CARDS ---------- */
+
+    .div-background2 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 35px;
+        box-sizing: border-box;
+    }
+
+    .service-cards {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .card-images {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .card-images img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .card-contents {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card-contents h2 {
+        font-size: 20px;
+        line-height: 1.3;
+        margin-top: 15px;
+    }
+
+    .card-contents p {
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+
+    /* ---------- GET STARTED ---------- */
+
+    .section-background2 > h1 {
+        overflow-wrap: break-word;
+    }
+
+
+    /* =====================================================
+       DRIVER APP SECTION
+       ===================================================== */
+
+    .mobile-text {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+        margin-top: 60px;
+        box-sizing: border-box;
+    }
+
+    /*
+       BIGGER MOBILE IMAGE
+       KEEP NATURAL HEIGHT
+    */
+    .mobile-image {
+        width: 480px;
+        max-width: 96%;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        flex: 0 0 auto;
+    }
+
+    .text-mobile1 {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .text-mobile1 h3 {
+        width: 100%;
+        font-size: 26px;
+        line-height: 1.25;
+        margin-bottom: 15px;
+    }
+
+    .text-mobile1 > p {
+        width: 100%;
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+    .h-p-text {
+        width: 100%;
+        margin-top: 30px;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    .pptext {
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.55;
+        margin-bottom: 22px;
+        overflow-wrap: break-word;
+    }
+
+    .pptext i {
+        margin-right: 7px;
+    }
+
+
+    /* ---------- FAQ ---------- */
+
+    .text-fuction {
+        width: 100%;
+        padding: 55px 18px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .text-fuction > h1 {
+        width: 100%;
+        font-size: clamp(28px, 8vw, 36px);
+        line-height: 1.2;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .faq-section {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .faq-item {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        box-sizing: border-box;
+    }
+
+    .faq-question h3 {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+        overflow-wrap: break-word;
+    }
+
+    .faq-btn {
+        flex: 0 0 auto;
+    }
+
+    .faq-btn i {
+        font-size: 15px;
+    }
+
+    .faq-answer {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .faq-answer p {
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.65;
+        overflow-wrap: break-word;
+    }
+
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+        width: 100%;
+        padding: 50px 20px 25px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .footer-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        box-sizing: border-box;
+    }
+
+    .footer-box {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .footer-box h2 {
+        font-size: 28px;
+    }
+
+    .footer-box h3 {
+        font-size: 19px;
+    }
+
+    .footer-box p {
+        font-size: 14px;
+        line-height: 1.65;
+        overflow-wrap: break-word;
+    }
+
+    .footer-box ul {
+        padding-left: 18px;
+    }
+
+    .footer-box li {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .social-icons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .social-icons a {
+        flex: 0 0 auto;
+    }
+
+    .footer hr {
+        margin: 35px 0 20px;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-bottom p {
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.6;
+        text-align: center;
+        overflow-wrap: break-word;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   380px AND BELOW
+   ========================================================= */
+
+@media screen and (max-width: 380px) {
+
+    .header2 {
+        padding: 16px 15px;
+    }
+
+    .header2 > img {
+        width: 115px;
+    }
+
+    .section-background2 {
+        padding: 45px 14px;
+    }
+
+    .section-background2 > h1 {
+        font-size: 29px;
+    }
+
+    .section-background2 > p {
+        font-size: 14px;
+    }
+
+    .div-background2 {
+        gap: 25px;
+    }
+
+    .card-contents h2 {
+        font-size: 18px;
+    }
+
+    .card-contents p {
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       SMALL MOBILE IMAGE
+       ===================================================== */
+
+    .mobile-image {
+        width: 440px;
+        max-width: 96%;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        flex: 0 0 auto;
+    }
+
+    .text-mobile1 h3 {
+        font-size: 23px;
+    }
+
+    .text-mobile1 > p {
+        font-size: 14px;
+    }
+
+    .pptext {
+        font-size: 13px;
+    }
+
+
+    /* ---------- FAQ ---------- */
+
+    .text-fuction {
+        padding: 45px 14px;
+    }
+
+    .text-fuction > h1 {
+        font-size: 27px;
+    }
+
+    .faq-question h3 {
+        font-size: 14px;
+    }
+
+    .faq-answer p {
+        font-size: 13px;
+    }
+
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/* =========================================================
+   INCREASE ONLY THE WIDTH OF DRIVER APP IMAGE
+   ========================================================= */
+
+@media screen and (min-width: 1101px) {
+    .mobile-image {
+        width: 750px !important;
+        max-width: 70% !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+    .mobile-image {
+        width: 650px !important;
+        max-width: 65% !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 768px) {
+    .mobile-image {
+        width: 650px !important;
+        max-width: 95% !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mobile-image {
+        width: 600px !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .mobile-image {
+        width: 550px !important;
+        max-width: 100% !important;
+        height: auto !important;
     }
 }
