@@ -4215,8 +4215,7 @@ body.dark-mode .close-settings {
 
 .section1 {
     width: 100%;
-    min-height: 40vh;
-    height: auto;
+    height: 70vh;
     background: url("/image/photo-1486406146926-c627a92ad1ab.avif");
     background-size: cover;
     background-position: center;
@@ -4241,11 +4240,15 @@ body.dark-mode .close-settings {
 .over-lays h1 {
     color: var(--primary-colour);
     font-size: 40px;
+    position: relative;
+    top: 20vh;
 }
 
 .over-lays p {
     color: var(--secondary-colour);
     font-size: 20px;
+    position: relative;
+    top: 20vh;
 }
 
 
@@ -4409,6 +4412,9 @@ body.dark-mode .close-settings {
 }
 
 
+
+
+
 /* CONTAC US */
 .text-section1 {
     display: flex;
@@ -4417,7 +4423,9 @@ body.dark-mode .close-settings {
     justify-content: center;
     align-items: center;
     padding: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+    position: relative;
+    top: 55px;
 }
 
 
@@ -8193,5 +8201,746 @@ footer {
     .footer-bottom {
 
         padding: 12px;
+    }
+}
+
+
+
+
+
+/* SERVICE */
+
+
+
+
+
+/* =========================================
+   LARGE DESKTOP
+========================================= */
+
+@media screen and (max-width: 1200px) {
+
+    .section3 {
+        min-height: 580px;
+
+        padding: 75px 50px;
+    }
+
+    .content {
+        max-width: 850px;
+    }
+
+    .content h1 {
+        font-size: clamp(42px, 6vw, 68px);
+    }
+
+    .content p {
+        max-width: 650px;
+    }
+}
+
+
+/* =========================================
+   LAPTOP / SMALL DESKTOP
+========================================= */
+
+@media screen and (max-width: 992px) {
+
+    .section3 {
+        min-height: 540px;
+
+        padding: 70px 35px;
+    }
+
+    .content {
+        max-width: 750px;
+    }
+
+    .top-btn {
+        padding: 9px 20px;
+    }
+
+    .content h1 {
+        font-size: clamp(38px, 7vw, 60px);
+
+        margin-top: 18px;
+        margin-bottom: 18px;
+    }
+
+    .content p {
+        font-size: 16px;
+
+        max-width: 600px;
+    }
+
+    .buttons {
+        margin-top: 30px;
+
+        gap: 15px;
+    }
+
+    .buttons .btn {
+        min-width: 180px;
+        min-height: 62px;
+
+        padding: 11px 18px;
+    }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+    .section3 {
+        width: 100%;
+
+        min-height: 500px;
+
+        padding: 65px 25px;
+    }
+
+    .content {
+        width: 100%;
+
+        max-width: 650px;
+    }
+
+    .top-btn {
+        font-size: 14px;
+
+        padding: 9px 18px;
+    }
+
+    .content h1 {
+        font-size: clamp(34px, 8vw, 52px);
+
+        line-height: 1.1;
+
+        margin: 17px auto;
+    }
+
+    .content p {
+        font-size: 15px;
+
+        line-height: 1.65;
+
+        max-width: 550px;
+    }
+
+    .buttons {
+        margin-top: 28px;
+
+        gap: 14px;
+    }
+
+    .buttons .btn {
+        min-width: 175px;
+
+        min-height: 60px;
+
+        padding: 10px 16px;
+
+        font-size: 13px;
+    }
+
+    .buttons .btn i {
+        font-size: 25px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+    .section3 {
+        min-height: 470px;
+
+        padding: 55px 18px;
+    }
+
+    .content {
+        max-width: 500px;
+    }
+
+    .top-btn {
+        font-size: 13px;
+
+        padding: 8px 16px;
+    }
+
+    .content h1 {
+        font-size: clamp(30px, 9vw, 45px);
+
+        line-height: 1.1;
+
+        margin: 15px auto;
+    }
+
+    .content p {
+        font-size: 14px;
+
+        line-height: 1.65;
+    }
+
+    .buttons {
+        width: 100%;
+
+        margin-top: 25px;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .buttons .btn {
+        width: 100%;
+        max-width: 300px;
+
+        min-width: 0;
+
+        min-height: 58px;
+
+        padding: 10px 16px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media screen and (max-width: 480px) {
+
+    .section3 {
+        min-height: 450px;
+
+        padding: 50px 15px;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .top-btn {
+        font-size: 12px;
+
+        padding: 8px 14px;
+    }
+
+    .content h1 {
+        font-size: clamp(28px, 9vw, 40px);
+
+        line-height: 1.08;
+
+        margin: 14px auto;
+    }
+
+    .content p {
+        font-size: 13.5px;
+
+        line-height: 1.6;
+    }
+
+    .buttons {
+        margin-top: 22px;
+    }
+
+    .buttons .btn {
+        width: 100%;
+        max-width: 280px;
+
+        min-height: 56px;
+
+        padding: 9px 14px;
+
+        font-size: 12px;
+    }
+
+    .buttons .btn i {
+        font-size: 23px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media screen and (max-width: 360px) {
+
+    .section3 {
+        min-height: 430px;
+
+        padding: 45px 12px;
+    }
+
+    .top-btn {
+        font-size: 11px;
+
+        padding: 7px 12px;
+    }
+
+    .content h1 {
+        font-size: 27px;
+
+        line-height: 1.1;
+    }
+
+    .content p {
+        font-size: 12.5px;
+
+        line-height: 1.6;
+    }
+
+    .buttons {
+        gap: 10px;
+    }
+
+    .buttons .btn {
+        max-width: 260px;
+
+        min-height: 54px;
+
+        font-size: 11px;
+
+        padding: 8px 12px;
+
+        gap: 9px;
+    }
+
+    .buttons .btn i {
+        font-size: 21px;
+    }
+}
+
+
+/* =========================================
+   EXTREMELY SMALL SCREEN
+========================================= */
+
+@media screen and (max-width: 320px) {
+
+    .section3 {
+        min-height: 410px;
+
+        padding: 40px 10px;
+    }
+
+    .content h1 {
+        font-size: 24px;
+    }
+
+    .content p {
+        font-size: 12px;
+    }
+
+    .buttons .btn {
+        max-width: 240px;
+    }
+}
+
+
+
+
+
+/* CONTACT */
+
+
+
+
+/* =========================================================
+   RESPONSIVE - TEXT SECTION 1 & TEXT SECTION 2
+========================================================= */
+
+
+/* =========================
+   TABLET / SMALL LAPTOP
+========================= */
+
+@media (max-width: 1000px) {
+
+    .text-section1 {
+        width: 100%;
+        padding: 80px 6%;
+        text-align: center;
+    }
+
+    .text-section1 h1 {
+        font-size: clamp(34px, 5vw, 52px);
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+
+    .text-section1 p {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+
+    .text-section2 {
+        width: 100%;
+        padding: 60px 6% 80px;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .div1,
+    .div2 {
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .div1 > h1 {
+        font-size: 34px;
+        line-height: 1.2;
+        margin-bottom: 30px;
+    }
+
+    .text-divss {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .text-divss > div:last-child {
+        min-width: 0;
+    }
+
+    .text-divss h3 {
+        font-size: 18px;
+        margin-bottom: 3px;
+    }
+
+    .text-divss p {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+    }
+
+
+    #contactForm {
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    #contactForm h1 {
+        font-size: 34px;
+        line-height: 1.2;
+    }
+
+    #contactForm input,
+    #contactForm textarea {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .text-section1 {
+        padding: 70px 30px 60px;
+    }
+
+    .text-section1 h1 {
+        font-size: clamp(32px, 7vw, 45px);
+    }
+
+    .text-section1 p {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+
+    .text-section2 {
+        padding: 50px 30px 70px;
+        gap: 45px;
+    }
+
+    .div1 > h1 {
+        font-size: 30px;
+    }
+
+    .text-divss {
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .iicon {
+        flex-shrink: 0;
+    }
+
+    #contactForm {
+        padding: 30px;
+    }
+
+    #contactForm h1 {
+        font-size: 30px;
+        margin-bottom: 25px;
+    }
+
+    #contactForm input {
+        min-height: 48px;
+    }
+
+    #contactForm textarea {
+        min-height: 130px;
+    }
+
+    #form-submit {
+        min-height: 48px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    /* FIRST SECTION */
+
+    .text-section1 {
+        width: 100%;
+        padding: 60px 20px 50px;
+        text-align: center;
+    }
+
+    .text-section1 h1 {
+        width: 100%;
+        font-size: clamp(28px, 9vw, 38px);
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+
+    .text-section1 p {
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+
+    /* SECOND SECTION */
+
+    .text-section2 {
+        width: 100%;
+        padding: 40px 18px 60px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+
+    /* CONTACT INFORMATION */
+
+    .div1 {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .div1 > h1 {
+        font-size: 27px;
+        line-height: 1.25;
+        margin-bottom: 28px;
+    }
+
+    .text-divss {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        margin-bottom: 22px;
+    }
+
+    .text-divss > div:last-child {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .iicon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .iicon i {
+        font-size: 16px;
+    }
+
+    .text-divss h3 {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 3px;
+    }
+
+    .text-divss p {
+        font-size: 13px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* FORM */
+
+    .div2 {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    #contactForm {
+        width: 100%;
+        max-width: 100%;
+        padding: 25px 18px;
+        margin: 0;
+    }
+
+    #contactForm h1 {
+        font-size: 27px;
+        line-height: 1.25;
+        margin-bottom: 25px;
+    }
+
+    #contactForm label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 7px;
+    }
+
+    #contactForm input:not([type="submit"]) {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        height: 48px;
+        padding: 0 13px;
+        margin-bottom: 17px;
+    }
+
+    #contactForm textarea {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 120px;
+        padding: 13px;
+    }
+
+    #form-submit {
+        width: 100%;
+        max-width: 100%;
+        height: 48px;
+    }
+
+
+    /* TOAST */
+
+    #toast {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+
+        width: calc(100% - 30px);
+        max-width: 400px;
+
+        transform: translateX(-50%);
+        z-index: 99999;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 400px) {
+
+    .text-section1 {
+        padding: 50px 15px 45px;
+    }
+
+    .text-section1 h1 {
+        font-size: 28px;
+    }
+
+    .text-section1 p {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+
+    .text-section2 {
+        padding: 35px 14px 50px;
+        gap: 35px;
+    }
+
+    .div1 > h1,
+    #contactForm h1 {
+        font-size: 24px;
+    }
+
+    .text-divss {
+        gap: 11px;
+    }
+
+    .iicon {
+        width: 39px;
+        height: 39px;
+        min-width: 39px;
+    }
+
+    .iicon i {
+        font-size: 14px;
+    }
+
+    .text-divss h3 {
+        font-size: 15px;
+    }
+
+    .text-divss p {
+        font-size: 12px;
+    }
+
+
+    #contactForm {
+        padding: 22px 14px;
+    }
+
+    #contactForm input:not([type="submit"]) {
+        height: 46px;
+    }
+
+    #contactForm textarea {
+        min-height: 110px;
+    }
+
+    #form-submit {
+        height: 46px;
     }
 }
